@@ -1,0 +1,51 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+.next/
+dist/
+build/
+out/
+*.tsbuildinfo
+
+# Environments
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Turbo
+.turbo
+
+# Testing
+coverage/
+.nyc_output/
+
+# Supabase
+supabase/.branches
+supabase/.temp
+
+# Vercel
+.vercel
+
+# Desktop bridge build artifacts
+apps/desktop-bridge/bin/
+apps/desktop-bridge/obj/
+*.user
+
+# Generated files
+packages/db/src/database.types.ts
