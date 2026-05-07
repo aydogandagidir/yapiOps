@@ -42,11 +42,47 @@
     "trialBanner": "{daysLeft} gün ücretsiz deneme süreniz kaldı. Plan seçmek için tıklayın.",
     "noProjects": "Henüz proje yok. İlk projenizi oluşturmak için başlayın.",
     "modules": {
+      "projects": "Projeler",
       "ek3pilot": "Ek-3 Pilot",
       "raporx": "RaporX",
       "spektrumhub": "Spektrum Hub",
       "copilot": "TBDY Copilot",
       "billing": "Faturalama"
+    }
+  },
+  "projects": {
+    "title": "Projeler",
+    "subtitle": "Tüm Ek-3, RaporX ve Spektrum analizlerinin bağlandığı proje kayıtları.",
+    "newButton": "Yeni Proje",
+    "newTitle": "Yeni Proje",
+    "newSubtitle": "Proje temelinizi oluşturun; teknik detaylar Ek-3 sihirbazında dolar.",
+    "formTitle": "Proje Bilgileri",
+    "listTitle": "Aktif Projeler",
+    "empty": "Henüz proje yok. Sağ üstten ilk projenizi oluşturun.",
+    "open": "Aç",
+    "createButton": "Projeyi Oluştur",
+    "newEk3": "Bu Projeye Ek-3",
+    "archive": "Arşivle",
+    "archiveConfirm": "Bu projeyi arşivlemek istediğinizden emin misiniz? Bağlı Ek-3 kayıtları silinmez.",
+    "detailsTitle": "Proje Detayları",
+    "detailsHint": "Yapı sınıfı, DTS, BYS gibi teknik alanlar Ek-3 sihirbazından doldurulur.",
+    "columns": {
+      "name": "Ad",
+      "location": "Konum",
+      "adaParsel": "Ada/Parsel",
+      "updated": "Güncelleme",
+      "actions": "İşlem"
+    },
+    "fields": {
+      "name": "Proje adı",
+      "il": "İl",
+      "ilce": "İlçe",
+      "mahalle": "Mahalle",
+      "pafta": "Pafta",
+      "ada": "Ada",
+      "parsel": "Parsel",
+      "created": "Oluşturulma",
+      "updated": "Güncelleme"
     }
   },
   "billing": {

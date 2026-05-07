@@ -1,13 +1,14 @@
 'use client';
 
 import { useMutation } from '@tanstack/react-query';
+import { Plus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
-import { useRouter } from '@/i18n/navigation';
+import { Link, useRouter } from '@/i18n/navigation';
 
 interface ProjectOption {
   id: string;
@@ -56,39 +57,56 @@ export function Ek3NewClient({ projects }: Props) {
         <CardHeader>
           <CardTitle className="text-base">Proje seç</CardTitle>
           <CardDescription>
-            Ek-3 bir projeye bağlanır. İlgili projeyi seçin veya önce
-            <a href="/dashboard" className="ml-1 underline">
-              dashboard&apos;dan
-            </a>
-            yeni bir proje oluşturun.
+            Ek-3 bir projeye bağlanır. İlgili projeyi seçin veya yeni bir proje oluşturun.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label>Proje</Label>
-            <select
-              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              value={projectId}
-              onChange={(e) => {
-                setProjectId(e.target.value);
-              }}
-            >
-              <option value="">—</option>
-              {projects.map((p) => (
-                <option key={p.id} value={p.id}>
-                  {p.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          <Button
-            disabled={!projectId || create.isPending}
-            onClick={() => {
-              create.mutate(projectId);
-            }}
-          >
-            Oluştur
-          </Button>
+          {projects.length === 0 ? (
+            <div className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
+              Henüz projeniz yok.
+              <Button asChild variant="link" size="sm" className="ml-1 h-auto p-0">
+                <Link href="/projects/new">
+                  <Plus className="mr-1 h-3 w-3" /> Yeni proje oluşturun
+                </Link>
+              </Button>
+              .
+            </div>
+          ) : (
+            <>
+              <div className="space-y-2">
+                <Label>Proje</Label>
+                <select
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  value={projectId}
+                  onChange={(e) => {
+                    setProjectId(e.target.value);
+                  }}
+                >
+                  <option value="">—</option>
+                  {projects.map((p) => (
+                    <option key={p.id} value={p.id}>
+                      {p.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  disabled={!projectId || create.isPending}
+                  onClick={() => {
+                    create.mutate(projectId);
+                  }}
+                >
+                  Oluştur
+                </Button>
+                <Button asChild variant="outline">
+                  <Link href="/projects/new">
+                    <Plus className="mr-2 h-4 w-4" /> Yeni proje
+                  </Link>
+                </Button>
+              </div>
+            </>
+          )}
           {create.isError && (
             <p className="text-sm text-destructive">{(create.error).message}</p>
           )}

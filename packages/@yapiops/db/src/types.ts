@@ -63,6 +63,7 @@ export type AuditAction =
   | 'project.created'
   | 'project.updated'
   | 'project.deleted'
+  | 'project.archived'
   | 'ek3.created'
   | 'ek3.updated'
   | 'ek3.generated'

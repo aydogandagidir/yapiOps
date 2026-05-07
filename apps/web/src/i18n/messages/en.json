@@ -42,11 +42,47 @@
     "trialBanner": "{daysLeft} days left in your free trial. Click to choose a plan.",
     "noProjects": "No projects yet. Get started by creating your first project.",
     "modules": {
+      "projects": "Projects",
       "ek3pilot": "Ek-3 Pilot",
       "raporx": "RaporX",
       "spektrumhub": "Spektrum Hub",
       "copilot": "TBDY Copilot",
       "billing": "Billing"
+    }
+  },
+  "projects": {
+    "title": "Projects",
+    "subtitle": "Project records that every Ek-3, RaporX and Spektrum analysis attaches to.",
+    "newButton": "New Project",
+    "newTitle": "New Project",
+    "newSubtitle": "Create the project shell; technical fields fill in via the Ek-3 wizard.",
+    "formTitle": "Project Details",
+    "listTitle": "Active Projects",
+    "empty": "No projects yet. Use the top right to create your first.",
+    "open": "Open",
+    "createButton": "Create Project",
+    "newEk3": "New Ek-3 in this project",
+    "archive": "Archive",
+    "archiveConfirm": "Archive this project? Linked Ek-3 records are kept.",
+    "detailsTitle": "Project Details",
+    "detailsHint": "Building class, DTS, BYS, and other technical fields are filled via the Ek-3 wizard.",
+    "columns": {
+      "name": "Name",
+      "location": "Location",
+      "adaParsel": "Block / Lot",
+      "updated": "Updated",
+      "actions": "Action"
+    },
+    "fields": {
+      "name": "Project name",
+      "il": "Province",
+      "ilce": "District",
+      "mahalle": "Neighborhood",
+      "pafta": "Sheet",
+      "ada": "Block",
+      "parsel": "Lot",
+      "created": "Created",
+      "updated": "Updated"
     }
   },
   "billing": {

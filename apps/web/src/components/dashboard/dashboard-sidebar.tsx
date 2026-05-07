@@ -6,6 +6,7 @@ import {
   Building2,
   CreditCard,
   FileText,
+  FolderOpen,
   LayoutGrid,
   LineChart,
   Sparkles,
@@ -16,7 +17,14 @@ import { useTranslations } from 'next-intl';
 import { Link, usePathname } from '@/i18n/navigation';
 
 interface NavItem {
-  href: '/dashboard' | '/ek3pilot' | '/raporx' | '/spektrumhub' | '/copilot' | '/billing';
+  href:
+    | '/dashboard'
+    | '/projects'
+    | '/ek3pilot'
+    | '/raporx'
+    | '/spektrumhub'
+    | '/copilot'
+    | '/billing';
   labelKey: string;
   icon: typeof LayoutGrid;
   enabled: boolean;
@@ -28,6 +36,7 @@ export function DashboardSidebar({ membership: _membership }: { membership: OrgM
 
   const items: NavItem[] = [
     { href: '/dashboard', labelKey: 'common.appName', icon: LayoutGrid, enabled: true },
+    { href: '/projects', labelKey: 'dashboard.modules.projects', icon: FolderOpen, enabled: true },
     { href: '/ek3pilot', labelKey: 'dashboard.modules.ek3pilot', icon: FileText, enabled: true },
     { href: '/raporx', labelKey: 'dashboard.modules.raporx', icon: LineChart, enabled: false },
     { href: '/spektrumhub', labelKey: 'dashboard.modules.spektrumhub', icon: Waves, enabled: false },
