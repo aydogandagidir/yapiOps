@@ -38,6 +38,7 @@
     "next-intl": "^3.21.1",
     "next-themes": "^0.3.0",
     "posthog-js": "^1.171.0",
+    "posthog-node": "^4.18.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.53.1",

@@ -12,6 +12,8 @@ import {
 import { cookies, headers } from 'next/headers';
 import { NextResponse } from 'next/server';
 
+import { captureServerEvent, flushPostHog } from '@/lib/posthog-server';
+
 export const runtime = 'nodejs';
 
 const MAX_UPLOAD_BYTES = 10 * 1024 * 1024; // 10 MB
@@ -137,6 +139,21 @@ export async function POST(request: Request) {
       metadata: { sha256, source: existing ? existing.source : 'manual_upload' },
     });
   }
+
+  captureServerEvent({
+    distinctId: ctx.membership.orgId,
+    event: 'ek3_template_uploaded',
+    userId: ctx.user.id,
+    properties: {
+      templateId,
+      sha256,
+      size: bytes.length,
+      version,
+      deduped: Boolean(existing),
+      activated: activate,
+    },
+  });
+  await flushPostHog();
 
   return NextResponse.json({ id: templateId, deduped: Boolean(existing), activated: activate });
 }

@@ -6,6 +6,8 @@ import { Ek3ReviseInputSchema } from '@yapiops/ek3';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
+import { captureServerEvent, flushPostHog } from '@/lib/posthog-server';
+
 import { buildAuditContext, getAuditLogger, mergeFormData, type Ek3Row } from '../../_helpers';
 
 export const runtime = 'nodejs';
@@ -95,6 +97,19 @@ export async function POST(request: Request, context: RouteContext) {
       reason: parsed.data.revisionReason,
     },
   });
+
+  captureServerEvent({
+    distinctId: ctx.membership.orgId,
+    event: 'ek3_revised',
+    userId: ctx.user.id,
+    properties: {
+      originalId: original.id,
+      previousVersion: original.version,
+      newVersion: revision.version,
+      role: ctx.membership.role,
+    },
+  });
+  await flushPostHog();
 
   return NextResponse.json({ ek3Form: revision }, { status: 201 });
 }

@@ -6,6 +6,9 @@ import { Ek3CreateInputSchema } from '@yapiops/ek3';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
+import { captureServerEvent, flushPostHog } from '@/lib/posthog-server';
+import { breadcrumbEk3 } from '@/lib/sentry-helpers';
+
 import { buildAuditContext, getAuditLogger, type Ek3Row } from './_helpers';
 
 export const runtime = 'nodejs';
@@ -103,6 +106,24 @@ export async function POST(request: Request) {
     resourceId: inserted.id,
     metadata: { projectId: inserted.project_id, version: inserted.version },
   });
+
+  breadcrumbEk3({
+    action: 'created',
+    orgId: ctx.membership.orgId,
+    resourceId: inserted.id,
+    data: { projectId: inserted.project_id },
+  });
+  captureServerEvent({
+    distinctId: ctx.membership.orgId,
+    event: 'ek3_created',
+    userId: ctx.user.id,
+    properties: {
+      projectId: inserted.project_id,
+      version: inserted.version,
+      role: ctx.membership.role,
+    },
+  });
+  await flushPostHog();
 
   return NextResponse.json({ ek3Form: inserted }, { status: 201 });
 }

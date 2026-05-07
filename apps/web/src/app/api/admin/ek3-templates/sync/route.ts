@@ -12,6 +12,9 @@ import {
 import { cookies, headers } from 'next/headers';
 import { NextResponse } from 'next/server';
 
+import { captureServerEvent, flushPostHog } from '@/lib/posthog-server';
+import { breadcrumbEk3, captureRouteWarning } from '@/lib/sentry-helpers';
+
 export const runtime = 'nodejs';
 // 30s — Bakanlık endpoint'i yavaş cevap verebilir.
 export const maxDuration = 30;
@@ -64,6 +67,13 @@ export async function runSync(
       resourceType: 'ek3_template',
       metadata: { error: message },
     });
+    captureRouteWarning(`ek3 template sync failed: ${message}`, {
+      route: '/api/admin/ek3-templates/sync',
+      feature: 'ek3_template',
+      orgId: auditMeta.orgId,
+      extra: { error: message },
+    });
+    await flushPostHog();
     return NextResponse.json({ status: 'fetch_failed', error: message }, { status: 502 });
   }
 
@@ -105,6 +115,25 @@ export async function runSync(
     resourceId: recorded.id,
     metadata: { sha256: fetched.sha256, source: 'official_fetch' },
   });
+
+  breadcrumbEk3({
+    action: 'template_synced',
+    orgId: auditMeta.orgId,
+    resourceId: recorded.id,
+    data: { sha256: fetched.sha256, sourceUrl: fetched.sourceUrl, status: cmp.status },
+  });
+  captureServerEvent({
+    distinctId: auditMeta.orgId,
+    event: 'ek3_template_synced',
+    userId: auditMeta.userId,
+    properties: {
+      sha256: fetched.sha256,
+      sourceUrl: fetched.sourceUrl,
+      version,
+      status: cmp.status,
+    },
+  });
+  await flushPostHog();
 
   return NextResponse.json({
     status: cmp.status, // 'first' | 'new'

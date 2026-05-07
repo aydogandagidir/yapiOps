@@ -11,6 +11,9 @@ import { renderEk3Pdf } from '@yapiops/pdf';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
+import { captureServerEvent, flushPostHog } from '@/lib/posthog-server';
+import { breadcrumbEk3 } from '@/lib/sentry-helpers';
+
 import { buildAuditContext, getAuditLogger, type Ek3Row } from '../../_helpers';
 
 export const runtime = 'nodejs';
@@ -99,6 +102,24 @@ export async function POST(_req: Request, context: RouteContext) {
   // Quota check (Free plan: 3/month).
   const quota = await checkQuota(supabase, ctx.membership.orgId, 'ek3Generations');
   if (!quota.allowed) {
+    breadcrumbEk3({
+      action: 'quota_exceeded',
+      orgId: ctx.membership.orgId,
+      resourceId: id,
+      data: { used: quota.used, limit: quota.limit, reason: quota.reason },
+    });
+    captureServerEvent({
+      distinctId: ctx.membership.orgId,
+      event: 'quota_exceeded',
+      userId: ctx.user.id,
+      properties: {
+        feature: 'ek3Generations',
+        used: quota.used,
+        limit: quota.limit,
+        reason: quota.reason,
+      },
+    });
+    await flushPostHog();
     return NextResponse.json(
       {
         error: 'quota_exceeded',
@@ -180,6 +201,30 @@ export async function POST(_req: Request, context: RouteContext) {
       templateId: template.templateId ?? null,
     },
   });
+
+  breadcrumbEk3({
+    action: 'generated',
+    orgId: ctx.membership.orgId,
+    resourceId: id,
+    data: {
+      strategy: rendered.strategy,
+      templateSource: template.source,
+      version: row.version,
+    },
+  });
+  captureServerEvent({
+    distinctId: ctx.membership.orgId,
+    event: 'ek3_generated',
+    userId: ctx.user.id,
+    properties: {
+      ek3FormId: id,
+      version: row.version,
+      strategy: rendered.strategy,
+      templateSource: template.source,
+      role: ctx.membership.role,
+    },
+  });
+  await flushPostHog();
 
   return NextResponse.json({
     ek3Form: updated,

@@ -6,6 +6,8 @@ import { createSupabaseServerClient } from '@yapiops/db/server';
 import { cookies, headers } from 'next/headers';
 import { NextResponse } from 'next/server';
 
+import { captureServerEvent, flushPostHog } from '@/lib/posthog-server';
+
 import { ProjectCreateSchema } from './_schema';
 
 export const runtime = 'nodejs';
@@ -99,6 +101,14 @@ export async function POST(request: Request) {
     resourceId: inserted.id,
     metadata: { name: inserted.name },
   });
+
+  captureServerEvent({
+    distinctId: ctx.membership.orgId,
+    event: 'project_created',
+    userId: ctx.user.id,
+    properties: { projectId: inserted.id, role: ctx.membership.role },
+  });
+  await flushPostHog();
 
   return NextResponse.json({ project: inserted }, { status: 201 });
 }
