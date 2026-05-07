@@ -70,5 +70,131 @@
     "unexpectedError": "Beklenmeyen bir hata oluştu",
     "authRequired": "Giriş yapmanız gerekiyor",
     "forbidden": "Bu işlem için yetkiniz yok"
+  },
+  "ek3pilot": {
+    "title": "Ek-3 Pilot",
+    "subtitle": "Yapı Denetim Hizmet Sözleşmesi Ek-3 formunu 5 dakikada üret",
+    "list": {
+      "newButton": "Yeni Ek-3",
+      "empty": "Henüz Ek-3 formunuz yok. İlk formu oluşturmak için tıklayın.",
+      "columns": {
+        "project": "Proje",
+        "version": "Sürüm",
+        "status": "Durum",
+        "updated": "Güncelleme",
+        "actions": "İşlem"
+      },
+      "status": {
+        "draft": "Taslak",
+        "completed": "Tamamlandı",
+        "signed": "İmzalı",
+        "superseded": "Eski Sürüm"
+      }
+    },
+    "wizard": {
+      "stepLabels": {
+        "proje": "Proje",
+        "yapi": "Yapı",
+        "insaat": "İnşaat",
+        "sahibi": "Sahibi",
+        "muteahhit": "Müteahhit",
+        "denetim": "Denetim"
+      },
+      "saveDraft": "Taslağı kaydet",
+      "savedAt": "Otomatik kaydedildi",
+      "generateButton": "PDF Üret",
+      "reviseButton": "Yeni Sürüm Oluştur",
+      "deleteButton": "Sil",
+      "fields": {
+        "proje": {
+          "ad": "Proje adı",
+          "il": "İl",
+          "ilce": "İlçe",
+          "mahalle": "Mahalle",
+          "pafta": "Pafta",
+          "ada": "Ada",
+          "parsel": "Parsel",
+          "lat": "Enlem",
+          "lng": "Boylam",
+          "imarDurumu": "İmar durumu"
+        },
+        "yapi": {
+          "sinif": "Yapı sınıfı",
+          "kullanimAmaci": "Kullanım amacı",
+          "toplamAlanM2": "Toplam alan (m²)",
+          "bodrumKat": "Bodrum kat sayısı",
+          "zeminUstuKat": "Zemin üstü kat sayısı",
+          "toplamYukseklikM": "Toplam yükseklik (m)",
+          "tasiyiciSistem": "Taşıyıcı sistem",
+          "dts": "Deprem Tasarım Sınıfı (DTS)",
+          "bys": "Bina Yükseklik Sınıfı (BYS)",
+          "sds": "Sds",
+          "sd1": "Sd1",
+          "pga": "PGA"
+        },
+        "insaat": {
+          "yapiRuhsatNo": "Yapı ruhsat no",
+          "yapiRuhsatTarihi": "Yapı ruhsat tarihi",
+          "baslamaTarihi": "Başlama tarihi",
+          "bitisTarihi": "Bitiş tarihi",
+          "toplamSureGun": "Toplam süre (gün)",
+          "maliyetTry": "İnşaat maliyeti (₺)"
+        },
+        "sahibi": {
+          "adSoyad": "Ad soyad / Ünvan",
+          "tckn": "TCKN",
+          "vkn": "VKN",
+          "adres": "Adres",
+          "telefon": "Telefon",
+          "eposta": "E-posta"
+        },
+        "firma": {
+          "unvan": "Ünvan",
+          "vkn": "VKN",
+          "yetkiBelgesi": "Yetki belgesi",
+          "yetkiSinifi": "Yetki belgesi sınıfı",
+          "yetkiNo": "Yetki belgesi no",
+          "yetkiliAdi": "Yetkili ad soyad",
+          "yetkiliTckn": "Yetkili TCKN",
+          "adres": "Adres",
+          "telefon": "Telefon",
+          "eposta": "E-posta",
+          "izinBelgesiNo": "İzin belgesi no",
+          "sorumluMuhendis": "Sorumlu mühendis",
+          "odaSicilNo": "Oda sicil no"
+        }
+      }
+    },
+    "validators": {
+      "tckn": "Geçersiz TCKN",
+      "vkn": "Geçersiz VKN",
+      "tcknOrVkn": "TCKN veya VKN zorunlu",
+      "dtsWarning": "Sds-DTS uyumsuzluğu (TBDY Tablo 3.2)",
+      "bysWarning": "BYS-yükseklik uyumsuzluğu (TBDY Tablo 3.3)"
+    },
+    "preview": {
+      "title": "PDF Önizleme",
+      "download": "PDF İndir",
+      "regenerate": "Yeniden Üret",
+      "signNote": "PDF e-imza alanı içerir; E-İmzaTR ile açıp imzalayabilirsiniz."
+    },
+    "errors": {
+      "quotaExceeded": "Aylık Ek-3 limitinize ulaştınız ({used}/{limit}). Plan yükseltmek için faturalama sayfasına gidin.",
+      "planExcludes": "Bu özellik mevcut planınıza dahil değil.",
+      "incompleteForm": "Form eksik. Lütfen tüm zorunlu alanları doldurun.",
+      "immutableStatus": "İmzalı veya eski sürüm Ek-3 üzerinde değişiklik yapılamaz.",
+      "alreadySuperseded": "Bu Ek-3 zaten eski sürüm. Mevcut sürüm üzerinden devam edin.",
+      "etabsImportComingSoon": "ETABS import özelliği Hafta 8-9'da aktif olacak."
+    },
+    "firmaSablon": {
+      "title": "Firma Şablonları",
+      "subtitle": "Müteahhit ve denetim firmalarını bir kez kaydet, formlarda hızla seç.",
+      "addButton": "Yeni Şablon",
+      "muteahhitTitle": "Müteahhit Firmaları",
+      "denetimTitle": "Yapı Denetim Kuruluşları",
+      "empty": "Henüz şablon yok.",
+      "selectPlaceholder": "Şablondan seç...",
+      "selectNone": "Şablonsuz devam et"
+    }
   }
 }

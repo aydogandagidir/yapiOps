@@ -28,6 +28,8 @@
     "@yapiops/auth": "workspace:*",
     "@yapiops/billing": "workspace:*",
     "@yapiops/db": "workspace:*",
+    "@yapiops/ek3": "workspace:*",
+    "@yapiops/pdf": "workspace:*",
     "@yapiops/ui": "workspace:*",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",

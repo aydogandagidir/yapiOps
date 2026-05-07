@@ -1,7 +1,11 @@
 export {
+  canCreateEk3,
   canCreateProject,
   canCreateReport,
+  canDeleteEk3,
   canEditBilling,
+  canEditEk3,
+  canManageFirmaSablon,
   canManageOrg,
   canManageSeats,
   canSignEk3,

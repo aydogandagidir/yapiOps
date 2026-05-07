@@ -70,5 +70,131 @@
     "unexpectedError": "An unexpected error occurred",
     "authRequired": "You need to sign in",
     "forbidden": "You don't have permission for this action"
+  },
+  "ek3pilot": {
+    "title": "Ek-3 Pilot",
+    "subtitle": "Generate the Yapı Denetim Ek-3 form in 5 minutes",
+    "list": {
+      "newButton": "New Ek-3",
+      "empty": "No Ek-3 forms yet. Click to create your first one.",
+      "columns": {
+        "project": "Project",
+        "version": "Version",
+        "status": "Status",
+        "updated": "Updated",
+        "actions": "Actions"
+      },
+      "status": {
+        "draft": "Draft",
+        "completed": "Completed",
+        "signed": "Signed",
+        "superseded": "Superseded"
+      }
+    },
+    "wizard": {
+      "stepLabels": {
+        "proje": "Project",
+        "yapi": "Building",
+        "insaat": "Construction",
+        "sahibi": "Owner",
+        "muteahhit": "Contractor",
+        "denetim": "Inspector"
+      },
+      "saveDraft": "Save draft",
+      "savedAt": "Auto-saved",
+      "generateButton": "Generate PDF",
+      "reviseButton": "Create New Version",
+      "deleteButton": "Delete",
+      "fields": {
+        "proje": {
+          "ad": "Project name",
+          "il": "Province",
+          "ilce": "District",
+          "mahalle": "Neighborhood",
+          "pafta": "Sheet",
+          "ada": "Block",
+          "parsel": "Lot",
+          "lat": "Latitude",
+          "lng": "Longitude",
+          "imarDurumu": "Zoning status"
+        },
+        "yapi": {
+          "sinif": "Building class",
+          "kullanimAmaci": "Use",
+          "toplamAlanM2": "Total area (m²)",
+          "bodrumKat": "Basement floors",
+          "zeminUstuKat": "Above-grade floors",
+          "toplamYukseklikM": "Total height (m)",
+          "tasiyiciSistem": "Structural system",
+          "dts": "Earthquake Design Class (DTS)",
+          "bys": "Building Height Class (BYS)",
+          "sds": "Sds",
+          "sd1": "Sd1",
+          "pga": "PGA"
+        },
+        "insaat": {
+          "yapiRuhsatNo": "Building permit no",
+          "yapiRuhsatTarihi": "Permit date",
+          "baslamaTarihi": "Start date",
+          "bitisTarihi": "End date",
+          "toplamSureGun": "Duration (days)",
+          "maliyetTry": "Cost (₺)"
+        },
+        "sahibi": {
+          "adSoyad": "Full name / Title",
+          "tckn": "Tax ID (TCKN)",
+          "vkn": "Tax ID (VKN)",
+          "adres": "Address",
+          "telefon": "Phone",
+          "eposta": "Email"
+        },
+        "firma": {
+          "unvan": "Title",
+          "vkn": "VKN",
+          "yetkiBelgesi": "Authorization",
+          "yetkiSinifi": "Class",
+          "yetkiNo": "Number",
+          "yetkiliAdi": "Authorized contact",
+          "yetkiliTckn": "Authorized TCKN",
+          "adres": "Address",
+          "telefon": "Phone",
+          "eposta": "Email",
+          "izinBelgesiNo": "License no",
+          "sorumluMuhendis": "Responsible engineer",
+          "odaSicilNo": "Chamber registry no"
+        }
+      }
+    },
+    "validators": {
+      "tckn": "Invalid TCKN",
+      "vkn": "Invalid VKN",
+      "tcknOrVkn": "TCKN or VKN required",
+      "dtsWarning": "Sds-DTS mismatch (TBDY 2018 §3.2)",
+      "bysWarning": "BYS-height mismatch (TBDY 2018 §3.3)"
+    },
+    "preview": {
+      "title": "PDF Preview",
+      "download": "Download PDF",
+      "regenerate": "Regenerate",
+      "signNote": "PDF includes an e-signature field — open with E-İmzaTR to sign."
+    },
+    "errors": {
+      "quotaExceeded": "Monthly Ek-3 limit reached ({used}/{limit}). Upgrade your plan from billing.",
+      "planExcludes": "This feature isn't included in your plan.",
+      "incompleteForm": "Form is incomplete. Please fill all required fields.",
+      "immutableStatus": "Signed or superseded Ek-3 forms cannot be edited.",
+      "alreadySuperseded": "This Ek-3 is already superseded. Continue from the latest version.",
+      "etabsImportComingSoon": "ETABS import is coming in week 8–9."
+    },
+    "firmaSablon": {
+      "title": "Firm Templates",
+      "subtitle": "Save contractor and inspector firms once, pick them quickly in forms.",
+      "addButton": "New Template",
+      "muteahhitTitle": "Contractors",
+      "denetimTitle": "Building Inspectors",
+      "empty": "No templates yet.",
+      "selectPlaceholder": "Pick from template...",
+      "selectNone": "Skip template"
+    }
   }
 }

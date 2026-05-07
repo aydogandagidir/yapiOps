@@ -1,0 +1,27 @@
+{
+  "name": "@yapiops/ek3",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Ek-3 form domain — Yapı Denetim Hizmet Sözleşmesi Ek-3 schema, Zod validators, ETABS metadata mapping",
+  "exports": {
+    ".": "./src/index.ts",
+    "./schema": "./src/schema.ts",
+    "./validators": "./src/validators.ts",
+    "./etabs-mapping": "./src/etabs-mapping.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "type-check": "tsc --noEmit",
+    "test": "vitest run",
+    "clean": "rimraf .turbo dist"
+  },
+  "dependencies": {
+    "@yapiops/db": "workspace:*",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@yapiops/config": "workspace:*",
+    "vitest": "^2.1.3"
+  }
+}

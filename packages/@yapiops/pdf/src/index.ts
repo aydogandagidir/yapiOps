@@ -1,5 +1,7 @@
-// PDF generation — placeholder.
-// Phase 1 (Ek3Pilot): pdf-lib for filling Yapı Denetim Ek-3 form template.
-// Phase 2 (RaporX):   Puppeteer for HTML → PDF rapor rendering.
+export { renderEk3Pdf } from './ek3-renderer';
+export type { Ek3RenderInput, Ek3RenderOutput } from './ek3-renderer';
 
-export {};
+export { buildEk3FieldMap } from './ek3-field-map';
+export type { Ek3FieldMap } from './ek3-field-map';
+
+export { buildEk3Html } from './ek3-html-fallback';

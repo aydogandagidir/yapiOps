@@ -3,16 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "PDF generation — placeholder, populated in Phase 1 (Ek3Pilot) and Phase 2 (RaporX)",
+  "description": "YapıOps PDF generation — Ek-3 (pdf-lib AcroForm + HTML fallback). RaporX Puppeteer renderer arrives in Phase 2.",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./ek3": "./src/ek3-renderer.ts"
   },
   "scripts": {
     "lint": "eslint .",
     "type-check": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests",
     "clean": "rimraf .turbo dist"
   },
+  "dependencies": {
+    "@yapiops/ek3": "workspace:*",
+    "pdf-lib": "^1.17.1"
+  },
   "devDependencies": {
-    "@yapiops/config": "workspace:*"
+    "@yapiops/config": "workspace:*",
+    "vitest": "^2.1.3"
   }
 }

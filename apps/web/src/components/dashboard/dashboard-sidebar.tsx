@@ -28,7 +28,7 @@ export function DashboardSidebar({ membership: _membership }: { membership: OrgM
 
   const items: NavItem[] = [
     { href: '/dashboard', labelKey: 'common.appName', icon: LayoutGrid, enabled: true },
-    { href: '/ek3pilot', labelKey: 'dashboard.modules.ek3pilot', icon: FileText, enabled: false },
+    { href: '/ek3pilot', labelKey: 'dashboard.modules.ek3pilot', icon: FileText, enabled: true },
     { href: '/raporx', labelKey: 'dashboard.modules.raporx', icon: LineChart, enabled: false },
     { href: '/spektrumhub', labelKey: 'dashboard.modules.spektrumhub', icon: Waves, enabled: false },
     { href: '/copilot', labelKey: 'dashboard.modules.copilot', icon: Sparkles, enabled: false },

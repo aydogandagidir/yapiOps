@@ -9,7 +9,8 @@
     "./iyzico": "./src/iyzico/index.ts",
     "./efatura": "./src/efatura/index.ts",
     "./plans": "./src/plans.ts",
-    "./trial": "./src/trial.ts"
+    "./trial": "./src/trial.ts",
+    "./quota": "./src/quota.ts"
   },
   "scripts": {
     "lint": "eslint .",

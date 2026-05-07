@@ -40,7 +40,9 @@ export type ReportType =
   | 'kolon'
   | 'doseme';
 
-export type Ek3Status = 'draft' | 'completed' | 'signed';
+export type Ek3Status = 'draft' | 'completed' | 'signed' | 'superseded';
+
+export type FirmaSablonType = 'muteahhit' | 'denetim';
 
 export type AiModel = 'claude-opus-4-7' | 'claude-haiku-4-5' | 'claude-managed-agent';
 
@@ -63,7 +65,14 @@ export type AuditAction =
   | 'project.deleted'
   | 'ek3.created'
   | 'ek3.updated'
+  | 'ek3.generated'
+  | 'ek3.revised'
+  | 'ek3.deleted'
   | 'ek3.signed'
+  | 'ek3.etabs_imported'
+  | 'firma_sablon.created'
+  | 'firma_sablon.updated'
+  | 'firma_sablon.deleted'
   | 'report.generated'
   | 'report.downloaded'
   | 'subscription.created'

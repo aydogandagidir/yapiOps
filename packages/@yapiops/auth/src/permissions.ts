@@ -46,6 +46,27 @@ export function canSignEk3(role: OrgRole): boolean {
   return role === 'owner' || role === 'admin' || role === 'engineer';
 }
 
+export function canCreateEk3(role: OrgRole): boolean {
+  return role === 'owner' || role === 'admin' || role === 'engineer';
+}
+
+export function canEditEk3(role: OrgRole, ownsForm: boolean): boolean {
+  if (role === 'owner' || role === 'admin') return true;
+  if (role === 'engineer') return ownsForm;
+  return false;
+}
+
+export function canDeleteEk3(role: OrgRole, ownsForm: boolean): boolean {
+  // Only owner/admin can hard-delete; engineers can only delete their own drafts.
+  if (role === 'owner' || role === 'admin') return true;
+  if (role === 'engineer') return ownsForm;
+  return false;
+}
+
+export function canManageFirmaSablon(role: OrgRole): boolean {
+  return role === 'owner' || role === 'admin' || role === 'engineer';
+}
+
 export function isReadOnly(role: OrgRole): boolean {
   return role === 'auditor';
 }

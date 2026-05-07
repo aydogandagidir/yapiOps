@@ -5,6 +5,7 @@ export type {
   BillingInterval,
   EInvoiceStatus,
   Ek3Status,
+  FirmaSablonType,
   OrgRole,
   PlanCode,
   ReportStatus,
