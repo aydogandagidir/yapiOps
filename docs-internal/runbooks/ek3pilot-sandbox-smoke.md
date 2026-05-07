@@ -22,10 +22,10 @@
 cd <repo-root>
 supabase start
 # çıktıdaki API URL + anon key + service role key'i .env.local'a yapıştır
-pnpm db:migrate     # 0001_initial_schema + 0002_org_invitations + 0003_ek3_templates uygulanır
+pnpm db:migrate     # 0001..0004 uygulanır (0004 ek3-templates + ek3-pdfs bucket'larını oluşturur)
 ```
 
-`ek3-templates` Storage bucket'ı el ile oluşturulmalı (Supabase Studio → Storage → New bucket → name: `ek3-templates`, public: false). `ek3-pdfs` bucket'ı da aynı şekilde gerekiyor (Hafta 5–7'den).
+> **Not:** 0004_storage_buckets migration'ı `ek3-templates` ve `ek3-pdfs` bucket'larını + RLS politikalarını otomatik oluşturur. Manuel Supabase Studio adımı **gerekmez**.
 
 ## 2) Web app'i başlat
 
@@ -59,18 +59,8 @@ pnpm dev
 
 ## 5) Ek-3 üretim akışı
 
-1. Sidebar → "Ek-3 Pilot" → "Yeni Ek-3".
-2. Önce bir proje gerek — şu an Faz 1'de proje oluşturma UI'sı yok; psql ile manuel ekle:
-   ```sql
-   INSERT INTO projects (org_id, name, ada_no, parsel_no, il, ilce, created_by)
-   VALUES (
-     (SELECT org_id FROM users WHERE email = 'sen@example.com'),
-     'Sandbox Test Projesi',
-     '123', '4', 'Ankara', 'Çankaya',
-     (SELECT id FROM users WHERE email = 'sen@example.com')
-   );
-   ```
-3. `/tr/ek3pilot/new` → projeyi seç → "Oluştur" → `/tr/ek3pilot/[id]`.
+1. Sidebar → "Projeler" → "Yeni Proje" → ad + il/ilçe + ada/parsel doldur → "Projeyi Oluştur".
+2. Sidebar → "Ek-3 Pilot" → "Yeni Ek-3" → projeyi seç → "Oluştur" → `/tr/ek3pilot/[id]`.
 4. **Sihirbazı baştan sona doldur:**
    - Proje: il/ilçe/ada/parsel + lat/lng (39.92, 32.85 — Ankara)
    - Yapı: 3A / konut / 1240 m² / 1 bodrum / 5 zemin üstü / 16.4 m / BAC / DTS=2 / BYS=7 / Sds=0.62
