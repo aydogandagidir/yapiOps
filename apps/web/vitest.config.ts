@@ -16,6 +16,10 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+      // 'server-only' is a marker package Next.js uses to forbid client imports.
+      // In Vitest (node) we replace it with a no-op so module graphs that
+      // include server-only files can still be loaded for unit testing.
+      'server-only': path.resolve(__dirname, './vitest.server-only-shim.ts'),
     },
   },
 });
