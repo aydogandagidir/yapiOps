@@ -29,6 +29,7 @@
     "@yapiops/billing": "workspace:*",
     "@yapiops/db": "workspace:*",
     "@yapiops/ek3": "workspace:*",
+    "@yapiops/notifications": "workspace:*",
     "@yapiops/pdf": "workspace:*",
     "@yapiops/ui": "workspace:*",
     "class-variance-authority": "^0.7.0",

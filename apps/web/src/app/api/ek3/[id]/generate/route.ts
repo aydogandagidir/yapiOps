@@ -1,20 +1,23 @@
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 
+import * as Sentry from '@sentry/nextjs';
 import { type SupabaseClient } from '@supabase/supabase-js';
 import { canEditEk3 } from '@yapiops/auth';
 import { requireAuthContext } from '@yapiops/auth/server';
 import { checkQuota, recordUsage } from '@yapiops/billing/quota';
 import { createSupabaseServerClient } from '@yapiops/db/server';
 import { downloadActiveTemplateBytes, Ek3FormDataSchema } from '@yapiops/ek3';
+import { sendEk3GeneratedEmail } from '@yapiops/notifications';
 import { renderEk3Pdf } from '@yapiops/pdf';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
+import { buildAuditContext, getAuditLogger, type Ek3Row } from '../../_helpers';
+
 import { captureServerEvent, flushPostHog } from '@/lib/posthog-server';
 import { breadcrumbEk3 } from '@/lib/sentry-helpers';
 
-import { buildAuditContext, getAuditLogger, type Ek3Row } from '../../_helpers';
 
 export const runtime = 'nodejs';
 
@@ -226,9 +229,73 @@ export async function POST(_req: Request, context: RouteContext) {
   });
   await flushPostHog();
 
+  // E-posta bildirimi (fail-tolerant) — kullanıcı opt-out etmediyse gönder.
+  void sendEk3GeneratedNotification({
+    supabase,
+    orgId: ctx.membership.orgId,
+    userId: ctx.user.id,
+    userEmail: ctx.user.email ?? null,
+    fullName: ctx.membership.fullName,
+    projectId: row.project_id,
+    ek3Version: row.version,
+    pdfUrl: publicUrl,
+  });
+
   return NextResponse.json({
     ek3Form: updated,
     pdfUrl: publicUrl,
     strategy: rendered.strategy,
   });
+}
+
+interface NotificationInput {
+  supabase: SupabaseClient;
+  orgId: string;
+  userId: string;
+  userEmail: string | null;
+  fullName: string | null;
+  projectId: string;
+  ek3Version: number;
+  pdfUrl: string;
+}
+
+/**
+ * Background-style fire-and-forget email gönderimi. PDF üretimini bloklamaz;
+ * her hata Sentry'ye düşer. Kullanıcı `preferences.email_ek3_generated`
+ * false ise hiç gönderilmez.
+ */
+async function sendEk3GeneratedNotification(input: NotificationInput): Promise<void> {
+  try {
+    if (!input.userEmail) return;
+    const { data: prefs } = await input.supabase
+      .from('users')
+      .select('preferences')
+      .eq('id', input.userId)
+      .maybeSingle<{ preferences: Record<string, unknown> | null }>();
+    const optedIn = (prefs?.preferences as { email_ek3_generated?: boolean } | null | undefined)
+      ?.email_ek3_generated;
+    if (optedIn === false) return;
+
+    const { data: project } = await input.supabase
+      .from('projects')
+      .select('name')
+      .eq('id', input.projectId)
+      .maybeSingle<{ name: string }>();
+
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'https://yapiops.com';
+    await sendEk3GeneratedEmail({
+      to: input.userEmail,
+      locale: 'tr', // TODO: kullanıcı locale tercihi 0006 migration'da gelecek
+      recipientName: input.fullName ?? input.userEmail,
+      projectName: project?.name ?? 'Proje',
+      ek3Version: input.ek3Version,
+      pdfUrl: input.pdfUrl,
+      appUrl,
+    });
+  } catch (err) {
+    Sentry.captureException(err, {
+      tags: { feature: 'notifications', kind: 'ek3_generated_email' },
+      extra: { orgId: input.orgId, userId: input.userId },
+    });
+  }
 }

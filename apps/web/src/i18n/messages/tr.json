@@ -85,6 +85,26 @@
       "updated": "Güncelleme"
     }
   },
+  "settings": {
+    "notifications": {
+      "title": "Bildirim Tercihleri",
+      "subtitle": "E-posta bildirimlerini buradan açıp kapatabilirsiniz. KVKK kapsamında transactional bildirimler default olarak açıktır.",
+      "emailTitle": "E-posta Bildirimleri",
+      "emailDescription": "Hangi durumlarda size e-posta gönderelim?",
+      "saveButton": "Kaydet",
+      "savedAt": "Kaydedildi {time}",
+      "options": {
+        "ek3Generated": {
+          "label": "Ek-3 PDF üretildiğinde e-posta gönder",
+          "description": "Sihirbazda \"PDF Üret\" tıkladığınızda hazır PDF linkini içeren e-posta gönderilir."
+        },
+        "weeklyDigest": {
+          "label": "Haftalık özet gönder",
+          "description": "Pazartesi sabahları geçen haftaki Ek-3 ve rapor üretimlerinin özeti."
+        }
+      }
+    }
+  },
   "billing": {
     "currentPlan": "Mevcut Plan",
     "upgradeTitle": "Plan Yükselt",

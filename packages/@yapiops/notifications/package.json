@@ -1,0 +1,26 @@
+{
+  "name": "@yapiops/notifications",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "YapıOps transactional bildirimler — Resend + React Email; ek3.generated başta olmak üzere fail-tolerant senderlar",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "type-check": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "clean": "rimraf .turbo dist"
+  },
+  "dependencies": {
+    "@react-email/components": "^0.0.31",
+    "react": "^19.0.0",
+    "resend": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@yapiops/config": "workspace:*",
+    "vitest": "^2.1.3"
+  }
+}

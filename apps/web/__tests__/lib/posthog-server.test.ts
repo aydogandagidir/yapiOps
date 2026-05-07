@@ -62,7 +62,7 @@ describe('captureServerEvent', () => {
     });
     const { captureServerEvent } = await import('@/lib/posthog-server');
     expect(() =>
-      captureServerEvent({ distinctId: 'org-1', event: 'ek3_created' }),
+      { captureServerEvent({ distinctId: 'org-1', event: 'ek3_created' }); },
     ).not.toThrow();
   });
 });

@@ -85,6 +85,26 @@
       "updated": "Updated"
     }
   },
+  "settings": {
+    "notifications": {
+      "title": "Notification Preferences",
+      "subtitle": "Toggle email notifications. Transactional emails are on by default under KVKK.",
+      "emailTitle": "Email Notifications",
+      "emailDescription": "When should we email you?",
+      "saveButton": "Save",
+      "savedAt": "Saved at {time}",
+      "options": {
+        "ek3Generated": {
+          "label": "Email me when an Ek-3 PDF is generated",
+          "description": "When you click \"Generate PDF\" in the wizard, we email you a link to the ready PDF."
+        },
+        "weeklyDigest": {
+          "label": "Send a weekly digest",
+          "description": "Monday mornings: summary of last week's Ek-3 and report generations."
+        }
+      }
+    }
+  },
   "billing": {
     "currentPlan": "Current Plan",
     "upgradeTitle": "Upgrade Plan",
