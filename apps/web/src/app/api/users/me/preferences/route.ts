@@ -3,19 +3,10 @@ import { requireAuthContext } from '@yapiops/auth/server';
 import { createSupabaseServerClient } from '@yapiops/db/server';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
-import { z } from 'zod';
+
+import { PreferencesPatchSchema } from './_schema';
 
 export const runtime = 'nodejs';
-
-/**
- * Kullanıcı bildirim tercihlerini günceller. JSONB merge ile mevcut
- * preferences objesi üzerine `email_ek3_generated` / `email_weekly_digest`
- * alanları yazılır.
- */
-const PreferencesPatchSchema = z.object({
-  email_ek3_generated: z.boolean().optional(),
-  email_weekly_digest: z.boolean().optional(),
-});
 
 interface UserPreferencesRow {
   preferences: Record<string, unknown> | null;

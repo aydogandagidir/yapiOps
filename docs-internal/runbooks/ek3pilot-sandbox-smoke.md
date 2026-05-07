@@ -114,6 +114,52 @@ curl -X GET 'http://localhost:3000/api/cron/ek3-template-sync' \
 - Üretilen PDF e-imza yazılımıyla (E-İmzaTR demo) açılıp imzalanabilir (manuel kontrol — DoD).
 - Vercel preview deploy'unda `vercel.json` cron'u "Cron Jobs" sekmesinde görünür.
 
+## 11) Telemetri akış kontrolü
+
+**Önkoşul:** `.env.local`'da `NEXT_PUBLIC_POSTHOG_KEY` + `SENTRY_DSN` set edilmiş olsun (yoksa ilgili istemci no-op'a düşer ve bu adım atlanır).
+
+1. Cookie consent banner'ında "Kabul et" tıkla — `localStorage.yapiops:cookie-consent = 'accepted'` set olur.
+2. Browser DevTools → Network → `eu.posthog.com` filtresi: dashboard'a girince `/decide` ve sonra `/e/` POST'larını gör.
+3. Sihirbazda PDF üret → server `captureServerEvent('ek3_generated', ...)` çağrılır. PostHog dashboard → "Live events" sekmesinde:
+   - `ek3_created` (sihirbaza başladığında)
+   - `ek3_generated` (PDF üretildiğinde, `templateSource`, `strategy`, `version` property'leriyle)
+   - Her iki event'in `distinct_id` değeri **org_id** olmalı; `properties.userId` ayrı alanda kullanıcının id'si.
+4. Free planda 4. PDF üretmeyi dene → `quota_exceeded` event'i + Sentry breadcrumb (`category: 'ek3', action: 'quota_exceeded'`) görünmeli.
+5. Şablon sync'ini tetikle (`/tr/settings/ek3-templates` → "Şimdi Senkronize Et"):
+   - Başarılı: `ek3_template_synced` event + Sentry breadcrumb.
+   - Başarısız (Bakanlık endpoint ulaşılamıyor): Sentry "Issues" sekmesinde `feature: ek3_template` tag'li `warning` seviyesinde issue.
+
+### Beklenen
+- PostHog'da org-level segmentasyon doğru: aynı org'un tüm kullanıcıları aynı `distinct_id` altında toplanır.
+- Sentry'de `feature` tag'i ile filtreleme yapılınca sadece ek3 / ek3_template / quota event'leri görünür.
+
+## 12) E-posta tercihleri (opt-out doğrulama)
+
+**Önkoşul:** `RESEND_API_KEY` + `EMAIL_FROM` set edilmiş olsun.
+
+### Default opt-in (KVKK transactional)
+1. Yeni signup → kullanıcı `users.preferences.email_ek3_generated = true` ile başlar (0005 migration default).
+2. Sihirbazda PDF üret → Resend dashboard ya da inbox'ta "Ek-3 PDF üretildi" konulu e-posta. TR locale'de "Merhaba {ad}, {proje} projesi için Ek-3 v1 formu üretildi…".
+3. E-posta footer'ında "İletişim tercihlerini değiştirmek için tıklayın" linki → `/{locale}/settings/notifications`'a yönlendirir.
+
+### Opt-out
+1. `/tr/settings/notifications` aç.
+2. "Ek-3 PDF üretildiğinde e-posta gönder" toggle'ını kapat → "Kaydet".
+3. PATCH `/api/users/me/preferences` body: `{"email_ek3_generated": false}` → 200 OK + güncel preferences.
+4. Yeni Ek-3 üret → e-posta **gönderilmemeli**. `ek3.generated` audit + PostHog event yine yazılmalı.
+
+### Beklenen edge case'ler
+| Senaryo | Beklenen davranış |
+|---|---|
+| `RESEND_API_KEY` boş | `sendEk3GeneratedEmail()` `{ status: 'skipped', reason: 'no_api_key' }` döner; PDF üretimi devam eder; Sentry'ye exception **düşmez** |
+| Kullanıcı `users.email` yok | Aynı şekilde `skipped` (`reason: 'no_recipient'`) — PDF response'u bloklanmaz |
+| Resend API 429 / 5xx | Sentry'de `feature: notifications, kind: ek3_generated_email` tag'li exception; PDF response'u **bloklanmaz** (kullanıcı zaten preview'da PDF'i görür) |
+
+### KVKK kontrolleri
+- Footer linki çalışıyor mu? (preferences sayfasına ulaşır mı)
+- E-posta görünür "İletişim tercihleri" mesajı içeriyor mu?
+- `users.preferences` JSONB merge sırasında diğer key'ler (örn. ileride `email_invoice_issued`) silinmemiş mi?
+
 ## Sorun giderme
 
 | Belirti | Olası neden | Çözüm |
@@ -123,3 +169,7 @@ curl -X GET 'http://localhost:3000/api/cron/ek3-template-sync' \
 | Otomatik sync `fetch_failed` | Bakanlık endpoint geçici hata / firewall | Manuel upload kullan; `EK3_TEMPLATE_OFFICIAL_URLS` ile alternatif kaynak ekle |
 | PDF Türkçe karakterleri "?" görünüyor | Renderer HTML-fallback yolunda (template yok) | DB'de aktif şablon olduğundan emin ol |
 | `ek3.generated` audit yok ama PDF üretildi | Audit yazımı `try/catch` ile sessize alındı (Sentry'ye düşer) | Sentry log'una bak; service-role yetkisi kontrol et |
+| PostHog'a event gitmiyor | `NEXT_PUBLIC_POSTHOG_KEY` boş veya cookie consent verilmemiş | `localStorage.yapiops:cookie-consent` ve env değerini kontrol et |
+| Sentry breadcrumb görünmüyor | `SENTRY_DSN` env yok veya sample rate 0 | `sentry.server.config.ts`'te DSN'i doğrula |
+| E-posta gelmiyor ama log'da error yok | Kullanıcı opt-out etti veya `RESEND_API_KEY` boş | `users.preferences.email_ek3_generated` + env değerini doğrula |
+| `data(ek3): TBDY 3.3 matrisi` commit'i öncesi DTS=2/3/4 yapısında BYS uyarısı | `BYS_MATRIX[dts]` boş | `bysConsistency()` "doğrulanmamış" warning'i bekleniyor; Hafta 9.2.b commit'i sonrası matris dolar |

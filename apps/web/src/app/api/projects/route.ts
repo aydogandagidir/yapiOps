@@ -6,9 +6,10 @@ import { createSupabaseServerClient } from '@yapiops/db/server';
 import { cookies, headers } from 'next/headers';
 import { NextResponse } from 'next/server';
 
+import { ProjectCreateSchema } from './_schema';
+
 import { captureServerEvent, flushPostHog } from '@/lib/posthog-server';
 
-import { ProjectCreateSchema } from './_schema';
 
 export const runtime = 'nodejs';
 

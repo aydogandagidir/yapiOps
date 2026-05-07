@@ -6,10 +6,11 @@ import { Ek3CreateInputSchema } from '@yapiops/ek3';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
+import { buildAuditContext, getAuditLogger, type Ek3Row } from './_helpers';
+
 import { captureServerEvent, flushPostHog } from '@/lib/posthog-server';
 import { breadcrumbEk3 } from '@/lib/sentry-helpers';
 
-import { buildAuditContext, getAuditLogger, type Ek3Row } from './_helpers';
 
 export const runtime = 'nodejs';
 

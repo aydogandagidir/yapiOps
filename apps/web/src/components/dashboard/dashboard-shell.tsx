@@ -1,10 +1,11 @@
 import { type OrgMembership } from '@yapiops/auth/server';
 import { type ReactNode } from 'react';
 
-import { PostHogIdentify } from '@/components/providers/posthog-identify';
 
 import { DashboardHeader } from './dashboard-header';
 import { DashboardSidebar } from './dashboard-sidebar';
+
+import { PostHogIdentify } from '@/components/providers/posthog-identify';
 
 interface DashboardShellProps {
   membership: OrgMembership;
