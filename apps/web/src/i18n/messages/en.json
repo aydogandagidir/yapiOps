@@ -1,0 +1,74 @@
+{
+  "common": {
+    "appName": "YapıOps",
+    "tagline": "Cloud-hybrid SaaS for Turkish structural engineering",
+    "loading": "Loading...",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "next": "Next",
+    "submit": "Submit",
+    "confirm": "Confirm",
+    "close": "Close",
+    "error": "Error",
+    "success": "Success"
+  },
+  "auth": {
+    "signupTitle": "Create Account",
+    "signupSubtitle": "Try free for 14 days — no card required",
+    "loginTitle": "Sign In",
+    "loginSubtitle": "Log in to your YapıOps account",
+    "fullName": "Full Name",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Password (again)",
+    "orgName": "Office / Company Name",
+    "kvkkConsent": "I have read and accept the KVKK privacy notice",
+    "submitSignup": "Create Account",
+    "submitLogin": "Sign In",
+    "haveAccount": "Already have an account?",
+    "noAccount": "Don't have an account?",
+    "forgotPassword": "Forgot password",
+    "resetPasswordTitle": "Reset Password",
+    "resetPasswordEmailSent": "We've sent a reset link to your email.",
+    "verifyEmailTitle": "Verify Your Email",
+    "verifyEmailBody": "We've sent a verification link to {email}. Please check your inbox.",
+    "logoutSuccess": "Logged out"
+  },
+  "dashboard": {
+    "welcome": "Welcome, {name}",
+    "trialBanner": "{daysLeft} days left in your free trial. Click to choose a plan.",
+    "noProjects": "No projects yet. Get started by creating your first project.",
+    "modules": {
+      "ek3pilot": "Ek-3 Pilot",
+      "raporx": "RaporX",
+      "spektrumhub": "Spektrum Hub",
+      "copilot": "TBDY Copilot",
+      "billing": "Billing"
+    }
+  },
+  "billing": {
+    "currentPlan": "Current Plan",
+    "upgradeTitle": "Upgrade Plan",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "yearlyDiscount": "15% off",
+    "perSeat": "user / month",
+    "selectPlan": "Select Plan",
+    "trialEndsIn": "Trial ends in {days} days",
+    "invoiceHistory": "Invoice History",
+    "noInvoices": "No invoices yet"
+  },
+  "errors": {
+    "required": "This field is required",
+    "invalidEmail": "Enter a valid email",
+    "passwordMin": "Password must be at least 8 characters",
+    "passwordMismatch": "Passwords do not match",
+    "kvkkRequired": "KVKK consent is required",
+    "unexpectedError": "An unexpected error occurred",
+    "authRequired": "You need to sign in",
+    "forbidden": "You don't have permission for this action"
+  }
+}

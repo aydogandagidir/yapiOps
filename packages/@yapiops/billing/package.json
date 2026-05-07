@@ -1,0 +1,32 @@
+{
+  "name": "@yapiops/billing",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "YapıOps billing — Iyzico subscriptions, Foriba e-fatura, plans, seats, trial",
+  "exports": {
+    ".": "./src/index.ts",
+    "./iyzico": "./src/iyzico/index.ts",
+    "./efatura": "./src/efatura/index.ts",
+    "./plans": "./src/plans.ts",
+    "./trial": "./src/trial.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "type-check": "tsc --noEmit",
+    "test": "vitest run",
+    "clean": "rimraf .turbo dist"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.4",
+    "@yapiops/audit": "workspace:*",
+    "@yapiops/db": "workspace:*",
+    "iyzipay": "^2.0.55",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/iyzipay": "^2.0.3",
+    "@yapiops/config": "workspace:*",
+    "vitest": "^2.1.3"
+  }
+}

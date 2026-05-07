@@ -1,0 +1,74 @@
+{
+  "common": {
+    "appName": "YapıOps",
+    "tagline": "Türk yapı mühendisliği için cloud-hibrit SaaS",
+    "loading": "Yükleniyor...",
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "delete": "Sil",
+    "edit": "Düzenle",
+    "back": "Geri",
+    "next": "İleri",
+    "submit": "Gönder",
+    "confirm": "Onayla",
+    "close": "Kapat",
+    "error": "Hata",
+    "success": "Başarılı"
+  },
+  "auth": {
+    "signupTitle": "Hesap Oluştur",
+    "signupSubtitle": "14 gün ücretsiz deneyin — kart bilgisi gerekmez",
+    "loginTitle": "Giriş Yap",
+    "loginSubtitle": "YapıOps hesabınıza giriş yapın",
+    "fullName": "Ad Soyad",
+    "email": "E-posta",
+    "password": "Şifre",
+    "confirmPassword": "Şifre (tekrar)",
+    "orgName": "Ofis / Şirket Adı",
+    "kvkkConsent": "KVKK aydınlatma metnini okudum ve onaylıyorum",
+    "submitSignup": "Hesap Oluştur",
+    "submitLogin": "Giriş Yap",
+    "haveAccount": "Hesabınız var mı?",
+    "noAccount": "Hesabınız yok mu?",
+    "forgotPassword": "Şifremi unuttum",
+    "resetPasswordTitle": "Şifre Sıfırla",
+    "resetPasswordEmailSent": "E-posta adresinize sıfırlama bağlantısı gönderildi.",
+    "verifyEmailTitle": "E-postanı Doğrula",
+    "verifyEmailBody": "{email} adresine doğrulama bağlantısı gönderdik. Lütfen e-postanı kontrol et.",
+    "logoutSuccess": "Çıkış yapıldı"
+  },
+  "dashboard": {
+    "welcome": "Hoş geldin, {name}",
+    "trialBanner": "{daysLeft} gün ücretsiz deneme süreniz kaldı. Plan seçmek için tıklayın.",
+    "noProjects": "Henüz proje yok. İlk projenizi oluşturmak için başlayın.",
+    "modules": {
+      "ek3pilot": "Ek-3 Pilot",
+      "raporx": "RaporX",
+      "spektrumhub": "Spektrum Hub",
+      "copilot": "TBDY Copilot",
+      "billing": "Faturalama"
+    }
+  },
+  "billing": {
+    "currentPlan": "Mevcut Plan",
+    "upgradeTitle": "Plan Yükselt",
+    "monthly": "Aylık",
+    "yearly": "Yıllık",
+    "yearlyDiscount": "%15 indirimli",
+    "perSeat": "kullanıcı / ay",
+    "selectPlan": "Bu Plan'ı Seç",
+    "trialEndsIn": "Deneme {days} gün sonra bitiyor",
+    "invoiceHistory": "Fatura Geçmişi",
+    "noInvoices": "Henüz fatura yok"
+  },
+  "errors": {
+    "required": "Bu alan zorunlu",
+    "invalidEmail": "Geçerli bir e-posta girin",
+    "passwordMin": "Şifre en az 8 karakter olmalı",
+    "passwordMismatch": "Şifreler eşleşmiyor",
+    "kvkkRequired": "KVKK onayı zorunlu",
+    "unexpectedError": "Beklenmeyen bir hata oluştu",
+    "authRequired": "Giriş yapmanız gerekiyor",
+    "forbidden": "Bu işlem için yetkiniz yok"
+  }
+}

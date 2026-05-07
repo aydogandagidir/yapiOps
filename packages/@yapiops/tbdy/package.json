@@ -1,0 +1,21 @@
+{
+  "name": "@yapiops/tbdy",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "TBDY 2018 calculation library — placeholder, populated in Phase 2 (RaporX)",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "type-check": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "test:tbdy": "vitest run --passWithNoTests",
+    "clean": "rimraf .turbo dist"
+  },
+  "devDependencies": {
+    "@yapiops/config": "workspace:*",
+    "vitest": "^2.1.3"
+  }
+}

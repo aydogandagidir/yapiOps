@@ -1,0 +1,10 @@
+{
+  "extends": "@yapiops/config/tsconfig-base",
+  "include": ["src/**/*"],
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "lib": ["ES2022", "DOM"],
+    "jsx": "preserve"
+  }
+}

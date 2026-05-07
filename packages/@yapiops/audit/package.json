@@ -1,0 +1,24 @@
+{
+  "name": "@yapiops/audit",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "YapıOps audit log writer — KVKK + engineering responsibility chain",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "type-check": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests",
+    "clean": "rimraf .turbo dist"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.4",
+    "@yapiops/db": "workspace:*"
+  },
+  "devDependencies": {
+    "@yapiops/config": "workspace:*",
+    "vitest": "^2.1.3"
+  }
+}

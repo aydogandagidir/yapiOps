@@ -1,0 +1,30 @@
+{
+  "name": "@yapiops/auth",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "YapıOps auth helpers — server/middleware/permissions for multi-tenant access control",
+  "exports": {
+    ".": "./src/index.ts",
+    "./server": "./src/server.ts",
+    "./middleware": "./src/middleware.ts",
+    "./permissions": "./src/permissions.ts",
+    "./rls": "./src/rls.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "type-check": "tsc --noEmit",
+    "clean": "rimraf .turbo dist"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.5.1",
+    "@supabase/supabase-js": "^2.45.4",
+    "@yapiops/db": "workspace:*"
+  },
+  "peerDependencies": {
+    "next": "^15.0.0"
+  },
+  "devDependencies": {
+    "@yapiops/config": "workspace:*"
+  }
+}

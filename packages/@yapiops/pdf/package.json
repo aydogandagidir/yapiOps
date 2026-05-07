@@ -1,0 +1,18 @@
+{
+  "name": "@yapiops/pdf",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "PDF generation — placeholder, populated in Phase 1 (Ek3Pilot) and Phase 2 (RaporX)",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "type-check": "tsc --noEmit",
+    "clean": "rimraf .turbo dist"
+  },
+  "devDependencies": {
+    "@yapiops/config": "workspace:*"
+  }
+}

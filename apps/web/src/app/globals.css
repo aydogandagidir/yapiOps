@@ -1,0 +1,6 @@
+@import '@yapiops/ui/styles/globals.css';
+
+html,
+body {
+  height: 100%;
+}

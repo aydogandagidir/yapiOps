@@ -1,0 +1,18 @@
+node_modules
+pnpm-lock.yaml
+.next
+.turbo
+.vercel
+dist
+build
+out
+coverage
+*.min.js
+*.min.css
+
+# Generated
+packages/@yapiops/db/src/database.types.ts
+
+# Supabase
+infrastructure/supabase/.branches
+infrastructure/supabase/.temp

@@ -1,0 +1,32 @@
+{
+  "name": "@yapiops/db",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "YapıOps Supabase client factories, generated types, and domain types",
+  "exports": {
+    ".": "./src/index.ts",
+    "./client": "./src/client.ts",
+    "./server": "./src/server.ts",
+    "./types": "./src/types.ts",
+    "./database.types": "./src/database.types.ts"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "type-check": "tsc --noEmit",
+    "clean": "rimraf .turbo dist"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.5.1",
+    "@supabase/supabase-js": "^2.45.4"
+  },
+  "peerDependencies": {
+    "next": "^15.0.0"
+  },
+  "peerDependenciesMeta": {
+    "next": { "optional": true }
+  },
+  "devDependencies": {
+    "@yapiops/config": "workspace:*"
+  }
+}

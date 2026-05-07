@@ -13,17 +13,22 @@
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
     "test": "turbo run test",
-    "test:tbdy": "turbo run test --filter=@yapiops/tbdy",
+    "test:tbdy": "turbo run test:tbdy --filter=@yapiops/tbdy",
     "type-check": "turbo run type-check",
     "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,md,json}\"",
     "db:migrate": "supabase db push",
     "db:reset": "supabase db reset",
-    "db:types": "supabase gen types typescript --local > packages/db/src/database.types.ts",
-    "clean": "turbo run clean && rm -rf node_modules"
+    "db:types": "supabase gen types typescript --local > packages/@yapiops/db/src/database.types.ts",
+    "clean": "turbo run clean && rimraf node_modules"
   },
   "devDependencies": {
     "@types/node": "^22.7.0",
+    "@yapiops/config": "workspace:*",
+    "eslint": "^9.13.0",
     "prettier": "^3.3.3",
+    "rimraf": "^6.0.1",
+    "tailwindcss": "^3.4.14",
     "turbo": "^2.1.3",
     "typescript": "^5.6.2"
   },
