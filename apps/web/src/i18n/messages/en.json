@@ -35,7 +35,20 @@
     "resetPasswordEmailSent": "We've sent a reset link to your email.",
     "verifyEmailTitle": "Verify Your Email",
     "verifyEmailBody": "We've sent a verification link to {email}. Please check your inbox.",
-    "logoutSuccess": "Logged out"
+    "logoutSuccess": "Logged out",
+    "bridge": {
+      "title": "Connect Desktop Bridge",
+      "subtitle": "Pairing the ETABS bridge with your cloud account.",
+      "account": "Account",
+      "user": "User",
+      "redirectingTo": "Redirect target",
+      "explainer": "Click Connect — the Bridge will pick up your session automatically. You can close the window after.",
+      "connectButton": "Connect Bridge",
+      "securityNote": "Tokens are passed via URL fragment (browser-only, never sent to the server). The Bridge validates the state parameter.",
+      "errors": {
+        "noSession": "No active session. Please sign in again."
+      }
+    }
   },
   "dashboard": {
     "welcome": "Welcome, {name}",

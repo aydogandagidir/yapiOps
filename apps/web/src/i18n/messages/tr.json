@@ -35,7 +35,20 @@
     "resetPasswordEmailSent": "E-posta adresinize sıfırlama bağlantısı gönderildi.",
     "verifyEmailTitle": "E-postanı Doğrula",
     "verifyEmailBody": "{email} adresine doğrulama bağlantısı gönderdik. Lütfen e-postanı kontrol et.",
-    "logoutSuccess": "Çıkış yapıldı"
+    "logoutSuccess": "Çıkış yapıldı",
+    "bridge": {
+      "title": "Masaüstü Bridge'e Bağlan",
+      "subtitle": "ETABS köprüsünü cloud hesabınızla eşleştiriyoruz.",
+      "account": "Hesap",
+      "user": "Kullanıcı",
+      "redirectingTo": "Yönlendirme adresi",
+      "explainer": "Bağlan'a tıkladığınızda Bridge otomatik olarak oturum bilgilerinizi alır. Pencereyi kapatabilirsiniz.",
+      "connectButton": "Bridge'e Bağlan",
+      "securityNote": "Token aktarımı tarayıcı içinde, fragment URL ile yapılır; sunucuya iletilmez. Bridge state parametresini doğrular.",
+      "errors": {
+        "noSession": "Aktif oturum bulunamadı. Lütfen yeniden giriş yapın."
+      }
+    }
   },
   "dashboard": {
     "welcome": "Hoş geldin, {name}",
