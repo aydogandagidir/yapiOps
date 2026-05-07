@@ -74,11 +74,11 @@ describe('bysConsistency', () => {
     expect(bysConsistency(120, 1, 1).ok).toBe(true);
   });
 
-  it('returns ok for short buildings → high BYS', () => {
-    expect(bysConsistency(15, 2, 8).ok).toBe(true);
+  it('returns ok for short buildings → high BYS (DTS=1)', () => {
+    expect(bysConsistency(15, 1, 8).ok).toBe(true);
   });
 
-  it('warns when BYS is wildly off', () => {
+  it('warns when BYS is wildly off (DTS=1)', () => {
     const r = bysConsistency(120, 1, 8);
     expect(r.ok).toBe(false);
     if (!r.ok) expect(r.warning).toContain('Override');
@@ -86,13 +86,15 @@ describe('bysConsistency', () => {
 });
 
 describe('yapiCrossChecks', () => {
-  it('returns no warnings for consistent input', () => {
-    const ws = yapiCrossChecks({ sds: 0.6, dts: 2, yukseklikM: 60, bys: 4 });
+  it('returns no warnings for consistent DTS=1 input', () => {
+    const ws = yapiCrossChecks({ sds: 0.85, dts: 1, yukseklikM: 60, bys: 4 });
     expect(ws).toEqual([]);
   });
 
-  it('aggregates DTS + BYS warnings', () => {
-    const ws = yapiCrossChecks({ sds: 0.85, dts: 4, yukseklikM: 120, bys: 8 });
+  it('aggregates DTS + BYS warnings (DTS=1 yolundan)', () => {
+    // Sds=0.2 → beklenen DTS=4 ama girilen DTS=1 (DTS warning) +
+    // HN=120 → beklenen BYS=1 ama girilen BYS=8 (BYS warning).
+    const ws = yapiCrossChecks({ sds: 0.2, dts: 1, yukseklikM: 120, bys: 8 });
     expect(ws.length).toBe(2);
   });
 });

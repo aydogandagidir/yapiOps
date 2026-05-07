@@ -46,6 +46,9 @@ export type { ConsistencyResult, YapiCrossCheckInput } from './validators';
 export { mapEtabsToYapi } from './etabs-mapping';
 export type { EtabsImportPayload, YapiMappedFields } from './etabs-mapping';
 
+export { BYS_MATRIX, expectedBysFor } from './tbdy-tables';
+export type { BysCode, BysRow, DtsCode, ExpectedBysResult } from './tbdy-tables';
+
 export {
   activateTemplate,
   compareToActive,

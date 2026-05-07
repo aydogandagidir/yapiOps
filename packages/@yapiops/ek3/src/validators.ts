@@ -1,3 +1,5 @@
+import { expectedBysFor } from './tbdy-tables';
+
 /**
  * TCKN / VKN / TBDY consistency validators. Pure functions; no side effects,
  * safe to run client-side.
@@ -85,31 +87,38 @@ export function dtsConsistency(sds: number, dts: number): ConsistencyResult {
 }
 
 /**
- * TBDY 2018 Tablo 3.3 — Bina Yükseklik Sınıfı by total height (m).
- * Maps height brackets per DTS group; this implementation uses the DTS=1 row
- * (most permissive), which is the common case for residential mid-rise.
- * For DTS=2–4 the brackets are stricter; we surface a warning for clear
- * out-of-bounds cases and leave borderline overrides to the engineer.
+ * TBDY 2018 §3.3.1 Tablo 3.3 — Bina Yükseklik Sınıfı (BYS).
+ *
+ * Matris `tbdy-tables.ts`'te tutulur; her DTS için ayrı satır var (Tablo 3.3
+ * tüm satırları). Verilen DTS henüz matriste tanımlanmadıysa "doğrulanmamış"
+ * yumuşak uyarı döner — engelleme yapmaz, mühendis sorumluluğuna bırakır
+ * (CLAUDE.md §9.2).
  */
-export function bysConsistency(yukseklikM: number, _dts: number, bys: number): ConsistencyResult {
+export function bysConsistency(
+  yukseklikM: number,
+  dts: number,
+  bys: number,
+): ConsistencyResult {
   if (!Number.isFinite(yukseklikM) || yukseklikM <= 0) {
     return { ok: false, warning: 'Yükseklik pozitif bir sayı olmalı' };
   }
+  if (dts !== 1 && dts !== 2 && dts !== 3 && dts !== 4) {
+    return { ok: false, warning: `DTS sınır dışı: ${String(dts)} (1-4 olmalı)` };
+  }
 
-  let expected: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
-  if (yukseklikM <= 17.5) expected = 8;
-  else if (yukseklikM <= 28) expected = 7;
-  else if (yukseklikM <= 42) expected = 6;
-  else if (yukseklikM <= 56) expected = 5;
-  else if (yukseklikM <= 70) expected = 4;
-  else if (yukseklikM <= 91) expected = 3;
-  else if (yukseklikM <= 105) expected = 2;
-  else expected = 1;
+  const result = expectedBysFor(yukseklikM, dts);
 
-  if (Math.abs(expected - bys) > 1) {
+  if (result.unverified) {
     return {
       ok: false,
-      warning: `Yükseklik=${String(yukseklikM)}m için beklenen BYS≈${String(expected)}, girilen=${String(bys)}. Override edilebilir.`,
+      warning: `BYS-DTS matris bu DTS için henüz doğrulanmamış (DTS=${String(dts)}). Mühendis kontrolü zorunlu.`,
+    };
+  }
+
+  if (result.expected != null && Math.abs(result.expected - bys) > 1) {
+    return {
+      ok: false,
+      warning: `Yükseklik=${String(yukseklikM)}m + DTS=${String(dts)} için beklenen BYS≈${String(result.expected)}, girilen=${String(bys)}. Override edilebilir.`,
     };
   }
   return { ok: true };
