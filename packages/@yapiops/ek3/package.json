@@ -8,7 +8,8 @@
     ".": "./src/index.ts",
     "./schema": "./src/schema.ts",
     "./validators": "./src/validators.ts",
-    "./etabs-mapping": "./src/etabs-mapping.ts"
+    "./etabs-mapping": "./src/etabs-mapping.ts",
+    "./template-source": "./src/template-source.ts"
   },
   "scripts": {
     "lint": "eslint .",
@@ -17,6 +18,7 @@
     "clean": "rimraf .turbo dist"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.45.4",
     "@yapiops/db": "workspace:*",
     "zod": "^3.23.8"
   },

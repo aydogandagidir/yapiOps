@@ -195,6 +195,46 @@
       "empty": "Henüz şablon yok.",
       "selectPlaceholder": "Şablondan seç...",
       "selectNone": "Şablonsuz devam et"
+    },
+    "templates": {
+      "title": "Ek-3 Form Şablonları",
+      "subtitle": "Resmi Ek-3 PDF şablonu Bakanlık kaynaklarından otomatik takip edilir; manuel sürüm de yükleyebilirsiniz.",
+      "activeTitle": "Aktif Şablon",
+      "activeDescription": "PDF üretimi sırasında bu sürüm kullanılır. Otomatik sync günlük 03:00 UTC çalışır.",
+      "noActive": "Aktif şablon yok. Şimdi senkronize edin veya manuel yükleyin — yoksa renderer HTML-fallback kullanır.",
+      "uploadTitle": "Manuel Yükleme",
+      "uploadDescription": "Resmi PDF değişti ve cron henüz yakalamadıysa elle yükleyin.",
+      "historyTitle": "Sürüm Geçmişi",
+      "noHistory": "Henüz şablon kaydı yok.",
+      "notesPlaceholder": "Bakanlık güncellemesi, manuel revize, vs.",
+      "activeBadge": "Aktif",
+      "fields": {
+        "version": "Sürüm",
+        "source": "Kaynak",
+        "sha256": "SHA-256",
+        "fetchedAt": "Çekilme Zamanı",
+        "sourceUrl": "Kaynak URL",
+        "notes": "Not",
+        "action": "İşlem"
+      },
+      "source": {
+        "official": "Otomatik (Bakanlık)",
+        "manual": "Manuel Yükleme"
+      },
+      "actions": {
+        "syncNow": "Şimdi Senkronize Et",
+        "upload": "Yükle ve Aktive Et",
+        "activate": "Aktive Et"
+      },
+      "syncResult": {
+        "unchanged": "Aktif sürüm en güncel; kaynak hash'i değişmemiş.",
+        "new": "Yeni sürüm bulundu ve aktive edildi.",
+        "first": "İlk şablon kaydı oluşturuldu ve aktive edildi.",
+        "failed": "Kaynak alınamadı: {error}"
+      },
+      "uploadResult": {
+        "deduped": "Aynı SHA-256 daha önce kaydedilmişti; mevcut kayıt aktive edildi."
+      }
     }
   }
 }

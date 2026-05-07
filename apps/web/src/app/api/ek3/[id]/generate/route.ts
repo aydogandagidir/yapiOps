@@ -6,7 +6,7 @@ import { canEditEk3 } from '@yapiops/auth';
 import { requireAuthContext } from '@yapiops/auth/server';
 import { checkQuota, recordUsage } from '@yapiops/billing/quota';
 import { createSupabaseServerClient } from '@yapiops/db/server';
-import { Ek3FormDataSchema } from '@yapiops/ek3';
+import { downloadActiveTemplateBytes, Ek3FormDataSchema } from '@yapiops/ek3';
 import { renderEk3Pdf } from '@yapiops/pdf';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
@@ -19,15 +19,44 @@ interface RouteContext {
   params: Promise<{ id: string }>;
 }
 
-const TEMPLATE_PATH = path.join(process.cwd(), 'public', 'templates', 'ek3-resmi-form.pdf');
+const PUBLIC_TEMPLATE_PATH = path.join(
+  process.cwd(),
+  'public',
+  'templates',
+  'ek3-resmi-form.pdf',
+);
 const STORAGE_BUCKET = 'ek3-pdfs';
 
-async function loadTemplate(): Promise<Uint8Array | null> {
+interface ResolvedTemplate {
+  bytes: Uint8Array;
+  source: 'db_active' | 'public_file' | 'none';
+  templateId?: string;
+  sha256?: string;
+}
+
+/**
+ * Şablon çözümleme önceliği:
+ *   1. `ek3_templates.is_active` satırı varsa → Storage'tan indir (canlı sync
+ *      veya admin upload sonucu)
+ *   2. `apps/web/public/templates/ek3-resmi-form.pdf` (eski path; geriye dönük
+ *      uyumluluk için tutuldu)
+ *   3. Yok → renderer HTML-fallback'e düşer
+ */
+async function resolveTemplate(supabase: SupabaseClient): Promise<ResolvedTemplate> {
+  const dbResult = await downloadActiveTemplateBytes(supabase);
+  if (dbResult) {
+    return {
+      bytes: dbResult.bytes,
+      source: 'db_active',
+      templateId: dbResult.row.id,
+      sha256: dbResult.row.sha256,
+    };
+  }
   try {
-    const buf = await fs.readFile(TEMPLATE_PATH);
-    return new Uint8Array(buf);
+    const buf = await fs.readFile(PUBLIC_TEMPLATE_PATH);
+    return { bytes: new Uint8Array(buf), source: 'public_file' };
   } catch {
-    return null;
+    return { bytes: new Uint8Array(), source: 'none' };
   }
 }
 
@@ -82,8 +111,11 @@ export async function POST(_req: Request, context: RouteContext) {
     );
   }
 
-  const template = await loadTemplate();
-  const rendered = await renderEk3Pdf({ form: parsed.data, templateBytes: template });
+  const template = await resolveTemplate(supabase);
+  const rendered = await renderEk3Pdf({
+    form: parsed.data,
+    templateBytes: template.source === 'none' ? null : template.bytes,
+  });
 
   // Upload to Supabase Storage.
   const storagePath = `${ctx.membership.orgId}/${row.project_id}/${id}.pdf`;
@@ -124,7 +156,13 @@ export async function POST(_req: Request, context: RouteContext) {
       userId: ctx.user.id,
       feature: 'ek3.generated',
       resourceId: id,
-      metadata: { strategy: rendered.strategy, version: row.version },
+      metadata: {
+        strategy: rendered.strategy,
+        version: row.version,
+        templateSource: template.source,
+        templateId: template.templateId ?? null,
+        templateSha256: template.sha256 ?? null,
+      },
     });
   } catch {
     // swallowed intentionally — see comment above
@@ -134,7 +172,13 @@ export async function POST(_req: Request, context: RouteContext) {
   await audit.log('ek3.generated', {
     resourceType: 'ek3_form',
     resourceId: id,
-    metadata: { pdfUrl: publicUrl, strategy: rendered.strategy, version: row.version },
+    metadata: {
+      pdfUrl: publicUrl,
+      strategy: rendered.strategy,
+      version: row.version,
+      templateSource: template.source,
+      templateId: template.templateId ?? null,
+    },
   });
 
   return NextResponse.json({

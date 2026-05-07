@@ -45,3 +45,21 @@ export type { ConsistencyResult, YapiCrossCheckInput } from './validators';
 
 export { mapEtabsToYapi } from './etabs-mapping';
 export type { EtabsImportPayload, YapiMappedFields } from './etabs-mapping';
+
+export {
+  activateTemplate,
+  compareToActive,
+  downloadActiveTemplateBytes,
+  fetchOfficialTemplate,
+  getActiveTemplate,
+  getOfficialSources,
+  recordNewTemplate,
+  sha256OfBytes,
+} from './template-source';
+export type {
+  CompareResult,
+  Ek3TemplateRow,
+  FetchedTemplate,
+  RecordedTemplate,
+  RecordNewTemplateInput,
+} from './template-source';

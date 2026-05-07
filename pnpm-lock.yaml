@@ -314,6 +314,9 @@ importers:
 
   packages/@yapiops/ek3:
     dependencies:
+      '@supabase/supabase-js':
+        specifier: ^2.45.4
+        version: 2.105.3
       '@yapiops/db':
         specifier: workspace:*
         version: link:../db

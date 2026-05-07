@@ -195,6 +195,46 @@
       "empty": "No templates yet.",
       "selectPlaceholder": "Pick from template...",
       "selectNone": "Skip template"
+    },
+    "templates": {
+      "title": "Ek-3 Form Templates",
+      "subtitle": "The official Ek-3 PDF template is auto-tracked from ministry sources; manual uploads are also supported.",
+      "activeTitle": "Active Template",
+      "activeDescription": "This version is used at PDF generation time. Auto-sync runs daily at 03:00 UTC.",
+      "noActive": "No active template. Sync now or upload manually — otherwise the renderer falls back to HTML.",
+      "uploadTitle": "Manual Upload",
+      "uploadDescription": "Use this when the official PDF has changed and the cron hasn't picked it up yet.",
+      "historyTitle": "Version History",
+      "noHistory": "No template records yet.",
+      "notesPlaceholder": "Ministry update, manual revision, etc.",
+      "activeBadge": "Active",
+      "fields": {
+        "version": "Version",
+        "source": "Source",
+        "sha256": "SHA-256",
+        "fetchedAt": "Fetched At",
+        "sourceUrl": "Source URL",
+        "notes": "Notes",
+        "action": "Action"
+      },
+      "source": {
+        "official": "Auto (Ministry)",
+        "manual": "Manual Upload"
+      },
+      "actions": {
+        "syncNow": "Sync Now",
+        "upload": "Upload & Activate",
+        "activate": "Activate"
+      },
+      "syncResult": {
+        "unchanged": "Active version is up to date — source hash hasn't changed.",
+        "new": "New version detected and activated.",
+        "first": "First template recorded and activated.",
+        "failed": "Source fetch failed: {error}"
+      },
+      "uploadResult": {
+        "deduped": "Same SHA-256 was already recorded; existing record activated."
+      }
     }
   }
 }
