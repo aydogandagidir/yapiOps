@@ -166,9 +166,10 @@ export const Ek3EtabsImportSchema = z.object({
   projectId: z.string().uuid(),
   ek3FormId: z.string().uuid().optional(),
   source: z.literal('desktop-bridge'),
-  bridgeVersion: z.string(),
+  /** Non-empty version string — Bridge identification için kritik. */
+  bridgeVersion: z.string().min(1),
   etabs: z.object({
-    fileName: z.string(),
+    fileName: z.string().min(1),
     etabsVersion: z.string().optional(),
     metadata: z
       .object({
