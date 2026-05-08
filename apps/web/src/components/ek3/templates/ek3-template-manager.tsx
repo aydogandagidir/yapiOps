@@ -1,7 +1,7 @@
 'use client';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { Ek3TemplateRow } from '@yapiops/ek3';
+import type { Ek3TemplateRow } from '@yapiops/ek3/template-source';
 import { cn } from '@yapiops/ui';
 import {
   CheckCircle2,

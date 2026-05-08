@@ -2,7 +2,7 @@ import { type SupabaseClient } from '@supabase/supabase-js';
 import { canManageOrg } from '@yapiops/auth';
 import { requireAuthContext } from '@yapiops/auth/server';
 import { createSupabaseServerClient } from '@yapiops/db/server';
-import type { Ek3TemplateRow } from '@yapiops/ek3';
+import type { Ek3TemplateRow } from '@yapiops/ek3/template-source';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { setRequestLocale } from 'next-intl/server';

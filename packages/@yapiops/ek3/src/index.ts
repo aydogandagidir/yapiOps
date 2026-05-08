@@ -49,20 +49,7 @@ export type { EtabsImportPayload, YapiMappedFields } from './etabs-mapping';
 export { BYS_MATRIX, expectedBysFor } from './tbdy-tables';
 export type { BysCode, BysRow, DtsCode, ExpectedBysResult } from './tbdy-tables';
 
-export {
-  activateTemplate,
-  compareToActive,
-  downloadActiveTemplateBytes,
-  fetchOfficialTemplate,
-  getActiveTemplate,
-  getOfficialSources,
-  recordNewTemplate,
-  sha256OfBytes,
-} from './template-source';
-export type {
-  CompareResult,
-  Ek3TemplateRow,
-  FetchedTemplate,
-  RecordedTemplate,
-  RecordNewTemplateInput,
-} from './template-source';
+// NOTE: `template-source` Node-only (`node:crypto`, Supabase service-role).
+// Buradan re-export ETMEYİN — client bundle'a sızdırır. Server route'lar için
+// `@yapiops/ek3/template-source` deep import kullanın (subpath export
+// `package.json`'da tanımlı).

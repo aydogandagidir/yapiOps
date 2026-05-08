@@ -8,7 +8,7 @@ import {
   compareToActive,
   fetchOfficialTemplate,
   recordNewTemplate,
-} from '@yapiops/ek3';
+} from '@yapiops/ek3/template-source';
 import { cookies, headers } from 'next/headers';
 import { NextResponse } from 'next/server';
 

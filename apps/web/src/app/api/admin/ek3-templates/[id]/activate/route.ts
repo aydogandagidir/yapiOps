@@ -3,7 +3,7 @@ import { AuditLogger } from '@yapiops/audit';
 import { canManageOrg } from '@yapiops/auth';
 import { requireAuthContext } from '@yapiops/auth/server';
 import { createSupabaseServerClient } from '@yapiops/db/server';
-import { activateTemplate, type Ek3TemplateRow } from '@yapiops/ek3';
+import { activateTemplate, type Ek3TemplateRow } from '@yapiops/ek3/template-source';
 import { cookies, headers } from 'next/headers';
 import { NextResponse } from 'next/server';
 
