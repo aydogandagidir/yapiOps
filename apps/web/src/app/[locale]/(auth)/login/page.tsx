@@ -2,8 +2,9 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createSupabaseBrowserClient } from '@yapiops/db/client';
+import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -38,7 +39,22 @@ type LoginInput = z.infer<typeof loginSchema>;
 export default function LoginPage() {
   const t = useTranslations();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [serverError, setServerError] = useState<string | null>(null);
+
+  // Surface error codes returned by middleware/callback redirects so the user
+  // isn't stuck wondering why login keeps bouncing them back.
+  useEffect(() => {
+    const code = searchParams.get('error');
+    if (!code) return;
+    const messageMap: Record<string, string> = {
+      no_membership: t('errors.unexpectedError'),
+      provision_failed: t('errors.unexpectedError'),
+      missing_code: t('errors.unexpectedError'),
+      session_failed: t('errors.unexpectedError'),
+    };
+    setServerError(messageMap[code] ?? code);
+  }, [searchParams, t]);
 
   const form = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
