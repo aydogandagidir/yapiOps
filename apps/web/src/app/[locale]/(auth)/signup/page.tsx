@@ -70,7 +70,11 @@ export default function SignupPage() {
 
     if (!response.ok) {
       const body = (await response.json().catch(() => ({}))) as { error?: string };
-      setServerError(body.error ?? t('errors.unexpectedError'));
+      if (response.status === 409 || body.error === 'user_already_exists') {
+        setServerError(t('errors.userAlreadyExists'));
+      } else {
+        setServerError(body.error ?? t('errors.unexpectedError'));
+      }
       return;
     }
 
