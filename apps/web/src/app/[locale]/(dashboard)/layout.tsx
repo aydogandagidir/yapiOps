@@ -38,7 +38,21 @@ export default async function DashboardLayout({ children, params }: LayoutProps)
       });
       membership = await getOrgMembership(cookieStore, session.user.id);
     } catch (err) {
-      console.error('[dashboard/layout] provisionFirstLogin self-heal failed', err);
+      // Vercel runtime log truncates raw Error objects ("[dashboard/layout]
+      // provisio..."). Stringify a JSON detail so the full message + name +
+      // first stack frames survive the log pipeline.
+      const detail =
+        err instanceof Error
+          ? {
+              message: err.message,
+              name: err.name,
+              stack: err.stack?.split('\n').slice(0, 6).join(' | '),
+            }
+          : { message: String(err) };
+      console.error(
+        '[dashboard/layout] provisionFirstLogin self-heal failed',
+        JSON.stringify(detail),
+      );
     }
     if (!membership) {
       redirect(`/${locale}/login?error=provision_failed`);

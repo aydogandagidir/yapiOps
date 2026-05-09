@@ -1,7 +1,7 @@
 -- =============================================================================
 -- _apply-all.sql — Tüm migration'ları SIFIRDAN uygulayan tek-seferlik dosya
 -- =============================================================================
--- Bu dosya `infrastructure/supabase/migrations/0001..0005`'i ve baştaki
+-- Bu dosya `infrastructure/supabase/migrations/0001..0006`'yı ve baştaki
 -- `public` schema reset'ini birleştirir. Boş bir Supabase projesinde tek
 -- copy-paste ile çalışır. Production'da CI/CD migration zinciri yerine
 -- kullanılmaz; sadece manuel bootstrap için.
@@ -13,6 +13,7 @@
 --   3. 0003_ek3_templates.sql
 --   4. 0004_storage_buckets.sql
 --   5. 0005_user_email_preferences.sql
+--   6. 0006_table_grants.sql
 
 -- =============================================================================
 -- STEP 0 — Reset public schema
@@ -731,3 +732,26 @@ WHERE NOT (preferences ? 'email_ek3_generated');
 UPDATE users
 SET preferences = preferences || '{"email_weekly_digest": false}'::jsonb
 WHERE NOT (preferences ? 'email_weekly_digest');
+
+
+-- =============================================================================
+-- STEP 6 — 0006_table_grants.sql
+-- =============================================================================
+-- STEP 0'daki DROP SCHEMA + CREATE SCHEMA, Supabase'in default tablo-level
+-- GRANT'larını siliyor. RLS satır seviyesinde, GRANT tablo seviyesinde;
+-- ikisi birlikte çalışmadan tüm authenticated query'ler 42501 patlıyor:
+--
+--   ERROR: 42501: permission denied for table users
+--
+-- `getOrgMembership` her zaman null dönüyor → dashboard layout sonsuz
+-- redirect → kullanıcı login formuna geri düşüp "beklenmedik hata" alıyor.
+-- Bu STEP table-level grant'leri yeniden açar. anon hariç (uygulama anon
+-- read/write kullanmıyor; tüm RLS policy'leri authenticated için yazılı).
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO authenticated;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO authenticated;
+
+ALTER DEFAULT PRIVILEGES IN SCHEMA public
+  GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO authenticated;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public
+  GRANT USAGE, SELECT ON SEQUENCES TO authenticated;
