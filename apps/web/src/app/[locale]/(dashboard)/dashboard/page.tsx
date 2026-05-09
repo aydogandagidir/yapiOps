@@ -1,6 +1,6 @@
 import { getOrgMembership, getServerSession } from '@yapiops/auth/server';
 import { cookies } from 'next/headers';
-import { setRequestLocale } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 import {
   Card,
@@ -22,20 +22,21 @@ export default async function DashboardPage({ params }: PageProps) {
   const session = await getServerSession(cookieStore);
   const membership = session ? await getOrgMembership(cookieStore, session.user.id) : null;
 
+  const t = await getTranslations('dashboard');
+
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold">
-          Hoş geldin{membership?.fullName ? `, ${membership.fullName}` : ''}
+          {membership?.fullName
+            ? t('welcome', { name: membership.fullName })
+            : t('welcomeAnonymous')}
         </h1>
       </div>
       <Card>
         <CardHeader>
-          <CardTitle>Henüz proje yok</CardTitle>
-          <CardDescription>
-            İlk projenizi oluşturmak için yan menüden bir modül seçin. Faz 0&apos;da yalnızca
-            Faturalama aktif.
-          </CardDescription>
+          <CardTitle>{t('empty.title')}</CardTitle>
+          <CardDescription>{t('empty.description')}</CardDescription>
         </CardHeader>
         <CardContent />
       </Card>
