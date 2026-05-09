@@ -138,7 +138,8 @@
     "kvkkRequired": "KVKK onayı zorunlu",
     "unexpectedError": "Beklenmeyen bir hata oluştu",
     "authRequired": "Giriş yapmanız gerekiyor",
-    "forbidden": "Bu işlem için yetkiniz yok"
+    "forbidden": "Bu işlem için yetkiniz yok",
+    "userAlreadyExists": "Bu e-posta adresi zaten kayıtlı. Lütfen giriş yapmayı deneyin."
   },
   "ek3pilot": {
     "title": "Ek-3 Pilot",

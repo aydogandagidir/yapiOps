@@ -138,7 +138,8 @@
     "kvkkRequired": "KVKK consent is required",
     "unexpectedError": "An unexpected error occurred",
     "authRequired": "You need to sign in",
-    "forbidden": "You don't have permission for this action"
+    "forbidden": "You don't have permission for this action",
+    "userAlreadyExists": "An account with this email already exists. Try signing in instead."
   },
   "ek3pilot": {
     "title": "Ek-3 Pilot",

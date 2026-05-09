@@ -46,7 +46,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
@@ -60,6 +60,20 @@ export async function POST(request: Request) {
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 400 });
+  }
+
+  // Supabase silently returns a fake user object when the email is already
+  // registered (no email is sent). The signal is `identities: []`. Surface a
+  // 409 so the UI can suggest login instead of leaving the user wondering
+  // why no email arrived.
+  if (data.user && (data.user.identities?.length ?? 0) === 0) {
+    return NextResponse.json(
+      {
+        error: 'user_already_exists',
+        message: 'An account with this email already exists.',
+      },
+      { status: 409 },
+    );
   }
 
   // The actual organization + users row is created in /auth/callback once

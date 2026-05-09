@@ -21,7 +21,8 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  // Match everything EXCEPT: API routes, Next.js internals, static files, and
-  // anything with a file extension (images, fonts, etc.).
-  matcher: ['/((?!api|_next|_vercel|.*\\..*).*)'],
+  // Match everything EXCEPT: API routes, Next.js internals, static files,
+  // and `/auth/*` (Supabase OAuth/email callback is locale-agnostic; without
+  // this skip next-intl rewrites it to `/{locale}/auth/...` which 404s).
+  matcher: ['/((?!api|_next|_vercel|auth|.*\\..*).*)'],
 };
