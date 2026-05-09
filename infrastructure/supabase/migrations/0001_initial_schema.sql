@@ -238,7 +238,10 @@ CREATE TABLE ai_queries (
 );
 
 CREATE INDEX idx_ai_queries_user ON ai_queries(user_id, created_at DESC);
-CREATE INDEX idx_ai_queries_org_month ON ai_queries(org_id, date_trunc('month', created_at));
+-- Aylık usage sorguları (`WHERE org_id = ? AND created_at >= ?`) için range
+-- index. `date_trunc('month', created_at)` IMMUTABLE değil, Postgres
+-- expression-index'te reddeder; basit composite index aynı planı yakalar.
+CREATE INDEX idx_ai_queries_org_month ON ai_queries(org_id, created_at DESC);
 
 -- =============================================================================
 -- BILLING
@@ -295,7 +298,7 @@ CREATE TABLE usage_records (
 );
 
 CREATE INDEX idx_usage_org_feature_month ON usage_records(
-  org_id, feature, date_trunc('month', created_at)
+  org_id, feature, created_at DESC
 );
 
 CREATE TABLE firma_sablonlari (
