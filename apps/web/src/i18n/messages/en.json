@@ -13,7 +13,8 @@
     "confirm": "Confirm",
     "close": "Close",
     "error": "Error",
-    "success": "Success"
+    "success": "Success",
+    "logout": "Logout"
   },
   "auth": {
     "signupTitle": "Create Account",
@@ -52,8 +53,13 @@
   },
   "dashboard": {
     "welcome": "Welcome, {name}",
+    "welcomeAnonymous": "Welcome",
     "trialBanner": "{daysLeft} days left in your free trial. Click to choose a plan.",
     "noProjects": "No projects yet. Get started by creating your first project.",
+    "empty": {
+      "title": "No projects yet",
+      "description": "Pick a module from the sidebar to create your first project. Only Billing is active in Phase 0."
+    },
     "modules": {
       "projects": "Projects",
       "ek3pilot": "Ek-3 Pilot",

@@ -13,7 +13,8 @@
     "confirm": "Onayla",
     "close": "Kapat",
     "error": "Hata",
-    "success": "Başarılı"
+    "success": "Başarılı",
+    "logout": "Çıkış"
   },
   "auth": {
     "signupTitle": "Hesap Oluştur",
@@ -52,8 +53,13 @@
   },
   "dashboard": {
     "welcome": "Hoş geldin, {name}",
+    "welcomeAnonymous": "Hoş geldin",
     "trialBanner": "{daysLeft} gün ücretsiz deneme süreniz kaldı. Plan seçmek için tıklayın.",
     "noProjects": "Henüz proje yok. İlk projenizi oluşturmak için başlayın.",
+    "empty": {
+      "title": "Henüz proje yok",
+      "description": "İlk projenizi oluşturmak için yan menüden bir modül seçin. Faz 0'da yalnızca Faturalama aktif."
+    },
     "modules": {
       "projects": "Projeler",
       "ek3pilot": "Ek-3 Pilot",
