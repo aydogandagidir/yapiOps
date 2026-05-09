@@ -27,7 +27,24 @@ export async function POST(request: Request) {
   const origin = headersList.get('origin') ?? headersList.get('host');
   const redirectTo = `${origin?.startsWith('http') ? origin : `https://${origin ?? 'yapiops.com'}`}/auth/callback`;
 
-  const supabase = createSupabaseServerClient(await cookies());
+  let supabase;
+  try {
+    supabase = createSupabaseServerClient(await cookies());
+  } catch (err) {
+    // createSupabaseServerClient throws when NEXT_PUBLIC_SUPABASE_URL or
+    // NEXT_PUBLIC_SUPABASE_ANON_KEY are missing — the deployment is
+    // misconfigured. Surface a 503 with a clear hint so the UI can show
+    // something better than a generic "unexpected error".
+    const message = err instanceof Error ? err.message : 'Configuration error';
+    return NextResponse.json(
+      {
+        error: 'service_unavailable',
+        message,
+        hint: 'Supabase environment variables are not configured for this deployment. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in Vercel for all environments and redeploy.',
+      },
+      { status: 503 },
+    );
+  }
 
   const { error } = await supabase.auth.signUp({
     email,
