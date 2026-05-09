@@ -1,7 +1,7 @@
 import { requireAuthContext } from '@yapiops/auth/server';
 import { createSupabaseServerClient } from '@yapiops/db/server';
 import { cookies } from 'next/headers';
-import { setRequestLocale } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -34,6 +34,25 @@ interface Invoice {
   pdf_url: string | null;
 }
 
+const PLAN_KEY: Record<string, string> = {
+  free: 'free',
+  solo_monthly: 'soloMonthly',
+  solo_yearly: 'soloYearly',
+  office_monthly: 'officeMonthly',
+  office_yearly: 'officeYearly',
+  office_ai_monthly: 'officeAiMonthly',
+  office_ai_yearly: 'officeAiYearly',
+  enterprise: 'enterprise',
+};
+
+const STATUS_KEY: Record<string, string> = {
+  trialing: 'trialing',
+  active: 'active',
+  past_due: 'pastDue',
+  canceled: 'canceled',
+  expired: 'expired',
+};
+
 export default async function BillingPage({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
@@ -42,6 +61,7 @@ export default async function BillingPage({ params }: PageProps) {
   const ctx = await requireAuthContext(cookieStore);
 
   const supabase = createSupabaseServerClient(cookieStore);
+  const t = await getTranslations('billing');
 
   const { data: sub } = await supabase
     .from('subscriptions')
@@ -60,40 +80,45 @@ export default async function BillingPage({ params }: PageProps) {
 
   const invoices: Invoice[] = (invoiceRows ?? []);
 
+  const planLabel = sub
+    ? t(`plans.${PLAN_KEY[sub.plan_code] ?? 'free'}` as 'plans.free')
+    : '';
+  const statusLabel = sub
+    ? t(`status.${STATUS_KEY[sub.status] ?? 'trialing'}` as 'status.trialing')
+    : '';
+
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold">Faturalama</h1>
-        <p className="text-sm text-muted-foreground">Plan, abonelik ve fatura yönetimi.</p>
+        <h1 className="text-2xl font-bold">{t('title')}</h1>
+        <p className="text-sm text-muted-foreground">{t('subtitle')}</p>
       </div>
 
       <Card>
         <CardHeader>
-          <CardTitle>Mevcut Plan</CardTitle>
+          <CardTitle>{t('currentPlan')}</CardTitle>
           <CardDescription>
-            {sub
-              ? `${formatPlan(sub.plan_code)} — ${formatStatus(sub.status)}`
-              : 'Henüz abonelik yok'}
+            {sub ? `${planLabel} — ${statusLabel}` : t('noSubscription')}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           {sub?.status === 'trialing' && sub.trial_end ? (
             <p className="text-sm">
-              Deneme {formatDate(sub.trial_end)} tarihinde sona eriyor.
+              {t('trialEnds', { date: formatDate(sub.trial_end, locale) })}
             </p>
           ) : sub?.current_period_end ? (
             <p className="text-sm">
-              Sonraki yenileme: {formatDate(sub.current_period_end)}
+              {t('nextRenewal', { date: formatDate(sub.current_period_end, locale) })}
             </p>
           ) : null}
           <div className="flex gap-2">
             <Button asChild>
-              <Link href="/billing/upgrade">Plan Yükselt</Link>
+              <Link href="/billing/upgrade">{t('upgradeButton')}</Link>
             </Button>
             {sub?.status === 'active' ? (
               <form action="/api/billing/cancel" method="post">
                 <Button type="submit" variant="outline">
-                  Aboneliği İptal Et
+                  {t('cancelSubscription')}
                 </Button>
               </form>
             ) : null}
@@ -103,29 +128,33 @@ export default async function BillingPage({ params }: PageProps) {
 
       <Card>
         <CardHeader>
-          <CardTitle>Fatura Geçmişi</CardTitle>
+          <CardTitle>{t('invoiceHistory')}</CardTitle>
         </CardHeader>
         <CardContent>
           {invoices.length === 0 ? (
-            <p className="text-sm text-muted-foreground">Henüz fatura yok.</p>
+            <p className="text-sm text-muted-foreground">{t('noInvoices')}</p>
           ) : (
             <table className="w-full text-sm">
               <thead className="text-left text-muted-foreground">
                 <tr>
-                  <th className="py-2">Tarih</th>
-                  <th className="py-2">Tutar (KDV dahil)</th>
-                  <th className="py-2">E-Fatura</th>
+                  <th className="py-2">{t('table.date')}</th>
+                  <th className="py-2">{t('table.amount')}</th>
+                  <th className="py-2">{t('table.eFatura')}</th>
                   <th className="py-2"></th>
                 </tr>
               </thead>
               <tbody>
                 {invoices.map((inv) => (
                   <tr key={inv.id} className="border-t">
-                    <td className="py-2">{inv.issued_at ? formatDate(inv.issued_at) : '—'}</td>
+                    <td className="py-2">
+                      {inv.issued_at ? formatDate(inv.issued_at, locale) : '—'}
+                    </td>
                     <td className="py-2">
                       ₺{(inv.amount_try + inv.vat_amount).toFixed(2)}
                     </td>
-                    <td className="py-2">{inv.e_invoice_status ?? 'beklemede'}</td>
+                    <td className="py-2">
+                      {inv.e_invoice_status ?? t('table.eFaturaPending')}
+                    </td>
                     <td className="py-2 text-right">
                       {inv.pdf_url ? (
                         <a
@@ -134,7 +163,7 @@ export default async function BillingPage({ params }: PageProps) {
                           target="_blank"
                           rel="noreferrer"
                         >
-                          PDF
+                          {t('table.pdf')}
                         </a>
                       ) : null}
                     </td>
@@ -149,30 +178,9 @@ export default async function BillingPage({ params }: PageProps) {
   );
 }
 
-function formatPlan(code: string): string {
-  const map: Record<string, string> = {
-    free: 'Ücretsiz',
-    solo_monthly: 'Solo Aylık',
-    solo_yearly: 'Solo Yıllık',
-    office_monthly: 'Office Aylık',
-    office_yearly: 'Office Yıllık',
-    office_ai_monthly: 'Office+AI Aylık',
-    office_ai_yearly: 'Office+AI Yıllık',
-    enterprise: 'Enterprise',
-  };
-  return map[code] ?? code;
-}
-
-function formatStatus(status: string): string {
-  const map: Record<string, string> = {
-    trialing: 'Deneme',
-    active: 'Aktif',
-    past_due: 'Ödeme Bekliyor',
-    canceled: 'İptal Edildi',
-  };
-  return map[status] ?? status;
-}
-
-function formatDate(iso: string): string {
-  return new Date(iso).toLocaleDateString('tr-TR');
+function formatDate(iso: string, locale: string): string {
+  // tr → tr-TR (DD.MM.YYYY), en → en-US default. Para birimi (₺) Türkiye-spesifik
+  // bilinçli olarak sabit; uluslararası versiyonda dahi iyzico TRY ile çalışır.
+  const tag = locale === 'tr' ? 'tr-TR' : 'en-US';
+  return new Date(iso).toLocaleDateString(tag);
 }

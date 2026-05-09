@@ -1,7 +1,9 @@
 import { getOrgMembership, getServerSession } from '@yapiops/auth/server';
+import { Plus } from 'lucide-react';
 import { cookies } from 'next/headers';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
@@ -9,6 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { Link } from '@/i18n/navigation';
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -38,7 +41,14 @@ export default async function DashboardPage({ params }: PageProps) {
           <CardTitle>{t('empty.title')}</CardTitle>
           <CardDescription>{t('empty.description')}</CardDescription>
         </CardHeader>
-        <CardContent />
+        <CardContent>
+          <Button asChild>
+            <Link href="/projects/new">
+              <Plus className="mr-2 h-4 w-4" />
+              {t('empty.cta')}
+            </Link>
+          </Button>
+        </CardContent>
       </Card>
     </div>
   );

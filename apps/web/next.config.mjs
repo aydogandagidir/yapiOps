@@ -13,9 +13,8 @@ const nextConfig = {
     '@yapiops/db',
     '@yapiops/ui',
   ],
-  experimental: {
-    typedRoutes: true,
-  },
+  // typedRoutes Next.js 15'te stable; experimental'den root'a taşındı.
+  typedRoutes: true,
   images: {
     remotePatterns: [
       // Supabase storage public URLs (e.g. brand assets, signed URLs).

@@ -58,7 +58,8 @@
     "noProjects": "No projects yet. Get started by creating your first project.",
     "empty": {
       "title": "No projects yet",
-      "description": "Pick a module from the sidebar to create your first project. Only Billing is active in Phase 0."
+      "description": "Your engineering analyses are organized under projects. Create your first project to start using Ek-3, RaporX and Spektrum Hub.",
+      "cta": "Create First Project"
     },
     "modules": {
       "projects": "Projects",
@@ -125,7 +126,14 @@
     }
   },
   "billing": {
+    "title": "Billing",
+    "subtitle": "Plan, subscription and invoice management.",
     "currentPlan": "Current Plan",
+    "noSubscription": "No active subscription",
+    "trialEnds": "Trial ends on {date}.",
+    "nextRenewal": "Next renewal: {date}",
+    "upgradeButton": "Upgrade Plan",
+    "cancelSubscription": "Cancel Subscription",
     "upgradeTitle": "Upgrade Plan",
     "monthly": "Monthly",
     "yearly": "Yearly",
@@ -134,7 +142,31 @@
     "selectPlan": "Select Plan",
     "trialEndsIn": "Trial ends in {days} days",
     "invoiceHistory": "Invoice History",
-    "noInvoices": "No invoices yet"
+    "noInvoices": "No invoices yet.",
+    "table": {
+      "date": "Date",
+      "amount": "Amount (VAT incl.)",
+      "eFatura": "E-Invoice",
+      "pdf": "PDF",
+      "eFaturaPending": "pending"
+    },
+    "plans": {
+      "free": "Free",
+      "soloMonthly": "Solo Monthly",
+      "soloYearly": "Solo Yearly",
+      "officeMonthly": "Office Monthly",
+      "officeYearly": "Office Yearly",
+      "officeAiMonthly": "Office+AI Monthly",
+      "officeAiYearly": "Office+AI Yearly",
+      "enterprise": "Enterprise"
+    },
+    "status": {
+      "trialing": "Trial",
+      "active": "Active",
+      "pastDue": "Past Due",
+      "canceled": "Canceled",
+      "expired": "Expired"
+    }
   },
   "errors": {
     "required": "This field is required",
