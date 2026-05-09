@@ -1,8 +1,8 @@
-import { AuditLogger } from '@yapiops/audit';
-import { startTrial } from '@yapiops/billing';
-import { createSupabaseServerClient, createSupabaseServiceClient } from '@yapiops/db/server';
+import { createSupabaseServerClient } from '@yapiops/db/server';
 import { cookies, headers } from 'next/headers';
 import { NextResponse } from 'next/server';
+
+import { provisionFirstLogin } from '@/lib/auth/provision';
 
 
 /**
@@ -41,88 +41,13 @@ export async function GET(request: Request) {
     .maybeSingle<{ id: string; org_id: string }>();
 
   if (!existing) {
+    const headersList = await headers();
     await provisionFirstLogin({
-      userId: data.user.id,
-      email: data.user.email ?? '',
-      fullName: (data.user.user_metadata.full_name as string | undefined) ?? null,
-      orgName:
-        (data.user.user_metadata.org_name as string | undefined) ?? data.user.email ?? 'My Office',
-      ipAddress: (await headers()).get('x-forwarded-for'),
-      userAgent: (await headers()).get('user-agent'),
+      user: data.user,
+      ipAddress: headersList.get('x-forwarded-for'),
+      userAgent: headersList.get('user-agent'),
     });
   }
 
   return NextResponse.redirect(new URL(next, url.origin));
-}
-
-async function provisionFirstLogin(input: {
-  userId: string;
-  email: string;
-  fullName: string | null;
-  orgName: string;
-  ipAddress: string | null;
-  userAgent: string | null;
-}) {
-  // Use the service client to bypass RLS for the initial bootstrap insert.
-  const service = createSupabaseServiceClient();
-
-  const slug = slugify(input.orgName) + '-' + input.userId.slice(0, 8);
-
-  const { data: org, error: orgErr } = await service
-    .from('organizations')
-    .insert({
-      name: input.orgName,
-      slug,
-      subscription_tier: 'free',
-      seat_count: 1,
-    })
-    .select('id')
-    .single<{ id: string }>();
-
-  if (orgErr || !org) {
-    throw new Error(`Failed to create organization: ${orgErr?.message ?? 'unknown'}`);
-  }
-
-  const { error: userErr } = await service.from('users').insert({
-    id: input.userId,
-    org_id: org.id,
-    email: input.email,
-    full_name: input.fullName,
-    role: 'owner',
-  });
-
-  if (userErr) {
-    throw new Error(`Failed to create user row: ${userErr.message}`);
-  }
-
-  // The service client's generic shape doesn't structurally match the SDK's
-  // default SupabaseClient<...> tuple — they're identical at runtime since
-  // Database = any in Phase 0. Cast through `unknown` to satisfy the contract.
-  const supabaseForLib = service as unknown as Parameters<typeof startTrial>[0];
-
-  await startTrial(supabaseForLib, org.id);
-
-  const audit = new AuditLogger(supabaseForLib, {
-    orgId: org.id,
-    userId: input.userId,
-    ipAddress: input.ipAddress,
-    userAgent: input.userAgent,
-  });
-  await audit.log('org.created', { resourceType: 'organization', resourceId: org.id });
-  await audit.log('subscription.created', {
-    resourceType: 'subscription',
-    metadata: { plan_code: 'free', trial: true },
-  });
-  await audit.log('login.success', { metadata: { first_login: true } });
-}
-
-function slugify(input: string): string {
-  return input
-    .toLowerCase()
-    .normalize('NFD')
-     
-    .replace(/[̀-ͯ]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)/g, '')
-    .slice(0, 40);
 }

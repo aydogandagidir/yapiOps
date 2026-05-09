@@ -7,6 +7,7 @@ import { type ReactNode } from 'react';
 
 import { DashboardShell } from '@/components/dashboard/dashboard-shell';
 import { TrialBanner } from '@/components/dashboard/trial-banner';
+import { provisionFirstLogin } from '@/lib/auth/provision';
 
 interface LayoutProps {
   children: ReactNode;
@@ -23,10 +24,25 @@ export default async function DashboardLayout({ children, params }: LayoutProps)
     redirect(`/${locale}/login`);
   }
 
-  const membership = await getOrgMembership(cookieStore, session.user.id);
+  let membership = await getOrgMembership(cookieStore, session.user.id);
   if (!membership) {
-    // User authenticated but no org row yet — re-run callback flow.
-    redirect(`/${locale}/login?error=no_membership`);
+    // Self-heal: auth.users row exists but public.users does not — usually
+    // because the email-confirmation callback was interrupted (wrong Site
+    // URL, 404, etc). Run the same provisioning the callback would have.
+    const headersList = await headers();
+    try {
+      await provisionFirstLogin({
+        user: session.user,
+        ipAddress: headersList.get('x-forwarded-for'),
+        userAgent: headersList.get('user-agent'),
+      });
+      membership = await getOrgMembership(cookieStore, session.user.id);
+    } catch (err) {
+      console.error('[dashboard/layout] provisionFirstLogin self-heal failed', err);
+    }
+    if (!membership) {
+      redirect(`/${locale}/login?error=provision_failed`);
+    }
   }
 
   const supabase = createSupabaseServerClient(cookieStore);
