@@ -1,7 +1,7 @@
 -- =============================================================================
 -- _apply-all.sql — Tüm migration'ları SIFIRDAN uygulayan tek-seferlik dosya
 -- =============================================================================
--- Bu dosya `infrastructure/supabase/migrations/0001..0004`'ü ve baştaki
+-- Bu dosya `infrastructure/supabase/migrations/0001..0005`'i ve baştaki
 -- `public` schema reset'ini birleştirir. Boş bir Supabase projesinde tek
 -- copy-paste ile çalışır. Production'da CI/CD migration zinciri yerine
 -- kullanılmaz; sadece manuel bootstrap için.
@@ -12,6 +12,7 @@
 --   2. 0002_org_invitations.sql
 --   3. 0003_ek3_templates.sql
 --   4. 0004_storage_buckets.sql
+--   5. 0005_user_email_preferences.sql
 
 -- =============================================================================
 -- STEP 0 — Reset public schema
@@ -710,3 +711,23 @@ CREATE POLICY "ek3_pdfs_storage_delete_own_org" ON storage.objects
     AND (current_user_has_role('owner') OR current_user_has_role('admin'))
     AND (storage.foldername(name))[1] = current_user_org_id()::text
   );
+
+
+-- =============================================================================
+-- STEP 5 — 0005_user_email_preferences.sql
+-- =============================================================================
+-- `users.preferences` JSONB zaten 0001'de tanımlı (`DEFAULT '{}'`). Bu adım
+-- default'u zenginleştirir + mevcut satırları doldurur (KVKK transactional
+-- opt-in). Fresh bootstrap'ta `users` boş — UPDATE no-op olur, default geçerli.
+
+ALTER TABLE users
+  ALTER COLUMN preferences SET DEFAULT
+    '{"email_ek3_generated": true, "email_weekly_digest": false}'::jsonb;
+
+UPDATE users
+SET preferences = preferences || '{"email_ek3_generated": true}'::jsonb
+WHERE NOT (preferences ? 'email_ek3_generated');
+
+UPDATE users
+SET preferences = preferences || '{"email_weekly_digest": false}'::jsonb
+WHERE NOT (preferences ? 'email_weekly_digest');
