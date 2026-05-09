@@ -207,8 +207,12 @@ CREATE TABLE tbdy_chunks (
   created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL
 );
 
-CREATE INDEX idx_tbdy_embedding ON tbdy_chunks
-  USING ivfflat (embedding vector_cosine_ops) WITH (lists = 100);
+-- NOTE: pgvector's ivfflat index max 2000 dimensions, but OpenAI
+-- text-embedding-3-large produces 3072. Faz 3'te TBDY-Copilot devreye
+-- alındığında ayrı bir migration ile `hnsw + halfvec(3072)` index ekleyeceğiz.
+-- Faz 1 boyunca tablo boş; sequential scan yeterli.
+-- CREATE INDEX idx_tbdy_embedding ON tbdy_chunks
+--   USING ivfflat (embedding vector_cosine_ops) WITH (lists = 100);
 
 CREATE INDEX idx_tbdy_madde ON tbdy_chunks(source, madde);
 
