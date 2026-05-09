@@ -16,6 +16,7 @@ type CookieStoreSetter = (...args: any[]) => any;
 
 export interface CookieStore {
   get(name: string): { value: string } | undefined;
+  getAll?: () => Array<{ name: string; value: string }>;
   set?: CookieStoreSetter;
   delete?: CookieStoreSetter;
 }
@@ -41,7 +42,12 @@ export function createSupabaseServerClient(cookieStore: CookieStore) {
   return createSSRClient(url, anonKey, {
     cookies: {
       getAll() {
-        return [];
+        // Read every request cookie so @supabase/ssr can recover the session
+        // (sb-{ref}-auth-token). The previous implementation returned [] as
+        // a placeholder, which silently broke server-side auth: getSession()
+        // always resolved to null and every protected route bounced back to
+        // /login without any error surfaced to the user.
+        return cookieStore.getAll ? cookieStore.getAll() : [];
       },
       setAll(cookiesToSet: CookieToSet[]) {
         try {
