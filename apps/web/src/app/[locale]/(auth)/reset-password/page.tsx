@@ -2,8 +2,9 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createSupabaseBrowserClient } from '@yapiops/db/client';
+import { Loader2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -26,30 +27,36 @@ import {
 import { Input } from '@/components/ui/input';
 import { useRouter } from '@/i18n/navigation';
 
-
-const schema = z
-  .object({
-    password: z.string().min(8),
-    confirmPassword: z.string().min(8),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: 'passwordMismatch',
-    path: ['confirmPassword'],
-  });
-
-type Input = z.infer<typeof schema>;
+interface ResetInput {
+  password: string;
+  confirmPassword: string;
+}
 
 export default function ResetPasswordPage() {
   const t = useTranslations();
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
 
-  const form = useForm<Input>({
+  const schema = useMemo(
+    () =>
+      z
+        .object({
+          password: z.string().min(8, t('errors.passwordMin')),
+          confirmPassword: z.string().min(8, t('errors.passwordMin')),
+        })
+        .refine((data) => data.password === data.confirmPassword, {
+          message: t('errors.passwordMismatch'),
+          path: ['confirmPassword'],
+        }),
+    [t],
+  );
+
+  const form = useForm<ResetInput>({
     resolver: zodResolver(schema),
     defaultValues: { password: '', confirmPassword: '' },
   });
 
-  async function onSubmit({ password }: Input) {
+  async function onSubmit({ password }: ResetInput) {
     setError(null);
     const supabase = createSupabaseBrowserClient();
     const { error: err } = await supabase.auth.updateUser({ password });
@@ -59,6 +66,8 @@ export default function ResetPasswordPage() {
     }
     router.push('/login');
   }
+
+  const submitting = form.formState.isSubmitting;
 
   return (
     <Card>
@@ -100,7 +109,8 @@ export default function ResetPasswordPage() {
                 {error}
               </p>
             ) : null}
-            <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+            <Button type="submit" className="w-full" disabled={submitting}>
+              {submitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
               {t('common.save')}
             </Button>
           </form>

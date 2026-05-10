@@ -252,7 +252,8 @@
     "noMembership": "Hesabınız henüz aktif değil. Lütfen birkaç saniye bekleyip tekrar deneyin; sorun devam ederse destek ekibiyle iletişime geçin.",
     "provisionFailed": "Hesap kurulumu tamamlanamadı. Lütfen tekrar giriş yapmayı deneyin.",
     "missingCode": "Doğrulama bağlantısı geçersiz veya süresi dolmuş. Yeni bir e-posta gönderelim mi?",
-    "sessionFailed": "Oturum açılamadı. Lütfen tekrar giriş yapmayı deneyin."
+    "sessionFailed": "Oturum açılamadı. Lütfen tekrar giriş yapmayı deneyin.",
+    "minChars": "En az {min} karakter girin"
   },
   "ek3pilot": {
     "title": "Ek-3 Pilot",
