@@ -58,7 +58,8 @@
     "noProjects": "Henüz proje yok. İlk projenizi oluşturmak için başlayın.",
     "empty": {
       "title": "Henüz proje yok",
-      "description": "İlk projenizi oluşturmak için yan menüden bir modül seçin. Faz 0'da yalnızca Faturalama aktif."
+      "description": "Mühendislik analizleriniz proje altında toplanır. İlk projeyi oluşturarak Ek-3, RaporX ve Spektrum Hub modüllerine başlayabilirsiniz.",
+      "cta": "Yeni Proje Oluştur"
     },
     "modules": {
       "projects": "Projeler",
@@ -125,7 +126,14 @@
     }
   },
   "billing": {
+    "title": "Faturalama",
+    "subtitle": "Plan, abonelik ve fatura yönetimi.",
     "currentPlan": "Mevcut Plan",
+    "noSubscription": "Henüz abonelik yok",
+    "trialEnds": "Deneme {date} tarihinde sona eriyor.",
+    "nextRenewal": "Sonraki yenileme: {date}",
+    "upgradeButton": "Plan Yükselt",
+    "cancelSubscription": "Aboneliği İptal Et",
     "upgradeTitle": "Plan Yükselt",
     "monthly": "Aylık",
     "yearly": "Yıllık",
@@ -134,7 +142,31 @@
     "selectPlan": "Bu Plan'ı Seç",
     "trialEndsIn": "Deneme {days} gün sonra bitiyor",
     "invoiceHistory": "Fatura Geçmişi",
-    "noInvoices": "Henüz fatura yok"
+    "noInvoices": "Henüz fatura yok.",
+    "table": {
+      "date": "Tarih",
+      "amount": "Tutar (KDV dahil)",
+      "eFatura": "E-Fatura",
+      "pdf": "PDF",
+      "eFaturaPending": "beklemede"
+    },
+    "plans": {
+      "free": "Ücretsiz",
+      "soloMonthly": "Solo Aylık",
+      "soloYearly": "Solo Yıllık",
+      "officeMonthly": "Office Aylık",
+      "officeYearly": "Office Yıllık",
+      "officeAiMonthly": "Office+AI Aylık",
+      "officeAiYearly": "Office+AI Yıllık",
+      "enterprise": "Enterprise"
+    },
+    "status": {
+      "trialing": "Deneme",
+      "active": "Aktif",
+      "pastDue": "Ödeme Bekliyor",
+      "canceled": "İptal Edildi",
+      "expired": "Süresi Doldu"
+    }
   },
   "errors": {
     "required": "Bu alan zorunlu",
