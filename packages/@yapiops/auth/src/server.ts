@@ -20,13 +20,35 @@ export interface AuthContext {
 /**
  * Returns the current Supabase session, or null if unauthenticated. Does NOT
  * redirect — use `requireUser()` for protected routes.
+ *
+ * Validates the JWT via `auth.getUser()` (talks to Supabase Auth) before
+ * returning the session. Without this validation Supabase warns:
+ *   "Using the user object as returned from supabase.auth.getSession() could
+ *    be insecure! This value comes directly from the storage medium (cookies)
+ *    and may be tampered with."
+ *
+ * Middleware already calls `getUser()` once per request; in @supabase/ssr
+ * subsequent calls within the same request hit the local validated cache
+ * (no extra Auth API round trip). Net: tighter security, ~no latency cost,
+ * and the validated `user` object overrides whatever the cookie carried.
  */
 export async function getServerSession(cookieStore: CookieStore): Promise<Session | null> {
   const supabase = createSupabaseServerClient(cookieStore);
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return null;
+
   const {
     data: { session },
   } = await supabase.auth.getSession();
-  return session;
+  if (!session) return null;
+
+  // Defense in depth: replace cookie-derived session.user with the validated
+  // one from getUser(). Tokens (access_token/refresh_token) are kept as-is
+  // — desktop-bridge OAuth handoff relies on them.
+  return { ...session, user };
 }
 
 /**
