@@ -3,7 +3,7 @@ import { requireAuthContext } from '@yapiops/auth/server';
 import type { AuditAction } from '@yapiops/db';
 import { createSupabaseServerClient } from '@yapiops/db/server';
 import { cookies } from 'next/headers';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 
 import {
   Card,
@@ -59,6 +59,16 @@ export default async function AuditPage({ params }: PageProps) {
   const auditRows = (rows ?? []) as AuditRow[];
   const dateLocale = locale === 'tr' ? 'tr-TR' : 'en-US';
 
+  // i18n action labels — flat namespace with underscore-replaced keys.
+  // Missing keys (new actions not yet translated) gracefully fall back to
+  // the raw action string instead of throwing.
+  const messages = (await getMessages()) as {
+    settings?: { audit?: { actions?: Record<string, string> } };
+  };
+  const actionLabels = messages.settings?.audit?.actions ?? {};
+  const labelFor = (action: string): string =>
+    actionLabels[action.replaceAll('.', '_')] ?? action;
+
   return (
     <div className="space-y-6">
       <div>
@@ -82,7 +92,12 @@ export default async function AuditPage({ params }: PageProps) {
                   <td className="px-4 py-2 font-mono text-xs">
                     {new Date(row.created_at).toLocaleString(dateLocale)}
                   </td>
-                  <td className="px-4 py-2 font-mono text-xs">{row.action}</td>
+                  <td className="px-4 py-2 text-xs">
+                    <span className="font-medium">{labelFor(row.action)}</span>
+                    <span className="ml-2 font-mono text-muted-foreground">
+                      {row.action}
+                    </span>
+                  </td>
                   <td className="px-4 py-2 text-xs">
                     {row.resource_type ? `${row.resource_type}:${row.resource_id ?? ''}` : '—'}
                   </td>
