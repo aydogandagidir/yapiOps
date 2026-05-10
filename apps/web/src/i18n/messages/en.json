@@ -108,6 +108,34 @@
     }
   },
   "settings": {
+    "organization": {
+      "title": "Organization",
+      "subtitle": "Company details, e-invoice alias, and plan info.",
+      "planLabel": "Plan",
+      "fields": {
+        "slug": "Slug",
+        "taxNumber": "Tax No",
+        "eInvoiceAlias": "E-invoice alias",
+        "seatCount": "Seat count"
+      }
+    },
+    "team": {
+      "title": "Team",
+      "subtitle": "Users, roles, and invitations."
+    },
+    "audit": {
+      "title": "Audit Log",
+      "subtitle": "Last 100 system events. Retained for KVKK and engineering accountability.",
+      "forbiddenTitle": "Forbidden",
+      "forbiddenDescription": "Only owner and admin can view audit logs.",
+      "empty": "No audit records yet.",
+      "table": {
+        "date": "Date",
+        "action": "Action",
+        "resource": "Resource",
+        "ip": "IP"
+      }
+    },
     "notifications": {
       "title": "Notification Preferences",
       "subtitle": "Toggle email notifications. Transactional emails are on by default under KVKK.",

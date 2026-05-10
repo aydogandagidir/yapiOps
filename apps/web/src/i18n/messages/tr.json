@@ -108,6 +108,34 @@
     }
   },
   "settings": {
+    "organization": {
+      "title": "Organizasyon",
+      "subtitle": "Şirket bilgileri, fatura alias'ı ve plan detayı.",
+      "planLabel": "Plan",
+      "fields": {
+        "slug": "Slug",
+        "taxNumber": "VKN",
+        "eInvoiceAlias": "E-fatura alias",
+        "seatCount": "Seat sayısı"
+      }
+    },
+    "team": {
+      "title": "Ekip",
+      "subtitle": "Kullanıcılar, roller ve davetler."
+    },
+    "audit": {
+      "title": "Audit Log",
+      "subtitle": "Son 100 sistem olayı. KVKK ve mühendislik sorumluluğu için tutulur.",
+      "forbiddenTitle": "Yetki Yok",
+      "forbiddenDescription": "Audit log'ları yalnızca owner ve admin görüntüleyebilir.",
+      "empty": "Henüz audit kaydı yok.",
+      "table": {
+        "date": "Tarih",
+        "action": "Eylem",
+        "resource": "Kaynak",
+        "ip": "IP"
+      }
+    },
     "notifications": {
       "title": "Bildirim Tercihleri",
       "subtitle": "E-posta bildirimlerini buradan açıp kapatabilirsiniz. KVKK kapsamında transactional bildirimler default olarak açıktır.",

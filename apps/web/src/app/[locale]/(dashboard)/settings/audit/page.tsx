@@ -3,7 +3,7 @@ import { requireAuthContext } from '@yapiops/auth/server';
 import type { AuditAction } from '@yapiops/db';
 import { createSupabaseServerClient } from '@yapiops/db/server';
 import { cookies } from 'next/headers';
-import { setRequestLocale } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 import {
   Card,
@@ -35,14 +35,14 @@ export default async function AuditPage({ params }: PageProps) {
   const cookieStore = await cookies();
   const ctx = await requireAuthContext(cookieStore);
 
+  const t = await getTranslations('settings.audit');
+
   if (!canViewAudit(ctx.membership.role)) {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Yetki Yok</CardTitle>
-          <CardDescription>
-            Audit log&apos;ları yalnızca owner ve admin görüntüleyebilir.
-          </CardDescription>
+          <CardTitle>{t('forbiddenTitle')}</CardTitle>
+          <CardDescription>{t('forbiddenDescription')}</CardDescription>
         </CardHeader>
       </Card>
     );
@@ -57,31 +57,30 @@ export default async function AuditPage({ params }: PageProps) {
     .limit(100);
 
   const auditRows = (rows ?? []) as AuditRow[];
+  const dateLocale = locale === 'tr' ? 'tr-TR' : 'en-US';
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold">Audit Log</h1>
-        <p className="text-sm text-muted-foreground">
-          Son 100 sistem olayı. KVKK ve mühendislik sorumluluğu için tutulur.
-        </p>
+        <h1 className="text-2xl font-bold">{t('title')}</h1>
+        <p className="text-sm text-muted-foreground">{t('subtitle')}</p>
       </div>
       <Card>
         <CardContent className="overflow-x-auto p-0">
           <table className="w-full text-sm">
             <thead className="text-left text-muted-foreground">
               <tr>
-                <th className="px-4 py-2">Tarih</th>
-                <th className="px-4 py-2">Eylem</th>
-                <th className="px-4 py-2">Kaynak</th>
-                <th className="px-4 py-2">IP</th>
+                <th className="px-4 py-2">{t('table.date')}</th>
+                <th className="px-4 py-2">{t('table.action')}</th>
+                <th className="px-4 py-2">{t('table.resource')}</th>
+                <th className="px-4 py-2">{t('table.ip')}</th>
               </tr>
             </thead>
             <tbody>
               {auditRows.map((row) => (
                 <tr key={row.id} className="border-t">
                   <td className="px-4 py-2 font-mono text-xs">
-                    {new Date(row.created_at).toLocaleString('tr-TR')}
+                    {new Date(row.created_at).toLocaleString(dateLocale)}
                   </td>
                   <td className="px-4 py-2 font-mono text-xs">{row.action}</td>
                   <td className="px-4 py-2 text-xs">
@@ -93,7 +92,7 @@ export default async function AuditPage({ params }: PageProps) {
               {auditRows.length === 0 ? (
                 <tr>
                   <td colSpan={4} className="px-4 py-8 text-center text-muted-foreground">
-                    Henüz audit kaydı yok.
+                    {t('empty')}
                   </td>
                 </tr>
               ) : null}
