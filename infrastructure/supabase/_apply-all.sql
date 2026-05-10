@@ -1,7 +1,7 @@
 -- =============================================================================
 -- _apply-all.sql — Tüm migration'ları SIFIRDAN uygulayan tek-seferlik dosya
 -- =============================================================================
--- Bu dosya `infrastructure/supabase/migrations/0001..0006`'yı ve baştaki
+-- Bu dosya `infrastructure/supabase/migrations/0001..0007`'yi ve baştaki
 -- `public` schema reset'ini birleştirir. Boş bir Supabase projesinde tek
 -- copy-paste ile çalışır. Production'da CI/CD migration zinciri yerine
 -- kullanılmaz; sadece manuel bootstrap için.
@@ -14,6 +14,7 @@
 --   4. 0004_storage_buckets.sql
 --   5. 0005_user_email_preferences.sql
 --   6. 0006_table_grants.sql
+--   7. 0007_security_hardening.sql
 
 -- =============================================================================
 -- STEP 0 — Reset public schema
@@ -755,3 +756,27 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public
   GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO authenticated;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public
   GRANT USAGE, SELECT ON SEQUENCES TO authenticated;
+
+
+-- =============================================================================
+-- STEP 7 — 0007_security_hardening.sql
+-- =============================================================================
+-- Supabase Security Advisor uyarılarına yanıt:
+--   - 3x function_search_path_mutable: SET search_path = public, pg_temp
+--   - 4x *_security_definer_function_executable: REVOKE EXECUTE FROM
+--     anon/authenticated (helper'lar sadece RLS policy expression'ında
+--     internal kullanım için).
+-- vector extension'ın extensions schema'sına taşınması Faz 3'te pgvector
+-- index'leri ile eş zamanlı yapılacak (şimdi atlandı).
+
+ALTER FUNCTION public.current_user_org_id() SET search_path = public, pg_temp;
+ALTER FUNCTION public.current_user_has_role(text) SET search_path = public, pg_temp;
+ALTER FUNCTION public.update_updated_at() SET search_path = public, pg_temp;
+
+-- PUBLIC + anon'dan REVOKE; authenticated tutulur çünkü RLS policy
+-- expression'ları authenticated context'te bu fonksiyonları çağırır,
+-- caller'ın EXECUTE izni olmazsa 42501 ile patlar.
+REVOKE EXECUTE ON FUNCTION public.current_user_org_id() FROM PUBLIC, anon;
+REVOKE EXECUTE ON FUNCTION public.current_user_has_role(text) FROM PUBLIC, anon;
+GRANT EXECUTE ON FUNCTION public.current_user_org_id() TO authenticated;
+GRANT EXECUTE ON FUNCTION public.current_user_has_role(text) TO authenticated;
