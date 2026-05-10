@@ -42,17 +42,19 @@ export function LoginForm() {
   const [serverError, setServerError] = useState<string | null>(null);
 
   // Surface error codes returned by middleware/callback redirects so the user
-  // isn't stuck wondering why login keeps bouncing them back.
+  // isn't stuck wondering why login keeps bouncing them back. Each code maps
+  // to a specific actionable message — generic "unexpected error" was the
+  // single biggest UX gap during Faz 1 deploy debugging.
   useEffect(() => {
     const code = searchParams.get('error');
     if (!code) return;
     const messageMap: Record<string, string> = {
-      no_membership: t('errors.unexpectedError'),
-      provision_failed: t('errors.unexpectedError'),
-      missing_code: t('errors.unexpectedError'),
-      session_failed: t('errors.unexpectedError'),
+      no_membership: t('errors.noMembership'),
+      provision_failed: t('errors.provisionFailed'),
+      missing_code: t('errors.missingCode'),
+      session_failed: t('errors.sessionFailed'),
     };
-    setServerError(messageMap[code] ?? code);
+    setServerError(messageMap[code] ?? t('errors.unexpectedError'));
   }, [searchParams, t]);
 
   const form = useForm<LoginInput>({

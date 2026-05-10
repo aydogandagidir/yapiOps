@@ -55,6 +55,8 @@
     "welcome": "Welcome, {name}",
     "welcomeAnonymous": "Welcome",
     "trialBanner": "{daysLeft} days left in your free trial. Click to choose a plan.",
+    "trialBannerWarning": "Heads up: only {daysLeft} day(s) left in your trial. Pick a plan now.",
+    "trialBannerExpired": "Your trial has ended. Pick a plan to continue.",
     "noProjects": "No projects yet. Get started by creating your first project.",
     "empty": {
       "title": "No projects yet",
@@ -177,7 +179,11 @@
     "unexpectedError": "An unexpected error occurred",
     "authRequired": "You need to sign in",
     "forbidden": "You don't have permission for this action",
-    "userAlreadyExists": "An account with this email already exists. Try signing in instead."
+    "userAlreadyExists": "An account with this email already exists. Try signing in instead.",
+    "noMembership": "Your account isn't active yet. Wait a few seconds and try again; contact support if it persists.",
+    "provisionFailed": "Account setup couldn't be completed. Please sign in again.",
+    "missingCode": "The verification link is invalid or expired. Should we send a new email?",
+    "sessionFailed": "Couldn't open your session. Please sign in again."
   },
   "ek3pilot": {
     "title": "Ek-3 Pilot",
