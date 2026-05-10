@@ -26,7 +26,7 @@
     "password": "Password",
     "confirmPassword": "Password (again)",
     "orgName": "Office / Company Name",
-    "kvkkConsent": "I have read and accept the KVKK privacy notice",
+    "kvkkConsent": "I have read and accept the <link>KVKK privacy notice</link>",
     "submitSignup": "Create Account",
     "submitLogin": "Sign In",
     "haveAccount": "Already have an account?",

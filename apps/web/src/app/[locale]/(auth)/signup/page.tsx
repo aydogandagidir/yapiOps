@@ -188,7 +188,17 @@ export default function SignupPage() {
                       />
                     </FormControl>
                     <FormLabel className="cursor-pointer leading-snug">
-                      {t('auth.kvkkConsent')}
+                      {t.rich('auth.kvkkConsent', {
+                        link: (chunks) => (
+                          <Link
+                            href="/legal/kvkk"
+                            target="_blank"
+                            className="font-medium underline"
+                          >
+                            {chunks}
+                          </Link>
+                        ),
+                      })}
                     </FormLabel>
                   </div>
                   <FormMessage />

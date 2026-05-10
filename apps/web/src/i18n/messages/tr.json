@@ -26,7 +26,7 @@
     "password": "Şifre",
     "confirmPassword": "Şifre (tekrar)",
     "orgName": "Ofis / Şirket Adı",
-    "kvkkConsent": "KVKK aydınlatma metnini okudum ve onaylıyorum",
+    "kvkkConsent": "<link>KVKK aydınlatma metnini</link> okudum ve onaylıyorum",
     "submitSignup": "Hesap Oluştur",
     "submitLogin": "Giriş Yap",
     "haveAccount": "Hesabınız var mı?",
