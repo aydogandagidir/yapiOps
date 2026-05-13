@@ -7,6 +7,7 @@ import { type ReactNode } from 'react';
 
 import { DashboardShell } from '@/components/dashboard/dashboard-shell';
 import { TrialBanner } from '@/components/dashboard/trial-banner';
+import { PostHogIdentify } from '@/components/providers/posthog-identify';
 import { provisionFirstLogin } from '@/lib/auth/provision';
 
 interface LayoutProps {
@@ -72,6 +73,12 @@ export default async function DashboardLayout({ children, params }: LayoutProps)
 
   return (
     <DashboardShell membership={membership} userAgent={userAgent}>
+      <PostHogIdentify
+        orgId={membership.orgId}
+        userId={session.user.id}
+        role={membership.role}
+        planCode={subscription?.plan_code}
+      />
       {subscription?.status === 'trialing' && subscription.trial_end ? (
         <TrialBanner trialEnd={new Date(subscription.trial_end)} />
       ) : null}
