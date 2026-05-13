@@ -1,8 +1,9 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -27,26 +28,40 @@ import {
 import { Input } from '@/components/ui/input';
 import { Link, useRouter } from '@/i18n/navigation';
 
-const signupSchema = z
-  .object({
-    fullName: z.string().min(2),
-    email: z.string().email(),
-    password: z.string().min(8),
-    confirmPassword: z.string().min(8),
-    orgName: z.string().min(2),
-    kvkkConsent: z.literal(true, { errorMap: () => ({ message: 'kvkkRequired' }) }),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: 'passwordMismatch',
-    path: ['confirmPassword'],
-  });
-
-type SignupInput = z.infer<typeof signupSchema>;
+interface SignupInput {
+  fullName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  orgName: string;
+  kvkkConsent: true;
+}
 
 export default function SignupPage() {
   const t = useTranslations();
   const router = useRouter();
   const [serverError, setServerError] = useState<string | null>(null);
+
+  // Localized validation messages — zod schema rebuilt when locale changes.
+  const signupSchema = useMemo(
+    () =>
+      z
+        .object({
+          fullName: z.string().min(2, t('errors.minChars', { min: 2 })),
+          email: z.string().email(t('errors.invalidEmail')),
+          password: z.string().min(8, t('errors.passwordMin')),
+          confirmPassword: z.string().min(8, t('errors.passwordMin')),
+          orgName: z.string().min(2, t('errors.minChars', { min: 2 })),
+          kvkkConsent: z.literal(true, {
+            errorMap: () => ({ message: t('errors.kvkkRequired') }),
+          }),
+        })
+        .refine((data) => data.password === data.confirmPassword, {
+          message: t('errors.passwordMismatch'),
+          path: ['confirmPassword'],
+        }),
+    [t],
+  );
 
   const form = useForm<SignupInput>({
     resolver: zodResolver(signupSchema),
@@ -80,6 +95,8 @@ export default function SignupPage() {
 
     router.push(`/verify-email?email=${encodeURIComponent(values.email)}`);
   }
+
+  const submitting = form.formState.isSubmitting;
 
   return (
     <Card>
@@ -171,7 +188,17 @@ export default function SignupPage() {
                       />
                     </FormControl>
                     <FormLabel className="cursor-pointer leading-snug">
-                      {t('auth.kvkkConsent')}
+                      {t.rich('auth.kvkkConsent', {
+                        link: (chunks) => (
+                          <Link
+                            href="/legal/kvkk"
+                            target="_blank"
+                            className="font-medium underline"
+                          >
+                            {chunks}
+                          </Link>
+                        ),
+                      })}
                     </FormLabel>
                   </div>
                   <FormMessage />
@@ -183,7 +210,8 @@ export default function SignupPage() {
                 {serverError}
               </p>
             ) : null}
-            <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+            <Button type="submit" className="w-full" disabled={submitting}>
+              {submitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
               {t('auth.submitSignup')}
             </Button>
           </form>

@@ -2,8 +2,9 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createSupabaseBrowserClient } from '@yapiops/db/client';
+import { Loader2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -27,21 +28,26 @@ import {
 import { Input } from '@/components/ui/input';
 import { Link } from '@/i18n/navigation';
 
-
-const schema = z.object({ email: z.string().email() });
-type Input = z.infer<typeof schema>;
+interface ForgotInput {
+  email: string;
+}
 
 export default function ForgotPasswordPage() {
   const t = useTranslations();
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const form = useForm<Input>({
+  const schema = useMemo(
+    () => z.object({ email: z.string().email(t('errors.invalidEmail')) }),
+    [t],
+  );
+
+  const form = useForm<ForgotInput>({
     resolver: zodResolver(schema),
     defaultValues: { email: '' },
   });
 
-  async function onSubmit({ email }: Input) {
+  async function onSubmit({ email }: ForgotInput) {
     setError(null);
     const supabase = createSupabaseBrowserClient();
     const { error: err } = await supabase.auth.resetPasswordForEmail(email, {
@@ -53,6 +59,8 @@ export default function ForgotPasswordPage() {
     }
     setSent(true);
   }
+
+  const submitting = form.formState.isSubmitting;
 
   return (
     <Card>
@@ -84,7 +92,8 @@ export default function ForgotPasswordPage() {
                   {error}
                 </p>
               ) : null}
-              <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+              <Button type="submit" className="w-full" disabled={submitting}>
+                {submitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
                 {t('common.submit')}
               </Button>
             </form>

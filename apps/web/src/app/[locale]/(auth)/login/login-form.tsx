@@ -2,9 +2,10 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createSupabaseBrowserClient } from '@yapiops/db/client';
+import { Loader2 } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -28,12 +29,10 @@ import {
 import { Input } from '@/components/ui/input';
 import { Link, useRouter } from '@/i18n/navigation';
 
-const loginSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8),
-});
-
-type LoginInput = z.infer<typeof loginSchema>;
+interface LoginInput {
+  email: string;
+  password: string;
+}
 
 export function LoginForm() {
   const t = useTranslations();
@@ -41,10 +40,17 @@ export function LoginForm() {
   const searchParams = useSearchParams();
   const [serverError, setServerError] = useState<string | null>(null);
 
-  // Surface error codes returned by middleware/callback redirects so the user
-  // isn't stuck wondering why login keeps bouncing them back. Each code maps
-  // to a specific actionable message — generic "unexpected error" was the
-  // single biggest UX gap during Faz 1 deploy debugging.
+  // Localized validation messages — zod schema rebuilt when locale changes.
+  const loginSchema = useMemo(
+    () =>
+      z.object({
+        email: z.string().email(t('errors.invalidEmail')),
+        password: z.string().min(8, t('errors.passwordMin')),
+      }),
+    [t],
+  );
+
+  // Surface error codes returned by middleware/callback redirects.
   useEffect(() => {
     const code = searchParams.get('error');
     if (!code) return;
@@ -73,6 +79,8 @@ export function LoginForm() {
     router.push('/dashboard');
     router.refresh();
   }
+
+  const submitting = form.formState.isSubmitting;
 
   return (
     <Card>
@@ -114,7 +122,8 @@ export function LoginForm() {
                 {serverError}
               </p>
             ) : null}
-            <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+            <Button type="submit" className="w-full" disabled={submitting}>
+              {submitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
               {t('auth.submitLogin')}
             </Button>
           </form>
