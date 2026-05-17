@@ -16,7 +16,7 @@ type CookieStoreSetter = (...args: any[]) => any;
 
 export interface CookieStore {
   get(name: string): { value: string } | undefined;
-  getAll?: () => Array<{ name: string; value: string }>;
+  getAll?: () => { name: string; value: string }[];
   set?: CookieStoreSetter;
   delete?: CookieStoreSetter;
 }
