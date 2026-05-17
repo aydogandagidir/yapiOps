@@ -25,6 +25,7 @@ Demir'in YouTube oynatma listesinde kanıtlanan kontroller — bunların hepsi M
 Bu özellikler **kategorik fark** yaratır:
 
 ### 3.1 HTML interaktif rapor
+
 - Three.js 3D viewer ile tüm modeli gez
 - Eleman tıklanınca detay paneli açılır
 - Filtreler: kat, eleman tipi, ihlal durumu
@@ -32,28 +33,34 @@ Bu özellikler **kategorik fark** yaratır:
 - Paylaşılabilir link (organizasyon içi, opsiyonel public)
 
 ### 3.2 Multi-user collaboration
+
 - Rapor üzerinde yorum (eleman bazlı)
 - Mention (`@meslektaş`) ile bildirim
 - Denetimci modu: yorumlama yetkisi var, değiştirme yok
 - Onay akışı: mühendis → kontrol mühendisi → denetimci
 
 ### 3.3 Versiyon karşılaştırma
+
 - Aynı projenin 2 versiyonu yan yana
 - Hangi elemanın hangi parametresi değişti
 - Hangi kontrol pass'ten fail'e döndü (regression detection)
 
 ### 3.4 Cloud arşiv
+
 - Tüm raporlar 5 yıl saklanır (yapı denetim audit gerekliliği)
 - Arama: tarih, proje, mühendis, durum
 - Toplu export (KVKK veri taşınabilirliği için)
 
 ### 3.5 Hata/uyarı yorumlayıcı (Copilot ile)
+
 Her ihlalde:
+
 - İlgili TBDY/TS500 maddesi linklenir
 - Neden ihlal edildiği projeye özel açıklanır
 - Düzeltme önerisi (örn: "Perde kalınlığını 30 cm'den 35 cm'ye çıkarın")
 
 ### 3.6 Şablon hafızası
+
 - İlk rapordan sonra mühendisin tercihleri öğrenilir:
   - Birim sistemi (kN-m vs ton-m vs kgf-cm)
   - Ondalık hassasiyet
@@ -115,34 +122,34 @@ import { ElemanDeplasmani, KatBilgisi, BetonarmeMalzeme, KullanimSinifi } from '
 
 export interface OtelemeSonucu {
   katNo: number;
-  katYuksekligi: number;        // hi (m)
-  delta_i: number;               // Kat ötelemesi (mm)
-  lambda_i: number;              // Etkin göreli kat ötelemesi
-  lambda_max: number;            // Sınır (Tablo 4.34a/b)
-  oran: number;                  // lambda_i / lambda_max
+  katYuksekligi: number; // hi (m)
+  delta_i: number; // Kat ötelemesi (mm)
+  lambda_i: number; // Etkin göreli kat ötelemesi
+  lambda_max: number; // Sınır (Tablo 4.34a/b)
+  oran: number; // lambda_i / lambda_max
   durum: 'GECER' | 'GECMEZ';
-  yontem: '4.34a' | '4.34b';     // Hangi tablo kullanıldı
+  yontem: '4.34a' | '4.34b'; // Hangi tablo kullanıldı
 }
 
 export function goreliKatOtelemesi(params: {
   katlar: KatBilgisi[];
   deplasmanlar: ElemanDeplasmani[];
-  R: number;                     // Taşıyıcı sistem davranış katsayısı
-  I: number;                     // Bina önem katsayısı
+  R: number; // Taşıyıcı sistem davranış katsayısı
+  I: number; // Bina önem katsayısı
   malzeme: BetonarmeMalzeme;
   kullanim: KullanimSinifi;
-  gevrekDolguDuvar: boolean;     // Tablo seçimini etkiler
+  gevrekDolguDuvar: boolean; // Tablo seçimini etkiler
 }): OtelemeSonucu[] {
   const sonuclar: OtelemeSonucu[] = [];
 
   for (const kat of params.katlar) {
     // Kat tepe ve taban deplasmanlarını bul
-    const tepe = params.deplasmanlar.find(d => d.elevation === kat.zUst);
-    const taban = params.deplasmanlar.find(d => d.elevation === kat.zAlt);
+    const tepe = params.deplasmanlar.find((d) => d.elevation === kat.zUst);
+    const taban = params.deplasmanlar.find((d) => d.elevation === kat.zAlt);
     if (!tepe || !taban) continue;
 
-    const delta_i = (tepe.dx - taban.dx);  // mm
-    const hi = kat.yukseklikM * 1000;       // mm
+    const delta_i = tepe.dx - taban.dx; // mm
+    const hi = kat.yukseklikM * 1000; // mm
 
     // TBDY 4.9.1.3 — etkin göreli kat ötelemesi
     const lambda_i = (delta_i / hi) * (params.R / params.I);
@@ -159,7 +166,7 @@ export function goreliKatOtelemesi(params: {
       lambda_max,
       oran: lambda_i / lambda_max,
       durum: lambda_i <= lambda_max ? 'GECER' : 'GECMEZ',
-      yontem
+      yontem,
     });
   }
 
@@ -199,7 +206,7 @@ describe('Göreli kat ötelemesi — TBDY 2018', () => {
 export interface EtabsModelData {
   metadata: {
     fileName: string;
-    etabsVersion: string;       // "21.2.0" gibi
+    etabsVersion: string; // "21.2.0" gibi
     units: 'kN-m' | 'kN-mm' | 'ton-m' | 'kgf-cm';
     extractedAt: string;
   };
@@ -232,7 +239,7 @@ export interface EtabsModelData {
   loadCombos: LoadCombo[];
 
   results: {
-    displacements: Displacement[];   // Her load combo için
+    displacements: Displacement[]; // Her load combo için
     storyForces: StoryForce[];
     elementForces: ElementForce[];
     modal: ModalResult[];
@@ -311,6 +318,7 @@ apps/web/app/(dashboard)/raporx/
 Resmi yapı denetim formatına yakın, ofis logolu, mühendis imza alanlı.
 
 **Bölümler:**
+
 1. Kapak (proje bilgisi, mühendis, tarih)
 2. Yönetici özeti (1 sayfa, AI ile üretilen)
 3. Genel bilgiler (ETABS modeli özeti, yük durumları)
@@ -341,15 +349,15 @@ POST   /api/reports/:id/compare/:other # Karşılaştırma raporu
 
 ## 10. Performans hedefleri
 
-| İşlem | Hedef | Maks |
-|---|---|---|
-| ETABS bridge export (orta model, ~500 eleman) | 30 sn | 90 sn |
-| Cloud upload | 5 sn | 30 sn |
-| TBDY hesaplama | 10 sn | 60 sn |
-| AI özet | 5 sn (cache hit) | 20 sn |
-| HTML render | 3 sn | 10 sn |
-| PDF render | 10 sn | 30 sn |
-| **Toplam (kullanıcının "rapor üret" → "PDF elinde")** | **<2 dk** | **<5 dk** |
+| İşlem                                                 | Hedef            | Maks      |
+| ----------------------------------------------------- | ---------------- | --------- |
+| ETABS bridge export (orta model, ~500 eleman)         | 30 sn            | 90 sn     |
+| Cloud upload                                          | 5 sn             | 30 sn     |
+| TBDY hesaplama                                        | 10 sn            | 60 sn     |
+| AI özet                                               | 5 sn (cache hit) | 20 sn     |
+| HTML render                                           | 3 sn             | 10 sn     |
+| PDF render                                            | 10 sn            | 30 sn     |
+| **Toplam (kullanıcının "rapor üret" → "PDF elinde")** | **<2 dk**        | **<5 dk** |
 
 ## 11. Lansman kriterleri (DoD)
 

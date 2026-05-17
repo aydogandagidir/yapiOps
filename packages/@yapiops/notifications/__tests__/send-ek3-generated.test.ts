@@ -9,7 +9,7 @@ vi.mock('resend', () => ({
 }));
 
 vi.mock('@react-email/components', async () => {
-  const actual = (await vi.importActual('@react-email/components'));
+  const actual = await vi.importActual('@react-email/components');
   return {
     ...actual,
     render: vi.fn(() => Promise.resolve('<html><body>mocked email body</body></html>')),

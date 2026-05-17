@@ -107,9 +107,7 @@ export function Ek3NewClient({ projects }: Props) {
               </div>
             </>
           )}
-          {create.isError && (
-            <p className="text-sm text-destructive">{(create.error).message}</p>
-          )}
+          {create.isError && <p className="text-sm text-destructive">{create.error.message}</p>}
         </CardContent>
       </Card>
     </div>

@@ -46,8 +46,8 @@ export default async function TeamPage({ params }: PageProps) {
       {canInvite ? <InviteMemberForm /> : null}
 
       <TeamList
-        members={(members ?? [])}
-        invitations={(invitations ?? [])}
+        members={members ?? []}
+        invitations={invitations ?? []}
         currentUserId={ctx.user.id}
         canManage={canInvite}
       />

@@ -1,4 +1,3 @@
-
 import { AuditLogger } from '@yapiops/audit';
 import { canEditBilling } from '@yapiops/auth';
 import { requireAuthContext } from '@yapiops/auth/server';
@@ -33,10 +32,7 @@ export async function POST() {
     return NextResponse.json({ error: 'no_subscription' }, { status: 404 });
   }
 
-  await supabase
-    .from('subscriptions')
-    .update({ cancel_at_period_end: true })
-    .eq('id', sub.id);
+  await supabase.from('subscriptions').update({ cancel_at_period_end: true }).eq('id', sub.id);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const audit = new AuditLogger(supabase as any, {

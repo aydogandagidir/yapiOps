@@ -29,9 +29,8 @@ export function breadcrumbEk3(input: Ek3BreadcrumbInput): void {
   Sentry.addBreadcrumb({
     category: 'ek3',
     message: input.action,
-    level: input.action.includes('failed') || input.action.includes('exceeded')
-      ? 'warning'
-      : 'info',
+    level:
+      input.action.includes('failed') || input.action.includes('exceeded') ? 'warning' : 'info',
     data: {
       orgId: input.orgId,
       ...(input.resourceId ? { resourceId: input.resourceId } : {}),

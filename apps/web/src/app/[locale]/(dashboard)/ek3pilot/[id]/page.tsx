@@ -48,19 +48,14 @@ export default async function Ek3PilotDetailPage({ params }: PageProps) {
         <div>
           <h1 className="text-2xl font-bold">Ek-3 v{row.version}</h1>
           <p className="text-sm text-muted-foreground">
-            Proje:{' '}
-            <span className="font-mono">{row.project_id.slice(0, 8)}</span>… · Durum:{' '}
+            Proje: <span className="font-mono">{row.project_id.slice(0, 8)}</span>… · Durum:{' '}
             <span className="font-medium">{row.status}</span>
           </p>
         </div>
         <EtabsImportButton ek3Id={row.id} projectId={row.project_id} />
       </div>
 
-      <Ek3Wizard
-        ek3Id={row.id}
-        initialData={row.form_data ?? {}}
-        initialStatus={row.status}
-      />
+      <Ek3Wizard ek3Id={row.id} initialData={row.form_data ?? {}} initialStatus={row.status} />
     </div>
   );
 }

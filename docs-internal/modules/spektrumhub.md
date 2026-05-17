@@ -11,6 +11,7 @@ Zemin etüd raporu yükle → AFAD spektrumu otomatik çek → ETABS-ready funct
 ## 2. Mevcut acı
 
 Bir mühendis bugün şunu yapıyor:
+
 1. Zemin etüd raporunu okur (PDF, ~30 sayfa)
 2. Vs30, zemin sınıfı, koordinat çıkarır (manuel)
 3. AFAD Türkiye Deprem Tehlike Haritası web sitesine girer
@@ -70,23 +71,21 @@ export interface AfadSpektrumIstek {
 }
 
 export interface AfadSpektrumYanit {
-  ss: number;       // Kısa periyot harita spektral ivme katsayısı
-  s1: number;       // 1.0 sn periyot harita spektral ivme katsayısı
-  pga: number;      // En büyük yer ivmesi
-  pgv: number;      // En büyük yer hızı
+  ss: number; // Kısa periyot harita spektral ivme katsayısı
+  s1: number; // 1.0 sn periyot harita spektral ivme katsayısı
+  pga: number; // En büyük yer ivmesi
+  pgv: number; // En büyük yer hızı
 
   // Zemin sınıfı katsayıları
-  fs: number;       // Kısa periyot zemin etki katsayısı
-  f1: number;       // 1.0 sn periyot zemin etki katsayısı
+  fs: number; // Kısa periyot zemin etki katsayısı
+  f1: number; // 1.0 sn periyot zemin etki katsayısı
 
   // Hesaplanan tasarım spektral ivme katsayıları
-  sds: number;      // Sds = Ss * Fs
-  sd1: number;      // Sd1 = S1 * F1
+  sds: number; // Sds = Ss * Fs
+  sd1: number; // Sd1 = S1 * F1
 }
 
-export async function afadSpektrumCek(
-  istek: AfadSpektrumIstek
-): Promise<AfadSpektrumYanit> {
+export async function afadSpektrumCek(istek: AfadSpektrumIstek): Promise<AfadSpektrumYanit> {
   // ...
 }
 ```
@@ -105,8 +104,8 @@ Zemin etüd raporları yapısal olarak farklı (her firma kendi şablonunu kulla
 // packages/@yapiops/spektrum/src/zemin-parser.ts
 
 export interface ZeminRaporVerisi {
-  vs30?: number;                      // m/s
-  zeminSinifi?: 'ZA'|'ZB'|'ZC'|'ZD'|'ZE'|'ZF';
+  vs30?: number; // m/s
+  zeminSinifi?: 'ZA' | 'ZB' | 'ZC' | 'ZD' | 'ZE' | 'ZF';
   koordinat?: { lat: number; lng: number };
   sondajDerinlikleri?: number[];
   spt?: { derinlik: number; n: number }[];
@@ -116,35 +115,35 @@ export interface ZeminRaporVerisi {
   rapor_no?: string;
   duzenleyen_firma?: string;
   duzenleyen_jeolog?: string;
-  guvenSeviyesi: 'yuksek' | 'orta' | 'dusuk';  // AI'nın güveni
-  tespitNotlari: string[];           // AI'nın çıkarım gerekçesi
+  guvenSeviyesi: 'yuksek' | 'orta' | 'dusuk'; // AI'nın güveni
+  tespitNotlari: string[]; // AI'nın çıkarım gerekçesi
 }
 
-export async function parseZeminRaporu(
-  pdfBuffer: Buffer
-): Promise<ZeminRaporVerisi> {
+export async function parseZeminRaporu(pdfBuffer: Buffer): Promise<ZeminRaporVerisi> {
   // PDF'i ilk 3 sayfa görüntüye çevir (özet + sonuç bölümleri)
   const images = await pdfToImages(pdfBuffer, { pages: [1, 2, 3, -1, -2] });
 
   const response = await claude.messages.create({
-    model: 'claude-haiku-4-5-20251001',  // Vision yeterli
+    model: 'claude-haiku-4-5-20251001', // Vision yeterli
     max_tokens: 2000,
     system: ZEMIN_PARSER_SYSTEM_PROMPT,
-    messages: [{
-      role: 'user',
-      content: [
-        ...images.map(img => ({
-          type: 'image',
-          source: { type: 'base64', media_type: 'image/png', data: img }
-        })),
-        {
-          type: 'text',
-          text: `Bu zemin etüd raporundan aşağıdaki bilgileri JSON olarak çıkar.
+    messages: [
+      {
+        role: 'user',
+        content: [
+          ...images.map((img) => ({
+            type: 'image',
+            source: { type: 'base64', media_type: 'image/png', data: img },
+          })),
+          {
+            type: 'text',
+            text: `Bu zemin etüd raporundan aşağıdaki bilgileri JSON olarak çıkar.
                  Bulamadıklarını null bırak. Çıkarım gerekçesini "tespitNotlari"
-                 içine yaz.`
-        }
-      ]
-    }]
+                 içine yaz.`,
+          },
+        ],
+      },
+    ],
   });
 
   return JSON.parse(extractJson(response.content[0].text));
@@ -174,13 +173,13 @@ export function tasarimSpektrumu(params: {
   sds: number;
   sd1: number;
   zeminSinifi: ZeminSinifi;
-  periyotAdimi?: number;   // default 0.01 sn
-  maxPeriyot?: number;     // default 6 sn
+  periyotAdimi?: number; // default 0.01 sn
+  maxPeriyot?: number; // default 6 sn
 }): SpektrumNoktasi[] {
   const { sds, sd1 } = params;
-  const TA = 0.2 * sd1 / sds;       // TBDY Eq. 2.5
-  const TB = sd1 / sds;              // TBDY Eq. 2.6
-  const TL = 6.0;                    // TBDY tablo
+  const TA = (0.2 * sd1) / sds; // TBDY Eq. 2.5
+  const TB = sd1 / sds; // TBDY Eq. 2.6
+  const TL = 6.0; // TBDY tablo
 
   const adim = params.periyotAdimi ?? 0.01;
   const noktalar: SpektrumNoktasi[] = [];
@@ -188,13 +187,13 @@ export function tasarimSpektrumu(params: {
   for (let T = 0; T <= (params.maxPeriyot ?? 6); T += adim) {
     let sa: number;
     if (T < TA) {
-      sa = (0.4 + 0.6 * T / TA) * sds;       // TBDY Eq. 2.1
+      sa = (0.4 + (0.6 * T) / TA) * sds; // TBDY Eq. 2.1
     } else if (T < TB) {
-      sa = sds;                                // TBDY Eq. 2.2
+      sa = sds; // TBDY Eq. 2.2
     } else if (T <= TL) {
-      sa = sd1 / T;                            // TBDY Eq. 2.3
+      sa = sd1 / T; // TBDY Eq. 2.3
     } else {
-      sa = sd1 * TL / (T * T);                // TBDY Eq. 2.4
+      sa = (sd1 * TL) / (T * T); // TBDY Eq. 2.4
     }
     noktalar.push({ T: Number(T.toFixed(3)), sa: Number(sa.toFixed(4)) });
   }
@@ -222,6 +221,7 @@ Damping: 0.05
 Direkt ETABS'a `Define → Functions → Response Spectrum → From File` ile import edilebilir.
 
 **Bonus:** Bridge'den çağrı ile ETABS modeline OAPI üzerinden direkt yazılabilir:
+
 ```csharp
 SapModel.Func.FuncRS.SetUser("TBDY2018", periodArray, saArray);
 ```

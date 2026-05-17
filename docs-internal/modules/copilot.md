@@ -11,25 +11,30 @@ TBDY 2018'i bilen, projenize özel cevap veren AI mühendis asistanı. Hiçbir T
 ## 2. Kullanıcı senaryoları
 
 ### S1: TBDY madde sorgu
+
 > Mühendis: "Perde uç bölgesindeki sargı donatısı için minimum hangi koşullar sağlanmalı?"
 >
 > Copilot: "TBDY 2018 Madde 7.6.5'e göre... [madde özeti] ... Sizin projenizde Perde-3 için minimum sargı sıklığı şöyle olmalı: ..."
 
 ### S2: Hata yorumu
+
 > RaporX raporunda "Perde-5 kesme kontrolü FAIL" gözükür
 >
 > Copilot otomatik açıklar: "Perde-5'te kesme kuvveti 1850 kN, kapasitesi 1400 kN. Madde 7.6.7'ye göre... Düzeltme önerisi: (a) perde kalınlığını 30→35 cm, (b) yatay donatı çapını φ12→φ14 vb."
 
 ### S3: Peer-review checklist
+
 > Mühendis "Peer-review başlat" tıklar
 >
 > Copilot tüm modeli tarar, 30+ kontrol noktası listeler:
+>
 > - [ ] Tüm perdelerde uç bölge sargı donatısı yeterli mi?
 > - [ ] Burulma düzensizliği var mı?
 > - [ ] Yumuşak kat var mı?
 > - ... her birine cevabı projeyle birlikte verir
 
 ### S4: Rapor anlatı bölümü
+
 > Mühendis: "Bu projenin yönetici özeti bölümünü yaz"
 >
 > Copilot 1 sayfa Türkçe profesyonel mühendislik dilinde özet üretir.
@@ -79,10 +84,12 @@ TBDY 2018'i bilen, projenize özel cevap veren AI mühendis asistanı. Hiçbir T
 ### 4.1 Kapsam
 
 **Faz 3 (lansman):**
+
 - TBDY 2018 (tüm bölümler, ~250 sayfa)
 - TS 500 — Betonarme Yapıların Tasarım ve Yapım Kuralları (~150 sayfa)
 
 **Faz 4:**
+
 - Yapı Denetim Yönetmeliği
 - ÇYTHYE 2016 (Çelik Yapıların Tasarım, Hesap ve Yapım Esasları)
 - ZSY (Zemin Sondajları ve Sondaj Yöntemleri Yönetmeliği)
@@ -97,16 +104,16 @@ TBDY hiyerarşik bir doküman; chunking bölüm-madde sınırlarına saygı gös
 
 interface TbdyChunk {
   source: 'TBDY 2018' | 'TS 500' | string;
-  bolum: string;       // "7"
-  altbolum?: string;   // "7.6"
-  madde: string;       // "7.6.7" — bu chunk'ın bağlandığı madde
+  bolum: string; // "7"
+  altbolum?: string; // "7.6"
+  madde: string; // "7.6.7" — bu chunk'ın bağlandığı madde
   baslik: string;
-  icerik: string;      // 200–500 kelime hedef
+  icerik: string; // 200–500 kelime hedef
   metadata: {
     sayfaNo: number;
-    tablo?: string;    // "Tablo 4.34a" gibi
-    formul?: string;   // "Eq. 7.15" gibi
-    ilgiliMaddeler: string[];  // Cross-reference
+    tablo?: string; // "Tablo 4.34a" gibi
+    formul?: string; // "Eq. 7.15" gibi
+    ilgiliMaddeler: string[]; // Cross-reference
   };
 }
 
@@ -122,6 +129,7 @@ interface TbdyChunk {
 **Karar:** OpenAI `text-embedding-3-large` (3072 boyut).
 
 Sebep:
+
 - Anthropic embedding modeli sunmuyor
 - Türkçe'de güçlü performans
 - Maliyet: $0.13/1M token — TBDY tüm corpus tek seferlik ~$5
@@ -196,33 +204,34 @@ async function buildPrompt(query: string, context: ProjectContext) {
     {
       type: 'text',
       text: TBDY_COPILOT_SYSTEM,
-      cache_control: { type: 'ephemeral' }
+      cache_control: { type: 'ephemeral' },
     },
 
     // 2. RAG sonuçları (CACHED — oturum başına)
     {
       type: 'text',
       text: `İlgili TBDY/TS500 referansları:\n\n${ragResults.map(formatChunk).join('\n---\n')}`,
-      cache_control: { type: 'ephemeral' }
+      cache_control: { type: 'ephemeral' },
     },
 
     // 3. Proje bağlamı (CACHED — proje başına)
     {
       type: 'text',
       text: `Proje bağlamı:\n${formatProjectContext(context)}`,
-      cache_control: { type: 'ephemeral' }
+      cache_control: { type: 'ephemeral' },
     },
 
     // 4. Soru (cache'siz)
     {
       type: 'text',
-      text: `Soru: ${query}`
-    }
+      text: `Soru: ${query}`,
+    },
   ];
 }
 ```
 
 **Cache hit beklentisi:**
+
 - Aynı projeyle 5 dakika içinde gelen sonraki sorgular: ~%90 maliyet düşüşü
 - Sistem prompt: kalıcı cache (her sorguda)
 - RAG sonuçları: 3 sorgu içinde benzer chunk'lar tekrar gelirse cache hit
@@ -233,12 +242,12 @@ async function buildPrompt(query: string, context: ProjectContext) {
 
 Plan başına aylık AI sorgu sınırı:
 
-| Plan | Sorgu/ay | Tahmini ham maliyet | Marj |
-|---|---|---|---|
-| Solo | 0 | $0 | — |
-| Office | 0 | $0 | — (Copilot dahil değil) |
-| Office+AI | 200 | ~$10–15 | %70 |
-| Enterprise | Sınırsız (fair use) | Değişken | ≥%50 |
+| Plan       | Sorgu/ay            | Tahmini ham maliyet | Marj                    |
+| ---------- | ------------------- | ------------------- | ----------------------- |
+| Solo       | 0                   | $0                  | —                       |
+| Office     | 0                   | $0                  | — (Copilot dahil değil) |
+| Office+AI  | 200                 | ~$10–15             | %70                     |
+| Enterprise | Sınırsız (fair use) | Değişken            | ≥%50                    |
 
 Top-up: 100 sorgu = ₺500.
 
@@ -351,7 +360,7 @@ const prompt = `Sistem: ... Soru: ${userInput}`;
 // DOĞRU:
 const messages = [
   { role: 'system', content: SYSTEM_PROMPT },
-  { role: 'user', content: userInput }  // Anthropic API yapısı
+  { role: 'user', content: userInput }, // Anthropic API yapısı
 ];
 ```
 
@@ -364,6 +373,7 @@ const messages = [
 ### 10.3 Sorumluluk reddi
 
 Her cevabın sonunda otomatik:
+
 > "Bu yorum danışma amaçlıdır. Mühendislik kararı ve ruhsat sorumluluğu projeyi imzalayan mühendise aittir. TBDY 2018 ve ilgili yönetmeliklerin güncel versiyonu için resmi kaynaklara başvurunuz."
 
 ## 11. Lansman kriterleri (DoD — Beta)

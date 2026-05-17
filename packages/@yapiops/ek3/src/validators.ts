@@ -22,7 +22,7 @@ export function isValidTckn(value: string): boolean {
   const oddSum = d(0) + d(2) + d(4) + d(6) + d(8);
   const evenSum = d(1) + d(3) + d(5) + d(7);
   const tenthDigit = (oddSum * 7 - evenSum) % 10;
-  if (((tenthDigit + 10) % 10) !== d(9)) return false;
+  if ((tenthDigit + 10) % 10 !== d(9)) return false;
 
   const totalFirstTen = digits.slice(0, 10).reduce((acc, n) => acc + n, 0);
   if (totalFirstTen % 10 !== d(10)) return false;
@@ -94,11 +94,7 @@ export function dtsConsistency(sds: number, dts: number): ConsistencyResult {
  * yumuşak uyarı döner — engelleme yapmaz, mühendis sorumluluğuna bırakır
  * (CLAUDE.md §9.2).
  */
-export function bysConsistency(
-  yukseklikM: number,
-  dts: number,
-  bys: number,
-): ConsistencyResult {
+export function bysConsistency(yukseklikM: number, dts: number, bys: number): ConsistencyResult {
   if (!Number.isFinite(yukseklikM) || yukseklikM <= 0) {
     return { ok: false, warning: 'Yükseklik pozitif bir sayı olmalı' };
   }

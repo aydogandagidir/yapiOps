@@ -3,7 +3,6 @@ import { cookies, headers } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 
-
 const signupSchema = z.object({
   fullName: z.string().min(2),
   email: z.string().email(),

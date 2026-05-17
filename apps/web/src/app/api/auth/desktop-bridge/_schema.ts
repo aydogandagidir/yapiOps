@@ -24,9 +24,7 @@ export const BridgeStartParamsSchema = z.object({
     .string()
     .url()
     .refine(
-      (url) =>
-        url.startsWith('http://localhost:53682/') ||
-        url.startsWith('yapiops-bridge://'),
+      (url) => url.startsWith('http://localhost:53682/') || url.startsWith('yapiops-bridge://'),
       'redirect_uri loopback (localhost:53682) veya custom protokol olmalı',
     ),
   state: z.string().min(8).max(128),

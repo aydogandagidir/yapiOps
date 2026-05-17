@@ -42,8 +42,7 @@ describe('getOfficialSources', () => {
   });
 
   it('overrides via env (comma-separated)', () => {
-    process.env.EK3_TEMPLATE_OFFICIAL_URLS =
-      'https://example.com/a.pdf, https://example.com/b.pdf';
+    process.env.EK3_TEMPLATE_OFFICIAL_URLS = 'https://example.com/a.pdf, https://example.com/b.pdf';
     const sources = getOfficialSources();
     expect(sources).toEqual(['https://example.com/a.pdf', 'https://example.com/b.pdf']);
   });

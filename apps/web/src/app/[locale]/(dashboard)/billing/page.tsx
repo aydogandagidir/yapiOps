@@ -4,13 +4,7 @@ import { cookies } from 'next/headers';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from '@/i18n/navigation';
 
 interface PageProps {
@@ -78,11 +72,9 @@ export default async function BillingPage({ params }: PageProps) {
     .order('issued_at', { ascending: false })
     .limit(20);
 
-  const invoices: Invoice[] = (invoiceRows ?? []);
+  const invoices: Invoice[] = invoiceRows ?? [];
 
-  const planLabel = sub
-    ? t(`plans.${PLAN_KEY[sub.plan_code] ?? 'free'}` as 'plans.free')
-    : '';
+  const planLabel = sub ? t(`plans.${PLAN_KEY[sub.plan_code] ?? 'free'}` as 'plans.free') : '';
   const statusLabel = sub
     ? t(`status.${STATUS_KEY[sub.status] ?? 'trialing'}` as 'status.trialing')
     : '';
@@ -103,9 +95,7 @@ export default async function BillingPage({ params }: PageProps) {
         </CardHeader>
         <CardContent className="space-y-4">
           {sub?.status === 'trialing' && sub.trial_end ? (
-            <p className="text-sm">
-              {t('trialEnds', { date: formatDate(sub.trial_end, locale) })}
-            </p>
+            <p className="text-sm">{t('trialEnds', { date: formatDate(sub.trial_end, locale) })}</p>
           ) : sub?.current_period_end ? (
             <p className="text-sm">
               {t('nextRenewal', { date: formatDate(sub.current_period_end, locale) })}
@@ -149,12 +139,8 @@ export default async function BillingPage({ params }: PageProps) {
                     <td className="py-2">
                       {inv.issued_at ? formatDate(inv.issued_at, locale) : '—'}
                     </td>
-                    <td className="py-2">
-                      ₺{(inv.amount_try + inv.vat_amount).toFixed(2)}
-                    </td>
-                    <td className="py-2">
-                      {inv.e_invoice_status ?? t('table.eFaturaPending')}
-                    </td>
+                    <td className="py-2">₺{(inv.amount_try + inv.vat_amount).toFixed(2)}</td>
+                    <td className="py-2">{inv.e_invoice_status ?? t('table.eFaturaPending')}</td>
                     <td className="py-2 text-right">
                       {inv.pdf_url ? (
                         <a

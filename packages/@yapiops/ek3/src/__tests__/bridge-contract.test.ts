@@ -1,10 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import {
-  Ek3EtabsImportSchema,
-  type EtabsImportPayload,
-  mapEtabsToYapi,
-} from '../index';
+import { Ek3EtabsImportSchema, type EtabsImportPayload, mapEtabsToYapi } from '../index';
 
 /**
  * Bridge contract test'leri.
@@ -74,7 +70,7 @@ describe('Ek3EtabsImportSchema — bridge payload contract', () => {
     expect(Ek3EtabsImportSchema.safeParse(PARTIAL_METADATA_PAYLOAD).success).toBe(true);
   });
 
-  it('accepts payloads with no metadata at all (Bridge couldn\'t extract anything)', () => {
+  it("accepts payloads with no metadata at all (Bridge couldn't extract anything)", () => {
     expect(Ek3EtabsImportSchema.safeParse(EMPTY_METADATA_PAYLOAD).success).toBe(true);
   });
 

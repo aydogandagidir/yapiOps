@@ -6,13 +6,13 @@
 
 ## Modüller
 
-| Modül | Vaat | Lansman |
-|---|---|---|
-| **Ek3Pilot** | Yapı Denetim Ek-3 form auto-fill | Faz 1 (Hafta 12) |
-| **RaporX** | ETABS OAPI → TBDY 2018 hesap raporu | Faz 2 (Hafta 20) |
-| **SpektrumHub** | AFAD spektrum + zemin entegrasyonu | Faz 3 (Hafta 26) |
-| **TBDY-Copilot** | AI destekli TBDY danışmanı | Faz 3 (Hafta 26 beta) |
-| **BillingCore** | E-fatura + Iyzico abonelik | Faz 0+1 paralel |
+| Modül            | Vaat                                | Lansman               |
+| ---------------- | ----------------------------------- | --------------------- |
+| **Ek3Pilot**     | Yapı Denetim Ek-3 form auto-fill    | Faz 1 (Hafta 12)      |
+| **RaporX**       | ETABS OAPI → TBDY 2018 hesap raporu | Faz 2 (Hafta 20)      |
+| **SpektrumHub**  | AFAD spektrum + zemin entegrasyonu  | Faz 3 (Hafta 26)      |
+| **TBDY-Copilot** | AI destekli TBDY danışmanı          | Faz 3 (Hafta 26 beta) |
+| **BillingCore**  | E-fatura + Iyzico abonelik          | Faz 0+1 paralel       |
 
 ## Hızlı başlangıç
 
@@ -41,19 +41,19 @@ Faz 1 Ek3Pilot için uçtan uca akışı denemek istiyorsanız:
 
 ## Komutlar
 
-| Komut | Açıklama |
-|---|---|
-| `pnpm dev` | apps/web Next.js dev sunucusu (Turbopack) |
-| `pnpm build` | Tüm paketleri Turbo ile build eder |
-| `pnpm type-check` | Tüm workspace TS tip kontrolü |
-| `pnpm lint` | ESLint + Prettier check |
-| `pnpm test` | Vitest birim testler (paketler + apps/web) |
-| `pnpm test:tbdy` | Sadece TBDY hesaplama testleri (kritik) |
-| `pnpm --filter @yapiops/web test:e2e` | Playwright e2e |
-| `pnpm db:migrate` | Supabase migration |
-| `pnpm db:reset` | Veritabanını sıfırla + migration |
-| `pnpm db:types` | TypeScript tipleri yeniden üret |
-| `pnpm format` | Prettier format |
+| Komut                                 | Açıklama                                   |
+| ------------------------------------- | ------------------------------------------ |
+| `pnpm dev`                            | apps/web Next.js dev sunucusu (Turbopack)  |
+| `pnpm build`                          | Tüm paketleri Turbo ile build eder         |
+| `pnpm type-check`                     | Tüm workspace TS tip kontrolü              |
+| `pnpm lint`                           | ESLint + Prettier check                    |
+| `pnpm test`                           | Vitest birim testler (paketler + apps/web) |
+| `pnpm test:tbdy`                      | Sadece TBDY hesaplama testleri (kritik)    |
+| `pnpm --filter @yapiops/web test:e2e` | Playwright e2e                             |
+| `pnpm db:migrate`                     | Supabase migration                         |
+| `pnpm db:reset`                       | Veritabanını sıfırla + migration           |
+| `pnpm db:types`                       | TypeScript tipleri yeniden üret            |
+| `pnpm format`                         | Prettier format                            |
 
 ## Yapı
 

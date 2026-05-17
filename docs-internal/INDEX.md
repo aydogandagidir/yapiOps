@@ -6,24 +6,25 @@
 ## Okuma sırası
 
 ### 1. Master mimari (zorunlu)
+
 [`CLAUDE.md`](./CLAUDE.md) — Tüm sistemin yüksek seviye mimarisi, monorepo yapısı, faz roadmap'i, fiyatlama, riskler.
 
 ### 2. Modül spec'leri (geliştirilen modüle göre)
 
-| Modül | Spec | Faz |
-|---|---|---|
-| BillingCore | [`modules/billing.md`](./modules/billing.md) | 0–1 (paralel) |
-| Ek3Pilot | [`modules/ek3pilot.md`](./modules/ek3pilot.md) | 1 (MVP) |
-| RaporX | [`modules/raporx.md`](./modules/raporx.md) | 2 |
-| SpektrumHub | [`modules/spektrumhub.md`](./modules/spektrumhub.md) | 3 |
-| TBDY-Copilot | [`modules/copilot.md`](./modules/copilot.md) | 3 (beta) |
+| Modül        | Spec                                                 | Faz           |
+| ------------ | ---------------------------------------------------- | ------------- |
+| BillingCore  | [`modules/billing.md`](./modules/billing.md)         | 0–1 (paralel) |
+| Ek3Pilot     | [`modules/ek3pilot.md`](./modules/ek3pilot.md)       | 1 (MVP)       |
+| RaporX       | [`modules/raporx.md`](./modules/raporx.md)           | 2             |
+| SpektrumHub  | [`modules/spektrumhub.md`](./modules/spektrumhub.md) | 3             |
+| TBDY-Copilot | [`modules/copilot.md`](./modules/copilot.md)         | 3 (beta)      |
 
 ### 3. Mimari kararlar (ADR)
 
-| No | Karar | Bağlantı |
-|---|---|---|
-| 001 | Hibrit mimari (masaüstü bridge + cloud) | [`adr/0001-hibrit-mimari.md`](./adr/0001-hibrit-mimari.md) |
-| 002 | AI maliyet stratejisi | [`adr/0002-ai-maliyet-stratejisi.md`](./adr/0002-ai-maliyet-stratejisi.md) |
+| No  | Karar                                   | Bağlantı                                                                   |
+| --- | --------------------------------------- | -------------------------------------------------------------------------- |
+| 001 | Hibrit mimari (masaüstü bridge + cloud) | [`adr/0001-hibrit-mimari.md`](./adr/0001-hibrit-mimari.md)                 |
+| 002 | AI maliyet stratejisi                   | [`adr/0002-ai-maliyet-stratejisi.md`](./adr/0002-ai-maliyet-stratejisi.md) |
 
 ### 4. Operasyon (runbook'lar)
 

@@ -49,8 +49,8 @@ export function mergeFormData(
     if (patchBlock == null) continue;
     const existingBlock = base[key];
     merged[key] = {
-      ...((existingBlock ?? {})),
-      ...(patchBlock),
+      ...(existingBlock ?? {}),
+      ...patchBlock,
     };
   }
   return merged;

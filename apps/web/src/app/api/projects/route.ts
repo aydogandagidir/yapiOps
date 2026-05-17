@@ -10,7 +10,6 @@ import { ProjectCreateSchema } from './_schema';
 
 import { captureServerEvent, flushPostHog } from '@/lib/posthog-server';
 
-
 export const runtime = 'nodejs';
 
 interface ProjectRow {
@@ -52,7 +51,7 @@ export async function GET() {
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
-  return NextResponse.json({ projects: (data ?? []) });
+  return NextResponse.json({ projects: data ?? [] });
 }
 
 export async function POST(request: Request) {

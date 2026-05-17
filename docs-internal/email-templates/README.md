@@ -22,15 +22,15 @@ kullanıldığı için mail kullanıcı domain'inden çıkar.
 
 ## Supabase template değişkenleri
 
-| Değişken | Açıklama |
-|---|---|
+| Değişken                 | Açıklama                                                                   |
+| ------------------------ | -------------------------------------------------------------------------- |
 | `{{ .ConfirmationURL }}` | Kullanıcının tıklayacağı eylem linki (signup confirm, password reset, vs.) |
-| `{{ .Token }}` | OTP kodu (link tıklanamazsa fallback) |
-| `{{ .SiteURL }}` | URL Configuration → Site URL değeri (`https://yapiops.bluedev.dev`) |
-| `{{ .Email }}` | Hedef kullanıcının e-posta adresi |
-| `{{ .RedirectTo }}` | Confirm sonrası yönlendirilecek path |
-| `{{ .Data.full_name }}` | signup user_metadata.full_name |
-| `{{ .Data.org_name }}` | signup user_metadata.org_name |
+| `{{ .Token }}`           | OTP kodu (link tıklanamazsa fallback)                                      |
+| `{{ .SiteURL }}`         | URL Configuration → Site URL değeri (`https://yapiops.bluedev.dev`)        |
+| `{{ .Email }}`           | Hedef kullanıcının e-posta adresi                                          |
+| `{{ .RedirectTo }}`      | Confirm sonrası yönlendirilecek path                                       |
+| `{{ .Data.full_name }}`  | signup user_metadata.full_name                                             |
+| `{{ .Data.org_name }}`   | signup user_metadata.org_name                                              |
 
 ## Stil / tasarım
 

@@ -1,13 +1,7 @@
 import { useTranslations } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from '@/i18n/navigation';
 
 interface PageProps {
@@ -29,9 +23,7 @@ function VerifyEmailContent({ email }: { email: string }) {
     <Card>
       <CardHeader className="text-center">
         <CardTitle>{t('auth.verifyEmailTitle')}</CardTitle>
-        <CardDescription>
-          {t('auth.verifyEmailBody', { email: email || '...' })}
-        </CardDescription>
+        <CardDescription>{t('auth.verifyEmailBody', { email: email || '...' })}</CardDescription>
       </CardHeader>
       <CardContent className="text-center">
         <Link href="/login" className="text-sm font-medium hover:underline">

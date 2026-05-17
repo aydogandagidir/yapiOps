@@ -19,19 +19,13 @@ import { buildAuditContext, getAuditLogger, type Ek3Row } from '../../_helpers';
 import { captureServerEvent, flushPostHog } from '@/lib/posthog-server';
 import { breadcrumbEk3 } from '@/lib/sentry-helpers';
 
-
 export const runtime = 'nodejs';
 
 interface RouteContext {
   params: Promise<{ id: string }>;
 }
 
-const PUBLIC_TEMPLATE_PATH = path.join(
-  process.cwd(),
-  'public',
-  'templates',
-  'ek3-resmi-form.pdf',
-);
+const PUBLIC_TEMPLATE_PATH = path.join(process.cwd(), 'public', 'templates', 'ek3-resmi-form.pdf');
 const STORAGE_BUCKET = 'ek3-pdfs';
 
 interface ResolvedTemplate {
@@ -144,12 +138,10 @@ export async function POST(_req: Request, context: RouteContext) {
 
   // Upload to Supabase Storage.
   const storagePath = `${ctx.membership.orgId}/${row.project_id}/${id}.pdf`;
-  const upload = await supabase.storage
-    .from(STORAGE_BUCKET)
-    .upload(storagePath, rendered.bytes, {
-      contentType: 'application/pdf',
-      upsert: true,
-    });
+  const upload = await supabase.storage.from(STORAGE_BUCKET).upload(storagePath, rendered.bytes, {
+    contentType: 'application/pdf',
+    upsert: true,
+  });
   if (upload.error) {
     return NextResponse.json({ error: upload.error.message }, { status: 500 });
   }

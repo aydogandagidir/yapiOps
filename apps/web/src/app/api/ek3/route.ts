@@ -11,7 +11,6 @@ import { buildAuditContext, getAuditLogger, type Ek3Row } from './_helpers';
 import { captureServerEvent, flushPostHog } from '@/lib/posthog-server';
 import { breadcrumbEk3 } from '@/lib/sentry-helpers';
 
-
 export const runtime = 'nodejs';
 
 export async function GET(request: Request) {
@@ -30,7 +29,9 @@ export async function GET(request: Request) {
 
   let q = supabase
     .from('ek3_forms')
-    .select('id, project_id, version, status, form_data, pdf_url, generated_at, supersedes, superseded_by, revision_reason, created_by, created_at, updated_at')
+    .select(
+      'id, project_id, version, status, form_data, pdf_url, generated_at, supersedes, superseded_by, revision_reason, created_by, created_at, updated_at',
+    )
     .eq('org_id', ctx.membership.orgId)
     .order('created_at', { ascending: false })
     .limit(200);

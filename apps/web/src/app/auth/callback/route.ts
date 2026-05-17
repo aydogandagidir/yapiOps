@@ -4,7 +4,6 @@ import { NextResponse } from 'next/server';
 
 import { provisionFirstLogin } from '@/lib/auth/provision';
 
-
 /**
  * Supabase OAuth/email-verification callback.
  *

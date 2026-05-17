@@ -13,10 +13,7 @@ const bodySchema = z.object({
   role: z.enum(['admin', 'engineer', 'auditor']),
 });
 
-export async function PATCH(
-  request: Request,
-  { params }: { params: Promise<{ userId: string }> },
-) {
+export async function PATCH(request: Request, { params }: { params: Promise<{ userId: string }> }) {
   const { userId } = await params;
   const cookieStore = await cookies();
   let ctx;

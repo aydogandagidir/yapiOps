@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(gh pr create --base main --head claude/focused-meitner-8b2881 --title 'feat\\(legal\\): KVKK aydınlatma metni sayfası + signup link' --body ' *)"
+    ]
+  }
+}

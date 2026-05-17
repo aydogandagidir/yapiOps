@@ -27,9 +27,7 @@ export interface SendResult {
  * Aynı durumda Sentry'ye hata düşürmek isteyen caller'lar dönüş status'una
  * bakıp manuel `captureException` çağırabilir.
  */
-export async function sendEk3GeneratedEmail(
-  input: SendEk3GeneratedInput,
-): Promise<SendResult> {
+export async function sendEk3GeneratedEmail(input: SendEk3GeneratedInput): Promise<SendResult> {
   if (!input.to) return { status: 'skipped', reason: 'no_recipient' };
   const client = getResendClient();
   if (!client) return { status: 'skipped', reason: 'no_api_key' };

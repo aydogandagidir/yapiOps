@@ -15,12 +15,7 @@ export { eArsivFaturaKes } from './efatura/foriba';
 export type { EFaturaResult, FaturaKalemi, FaturaTipi, KesEFaturaInput } from './efatura/foriba';
 export { assignSeat, getSeatUsage, revokeSeat } from './seat-management';
 export type { SeatUsage } from './seat-management';
-export {
-  checkQuota,
-  getActivePlanCode,
-  getMonthlyUsage,
-  recordUsage,
-} from './quota';
+export { checkQuota, getActivePlanCode, getMonthlyUsage, recordUsage } from './quota';
 export type {
   FeatureQuotas,
   QuotaCheckResult,

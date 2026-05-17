@@ -69,7 +69,9 @@ export class ForbiddenError extends Error {
   }
 }
 
-export async function requireUser(cookieStore: CookieStore): Promise<{ user: User; session: Session }> {
+export async function requireUser(
+  cookieStore: CookieStore,
+): Promise<{ user: User; session: Session }> {
   const session = await getServerSession(cookieStore);
   if (!session) {
     throw new AuthRequiredError();

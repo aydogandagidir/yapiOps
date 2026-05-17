@@ -34,42 +34,74 @@ export function ProjeStep({ value, onChange, readOnly }: Props) {
   return (
     <div className="grid gap-4 md:grid-cols-2">
       <Field label={t('ad')} required>
-        <Input value={v.ad ?? ''} onChange={(e) => { update('ad', e.target.value); }} disabled={readOnly} />
+        <Input
+          value={v.ad ?? ''}
+          onChange={(e) => {
+            update('ad', e.target.value);
+          }}
+          disabled={readOnly}
+        />
       </Field>
       <Field label={t('imarDurumu')}>
         <Input
           value={v.imarDurumu ?? ''}
-          onChange={(e) => { update('imarDurumu', e.target.value); }}
+          onChange={(e) => {
+            update('imarDurumu', e.target.value);
+          }}
           disabled={readOnly}
         />
       </Field>
       <Field label={t('il')} required>
-        <Input value={v.il ?? ''} onChange={(e) => { update('il', e.target.value); }} disabled={readOnly} />
+        <Input
+          value={v.il ?? ''}
+          onChange={(e) => {
+            update('il', e.target.value);
+          }}
+          disabled={readOnly}
+        />
       </Field>
       <Field label={t('ilce')} required>
-        <Input value={v.ilce ?? ''} onChange={(e) => { update('ilce', e.target.value); }} disabled={readOnly} />
+        <Input
+          value={v.ilce ?? ''}
+          onChange={(e) => {
+            update('ilce', e.target.value);
+          }}
+          disabled={readOnly}
+        />
       </Field>
       <Field label={t('mahalle')}>
         <Input
           value={v.mahalle ?? ''}
-          onChange={(e) => { update('mahalle', e.target.value); }}
+          onChange={(e) => {
+            update('mahalle', e.target.value);
+          }}
           disabled={readOnly}
         />
       </Field>
       <Field label={t('pafta')}>
         <Input
           value={v.pafta ?? ''}
-          onChange={(e) => { update('pafta', e.target.value); }}
+          onChange={(e) => {
+            update('pafta', e.target.value);
+          }}
           disabled={readOnly}
         />
       </Field>
       <Field label={t('ada')} required>
-        <Input value={v.ada ?? ''} onChange={(e) => { update('ada', e.target.value); }} disabled={readOnly} />
+        <Input
+          value={v.ada ?? ''}
+          onChange={(e) => {
+            update('ada', e.target.value);
+          }}
+          disabled={readOnly}
+        />
       </Field>
       <Field label={t('parsel')} required>
         <Input
           value={v.parsel ?? ''}
-          onChange={(e) => { update('parsel', e.target.value); }}
+          onChange={(e) => {
+            update('parsel', e.target.value);
+          }}
           disabled={readOnly}
         />
       </Field>
@@ -78,7 +110,9 @@ export function ProjeStep({ value, onChange, readOnly }: Props) {
           type="number"
           step="0.00001"
           value={v.koordinat?.lat ?? ''}
-          onChange={(e) => { updateKoordinat('lat', e.target.value); }}
+          onChange={(e) => {
+            updateKoordinat('lat', e.target.value);
+          }}
           disabled={readOnly}
         />
       </Field>
@@ -87,7 +121,9 @@ export function ProjeStep({ value, onChange, readOnly }: Props) {
           type="number"
           step="0.00001"
           value={v.koordinat?.lng ?? ''}
-          onChange={(e) => { updateKoordinat('lng', e.target.value); }}
+          onChange={(e) => {
+            updateKoordinat('lng', e.target.value);
+          }}
           disabled={readOnly}
         />
       </Field>

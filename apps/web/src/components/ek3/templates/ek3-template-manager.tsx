@@ -3,13 +3,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { Ek3TemplateRow } from '@yapiops/ek3/template-source';
 import { cn } from '@yapiops/ui';
-import {
-  CheckCircle2,
-  CloudDownload,
-  FileUp,
-  Loader2,
-  RotateCw,
-} from 'lucide-react';
+import { CheckCircle2, CloudDownload, FileUp, Loader2, RotateCw } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useRef, useState } from 'react';
 
@@ -128,9 +122,7 @@ export function Ek3TemplateManager({ initialTemplates }: Props) {
               <dd className="font-mono text-xs">{active.sha256.slice(0, 16)}…</dd>
               <dt className="text-muted-foreground">{t('fields.fetchedAt')}</dt>
               <dd>
-                {active.fetched_at
-                  ? new Date(active.fetched_at).toLocaleString('tr-TR')
-                  : '—'}
+                {active.fetched_at ? new Date(active.fetched_at).toLocaleString('tr-TR') : '—'}
               </dd>
               {active.source_url && (
                 <>
@@ -181,9 +173,7 @@ export function Ek3TemplateManager({ initialTemplates }: Props) {
                 t('syncResult.failed', { error: sync.data.error ?? '?' })}
             </p>
           )}
-          {sync.isError && (
-            <p className="text-sm text-destructive">{(sync.error).message}</p>
-          )}
+          {sync.isError && <p className="text-sm text-destructive">{sync.error.message}</p>}
         </CardContent>
       </Card>
 
@@ -238,9 +228,7 @@ export function Ek3TemplateManager({ initialTemplates }: Props) {
           {upload.isSuccess && upload.data.deduped && (
             <p className="text-sm text-amber-700">{t('uploadResult.deduped')}</p>
           )}
-          {upload.isError && (
-            <p className="text-sm text-destructive">{(upload.error).message}</p>
-          )}
+          {upload.isError && <p className="text-sm text-destructive">{upload.error.message}</p>}
         </CardContent>
       </Card>
 
@@ -267,15 +255,11 @@ export function Ek3TemplateManager({ initialTemplates }: Props) {
                   <tr key={row.id} className="border-b last:border-0">
                     <td className="py-2 font-medium">{row.version}</td>
                     <td className="py-2">
-                      {row.source === 'official_fetch'
-                        ? t('source.official')
-                        : t('source.manual')}
+                      {row.source === 'official_fetch' ? t('source.official') : t('source.manual')}
                     </td>
                     <td className="py-2 font-mono text-xs">{row.sha256.slice(0, 12)}…</td>
                     <td className="py-2 text-muted-foreground">
-                      {row.fetched_at
-                        ? new Date(row.fetched_at).toLocaleDateString('tr-TR')
-                        : '—'}
+                      {row.fetched_at ? new Date(row.fetched_at).toLocaleDateString('tr-TR') : '—'}
                     </td>
                     <td className="py-2 text-right">
                       {row.is_active ? (

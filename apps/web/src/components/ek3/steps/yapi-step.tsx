@@ -153,7 +153,9 @@ export function YapiStep({ value, onChange, readOnly }: Props) {
             type="number"
             step="0.001"
             value={v.sds ?? ''}
-            onChange={(e) => { update('sds', num(e.target.value)); }}
+            onChange={(e) => {
+              update('sds', num(e.target.value));
+            }}
             disabled={readOnly}
           />
         </Field>
@@ -162,7 +164,9 @@ export function YapiStep({ value, onChange, readOnly }: Props) {
             type="number"
             step="0.001"
             value={v.sd1 ?? ''}
-            onChange={(e) => { update('sd1', num(e.target.value)); }}
+            onChange={(e) => {
+              update('sd1', num(e.target.value));
+            }}
             disabled={readOnly}
           />
         </Field>
@@ -171,7 +175,9 @@ export function YapiStep({ value, onChange, readOnly }: Props) {
             type="number"
             step="0.001"
             value={v.pga ?? ''}
-            onChange={(e) => { update('pga', num(e.target.value)); }}
+            onChange={(e) => {
+              update('pga', num(e.target.value));
+            }}
             disabled={readOnly}
           />
         </Field>

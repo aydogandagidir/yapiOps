@@ -33,30 +33,33 @@ YapıOps Suite'in temel modüllerinden RaporX, ETABS modelinden veri okuyup TBDY
 
 ## Hibrit'in avantajları
 
-| Konu | Hibrit | Tam masaüstü (Etex) | Tam cloud |
-|---|---|---|---|
-| ETABS entegrasyonu | ✓ | ✓ | ✗ |
-| Self-serve abonelik | ✓ | ✗ | ✓ |
-| Multi-seat | ✓ | ✗ | ✓ |
-| AI bağlamı | ✓ | Kısmen | ✓ |
-| Cross-device | Kısmen (cloud kısmı) | ✗ | ✓ |
-| Güncelleme | Otomatik | Manuel | Otomatik |
-| Lisans denetimi | Cloud | Lokal lisans dosyası | Cloud |
-| Audit log | ✓ | ✗ | ✓ |
+| Konu                | Hibrit               | Tam masaüstü (Etex)  | Tam cloud |
+| ------------------- | -------------------- | -------------------- | --------- |
+| ETABS entegrasyonu  | ✓                    | ✓                    | ✗         |
+| Self-serve abonelik | ✓                    | ✗                    | ✓         |
+| Multi-seat          | ✓                    | ✗                    | ✓         |
+| AI bağlamı          | ✓                    | Kısmen               | ✓         |
+| Cross-device        | Kısmen (cloud kısmı) | ✗                    | ✓         |
+| Güncelleme          | Otomatik             | Manuel               | Otomatik  |
+| Lisans denetimi     | Cloud                | Lokal lisans dosyası | Cloud     |
+| Audit log           | ✓                    | ✗                    | ✓         |
 
 ## Sonuçlar
 
 ### Olumlu
+
 - Etex'in "tek-modül masaüstü" konumuna karşı yapısal fark
 - Ek3Pilot ve SpektrumHub ETABS gerekmediği için daha geniş kullanıcı tabanı (mühendislik öğrencileri, sahibi, yapı denetim firmaları)
 - BillingCore modülü direkt cloud'da, e-fatura otomatik
 
 ### Olumsuz
+
 - İki ayrı kod tabanı bakım maliyeti (Bluedev tek kişi → risk)
 - Bridge'in version drift'i (ETABS v21 → v22 gibi geçişler)
 - Network latency (bridge → cloud) kullanıcı deneyimini etkileyebilir
 
 ### Azaltım
+
 - Bridge minimum kod: sadece ETABS okuma + cloud'a iletim. Tüm "akıllı" iş cloud'da.
 - ETABS adapter pattern ile çoklu version desteği
 - Bridge offline mode: network yoksa son sonuçları lokal cache'den göster, online olunca senkron
@@ -64,15 +67,19 @@ YapıOps Suite'in temel modüllerinden RaporX, ETABS modelinden veri okuyup TBDY
 ## Alternatifler reddedildi
 
 ### A1: Tam masaüstü (Etex modeli)
+
 Reddedildi — yukarıdaki "neden tam masaüstü değil" gerekçesiyle.
 
 ### A2: Tam cloud (kullanıcı .EDB upload eder)
+
 Reddedildi — büyük dosya boyutu, yavaş yükleme, mühendis akışını bozar.
 
 ### A3: Web-only ETABS API gateway (cloud'da ETABS host)
+
 Reddedildi — CSI lisans ihlali, maliyet bombası, hukuki risk.
 
 ### A4: Browser eklentisi (Chrome extension ETABS'a bağlanır)
+
 Reddedildi — Chrome COM API'lerine erişemez, mimari uygunsuz.
 
 ## Referanslar

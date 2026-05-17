@@ -13,10 +13,7 @@ export interface SeatUsage {
  * Returns current seat usage for an org. Counts active assignments in
  * `seat_assignments` and reads the plan's seat limit from the catalog.
  */
-export async function getSeatUsage(
-  supabase: SupabaseClient,
-  orgId: string,
-): Promise<SeatUsage> {
+export async function getSeatUsage(supabase: SupabaseClient, orgId: string): Promise<SeatUsage> {
   const { data: sub } = await supabase
     .from('subscriptions')
     .select('plan_code')
@@ -25,7 +22,9 @@ export async function getSeatUsage(
     .limit(1)
     .maybeSingle<{ plan_code: string }>();
 
-  const plan = sub?.plan_code ? getPlan(sub.plan_code as Parameters<typeof getPlan>[0]) : getPlan('free');
+  const plan = sub?.plan_code
+    ? getPlan(sub.plan_code as Parameters<typeof getPlan>[0])
+    : getPlan('free');
 
   const { count } = await supabase
     .from('seat_assignments')
