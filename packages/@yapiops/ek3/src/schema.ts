@@ -14,7 +14,10 @@ const tcknSchema = z
   .regex(/^[1-9]\d{10}$/, 'TCKN 11 haneli, ilk hane 0 olmamalı')
   .refine(isValidTckn, 'TCKN algoritma kontrolü başarısız');
 
-const vknSchema = z.string().regex(/^\d{10}$/, 'VKN 10 haneli sayı olmalı').refine(isValidVkn, 'Geçersiz VKN');
+const vknSchema = z
+  .string()
+  .regex(/^\d{10}$/, 'VKN 10 haneli sayı olmalı')
+  .refine(isValidVkn, 'Geçersiz VKN');
 
 const tcknOrVkn = z
   .object({ tckn: tcknSchema.optional(), vkn: vknSchema.optional() })
@@ -87,17 +90,17 @@ const baseKisi = z.object({
   eposta: z.string().email().optional().or(z.literal('')),
 });
 
-export const SahibiSchema = baseKisi.merge(
-  z.object({ tckn: tcknSchema.optional(), vkn: vknSchema.optional() }),
-).superRefine((v, ctx) => {
-  if (v.tckn == null && v.vkn == null) {
-    ctx.addIssue({
-      code: z.ZodIssueCode.custom,
-      message: 'TCKN veya VKN zorunlu',
-      path: ['tckn'],
-    });
-  }
-});
+export const SahibiSchema = baseKisi
+  .merge(z.object({ tckn: tcknSchema.optional(), vkn: vknSchema.optional() }))
+  .superRefine((v, ctx) => {
+    if (v.tckn == null && v.vkn == null) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'TCKN veya VKN zorunlu',
+        path: ['tckn'],
+      });
+    }
+  });
 
 export const FirmaSchema = z.object({
   unvan: z.string().min(2),

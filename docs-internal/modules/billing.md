@@ -13,6 +13,7 @@ Türkiye'ye özgü self-serve abonelik altyapısı: kart ile online satın al, o
 ## 2. Akış: Müşteri yolculuğu
 
 ### S1: Yeni kayıt → 14 gün ücretsiz deneme
+
 1. Web'de "Ücretsiz dene" → email/şifre
 2. Email doğrulama
 3. Organizasyon kurulumu (firma adı, VKN opsiyonel)
@@ -21,6 +22,7 @@ Türkiye'ye özgü self-serve abonelik altyapısı: kart ile online satın al, o
 6. Deneme süresi sonunda: "Devam etmek için plan seçin" CTA
 
 ### S2: Plan satın alma
+
 1. Plan seç (Solo / Office / Office+AI)
 2. Aylık vs yıllık (yıllık %15 indirim)
 3. Iyzico checkout (kart kaydet)
@@ -30,12 +32,14 @@ Türkiye'ye özgü self-serve abonelik altyapısı: kart ile online satın al, o
 7. E-fatura otomatik kesilir, mail ile iletilir
 
 ### S3: Yenileme
+
 - 3 gün önce email hatırlatma
 - Otomatik tahsilat (kart saklı)
 - Başarısız → 3 retry (1 gün, 3 gün, 7 gün)
 - Hâlâ başarısız → plan downgrade (sadece okuma erişimi)
 
 ### S4: İptal
+
 - Settings → "Aboneliği iptal et"
 - "Neden iptal ediyorsunuz?" anketi (opsiyonel)
 - Mevcut dönem sonuna kadar erişim devam eder
@@ -57,9 +61,14 @@ Türkiye'ye özgü self-serve abonelik altyapısı: kart ile online satın al, o
 
 export async function createSubscription(params: {
   orgId: string;
-  planCode: 'solo_monthly' | 'office_monthly' | 'office_ai_monthly' |
-            'solo_yearly' | 'office_yearly' | 'office_ai_yearly';
-  cardToken: string;          // Iyzico checkout'tan dönen token
+  planCode:
+    | 'solo_monthly'
+    | 'office_monthly'
+    | 'office_ai_monthly'
+    | 'solo_yearly'
+    | 'office_yearly'
+    | 'office_ai_yearly';
+  cardToken: string; // Iyzico checkout'tan dönen token
   customer: CustomerInfo;
 }): Promise<Subscription> {
   // 1. Iyzico subscription customer oluştur
@@ -69,14 +78,14 @@ export async function createSubscription(params: {
     email: params.customer.email,
     gsmNumber: params.customer.phone,
     identityNumber: params.customer.tckn,
-    billingAddress: params.customer.address
+    billingAddress: params.customer.address,
   });
 
   // 2. Subscription başlat
   const subscription = await iyzico.subscription.initialize({
     customerReferenceCode: customer.referenceCode,
     pricingPlanReferenceCode: PLAN_CODES[params.planCode],
-    paymentCard: { cardToken: params.cardToken }
+    paymentCard: { cardToken: params.cardToken },
   });
 
   // 3. DB'ye yaz
@@ -84,10 +93,10 @@ export async function createSubscription(params: {
     org_id: params.orgId,
     iyzico_subscription_id: subscription.referenceCode,
     plan_code: params.planCode,
-    status: 'trialing',  // İlk 14 gün
+    status: 'trialing', // İlk 14 gün
     current_period_start: new Date(),
     current_period_end: addDays(new Date(), 14),
-    trial_end: addDays(new Date(), 14)
+    trial_end: addDays(new Date(), 14),
   });
 
   // 4. Audit
@@ -143,6 +152,7 @@ export async function POST(req: Request) {
 **Birinci tercih:** Foriba (https://www.foriba.com/) — geniş API, Türkçe doküman, KOBİ dostu
 
 **Alternatifler:**
+
 - Logo e-Fatura (Logo Yazılım)
 - Mikro Yazılım
 - BulutFatura
@@ -162,19 +172,21 @@ export async function eArşivFaturaKes(payment: PaymentRecord): Promise<EFaturaR
     aliciAdSoyad: payment.org.name,
     aliciAdres: payment.org.billingAddress,
 
-    kalemler: [{
-      ad: getPlanName(payment.plan_code),
-      miktar: 1,
-      birim: 'AY',
-      birimFiyat: payment.amount_try / 1.20,  // KDV hariç
-      kdvOrani: 20,
-      kdvTutari: payment.amount_try - (payment.amount_try / 1.20),
-      toplam: payment.amount_try
-    }],
+    kalemler: [
+      {
+        ad: getPlanName(payment.plan_code),
+        miktar: 1,
+        birim: 'AY',
+        birimFiyat: payment.amount_try / 1.2, // KDV hariç
+        kdvOrani: 20,
+        kdvTutari: payment.amount_try - payment.amount_try / 1.2,
+        toplam: payment.amount_try,
+      },
+    ],
 
     odenenTutar: payment.amount_try,
     odemeYontemi: 'KREDI_KARTI',
-    duzenlenmeTarihi: new Date()
+    duzenlenmeTarihi: new Date(),
   };
 
   const result = await foriba.fatura.olustur(fatura);
@@ -186,7 +198,7 @@ export async function eArşivFaturaKes(payment: PaymentRecord): Promise<EFaturaR
     uuid: result.uuid,
     pdfUrl: result.pdfUrl,
     xmlUrl: result.xmlUrl,
-    eTtnNumber: result.eTtnNumber
+    eTtnNumber: result.eTtnNumber,
   };
 }
 ```
@@ -219,8 +231,8 @@ export const PLANS = {
       spektrumhub: { enabled: false },
       copilot: { enabled: false },
       audit: { enabled: false },
-      sso: false
-    }
+      sso: false,
+    },
   },
   solo_monthly: {
     code: 'solo_monthly',
@@ -233,8 +245,8 @@ export const PLANS = {
       spektrumhub: { enabled: false },
       copilot: { enabled: false },
       audit: { enabled: true, retention: '90d' },
-      sso: false
-    }
+      sso: false,
+    },
   },
   office_monthly: {
     code: 'office_monthly',
@@ -247,8 +259,8 @@ export const PLANS = {
       spektrumhub: { enabled: true, monthlyLimit: 30 },
       copilot: { enabled: false },
       audit: { enabled: true, retention: '5y' },
-      sso: false
-    }
+      sso: false,
+    },
   },
   office_ai_monthly: {
     code: 'office_ai_monthly',
@@ -261,14 +273,14 @@ export const PLANS = {
       spektrumhub: { enabled: true, monthlyLimit: -1 },
       copilot: { enabled: true, monthlyLimit: 200 },
       audit: { enabled: true, retention: '5y' },
-      sso: false
-    }
+      sso: false,
+    },
   },
   enterprise: {
     code: 'enterprise',
     name: 'Kurumsal',
-    monthlyPrice: null,  // Özel
-    seats: 10,           // Başlangıç, +ekleme mümkün
+    monthlyPrice: null, // Özel
+    seats: 10, // Başlangıç, +ekleme mümkün
     features: {
       // Tümü sınırsız
       ek3pilot: { enabled: true, monthlyLimit: -1 },
@@ -277,9 +289,9 @@ export const PLANS = {
       copilot: { enabled: true, monthlyLimit: -1 },
       audit: { enabled: true, retention: '10y' },
       sso: true,
-      sla: true
-    }
-  }
+      sla: true,
+    },
+  },
 } as const;
 ```
 
@@ -332,7 +344,7 @@ export async function checkAndIncrementUsage(params: {
       reason: 'MONTHLY_LIMIT_REACHED',
       limit,
       current: currentUsage,
-      upgradeOptions: getUpgradeOptions(subscription.plan_code)
+      upgradeOptions: getUpgradeOptions(subscription.plan_code),
     };
   }
 

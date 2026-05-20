@@ -149,9 +149,7 @@ export function ProjectForm() {
             )}
             {t('createButton')}
           </Button>
-          {create.isError && (
-            <p className="text-sm text-destructive">{(create.error).message}</p>
-          )}
+          {create.isError && <p className="text-sm text-destructive">{create.error.message}</p>}
         </CardContent>
       </Card>
     </div>

@@ -16,7 +16,6 @@ import { Check, Loader2 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
-
 import { DenetimStep } from './steps/denetim-step';
 import { InsaatStep } from './steps/insaat-step';
 import { MuteahhitStep } from './steps/muteahhit-step';
@@ -89,14 +88,14 @@ export function Ek3Wizard({ ek3Id, initialData, initialStatus }: Ek3WizardProps)
     },
   });
 
-  useEffect(() => () => {
-    if (pendingTimeout.current) clearTimeout(pendingTimeout.current);
-  }, []);
+  useEffect(
+    () => () => {
+      if (pendingTimeout.current) clearTimeout(pendingTimeout.current);
+    },
+    [],
+  );
 
-  const updateStep = <K extends keyof Ek3FormDataPartial>(
-    key: K,
-    value: Ek3FormDataPartial[K],
-  ) => {
+  const updateStep = <K extends keyof Ek3FormDataPartial>(key: K, value: Ek3FormDataPartial[K]) => {
     if (readOnly) return;
     setFormData((prev) => ({ ...prev, [key]: value }));
     if (pendingTimeout.current) clearTimeout(pendingTimeout.current);
@@ -117,42 +116,54 @@ export function Ek3Wizard({ ek3Id, initialData, initialStatus }: Ek3WizardProps)
           {step === 'proje' && (
             <ProjeStep
               value={formData.proje}
-              onChange={(v) => { updateStep('proje', v); }}
+              onChange={(v) => {
+                updateStep('proje', v);
+              }}
               readOnly={readOnly}
             />
           )}
           {step === 'yapi' && (
             <YapiStep
               value={formData.yapi}
-              onChange={(v) => { updateStep('yapi', v); }}
+              onChange={(v) => {
+                updateStep('yapi', v);
+              }}
               readOnly={readOnly}
             />
           )}
           {step === 'insaat' && (
             <InsaatStep
               value={formData.insaat}
-              onChange={(v) => { updateStep('insaat', v); }}
+              onChange={(v) => {
+                updateStep('insaat', v);
+              }}
               readOnly={readOnly}
             />
           )}
           {step === 'sahibi' && (
             <SahibiStep
               value={formData.sahibi}
-              onChange={(v) => { updateStep('sahibi', v); }}
+              onChange={(v) => {
+                updateStep('sahibi', v);
+              }}
               readOnly={readOnly}
             />
           )}
           {step === 'muteahhit' && (
             <MuteahhitStep
               value={formData.muteahhit}
-              onChange={(v) => { updateStep('muteahhit', v); }}
+              onChange={(v) => {
+                updateStep('muteahhit', v);
+              }}
               readOnly={readOnly}
             />
           )}
           {step === 'denetim' && (
             <DenetimStep
               value={formData.denetim}
-              onChange={(v) => { updateStep('denetim', v); }}
+              onChange={(v) => {
+                updateStep('denetim', v);
+              }}
               readOnly={readOnly}
             />
           )}
@@ -209,22 +220,16 @@ export function Ek3Wizard({ ek3Id, initialData, initialStatus }: Ek3WizardProps)
 
       {generateMutation.isError && (
         <p className="text-sm text-destructive">
-          {(generateMutation.error).message === 'quota_exceeded'
+          {generateMutation.error.message === 'quota_exceeded'
             ? t('errors.quotaExceeded', { used: 0, limit: 0 })
-            : (generateMutation.error).message}
+            : generateMutation.error.message}
         </p>
       )}
     </div>
   );
 }
 
-function Stepper({
-  current,
-  onChange,
-}: {
-  current: Ek3Step;
-  onChange: (s: Ek3Step) => void;
-}) {
+function Stepper({ current, onChange }: { current: Ek3Step; onChange: (s: Ek3Step) => void }) {
   const t = useTranslations('ek3pilot.wizard.stepLabels');
   const currentIdx = EK3_STEPS.indexOf(current);
 

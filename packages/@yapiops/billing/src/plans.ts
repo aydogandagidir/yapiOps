@@ -46,7 +46,13 @@ export const PLAN_CATALOG: Record<PlanCode, PlanDefinition> = {
     priceTry: 1500,
     iyzicoRefEnvKey: 'IYZICO_PLAN_SOLO_MONTHLY',
     seatLimit: 1,
-    features: { ek3: true, raporx: true, spektrumhub: false, copilot: false, monthlyReportLimit: 5 },
+    features: {
+      ek3: true,
+      raporx: true,
+      spektrumhub: false,
+      copilot: false,
+      monthlyReportLimit: 5,
+    },
   },
   solo_yearly: {
     code: 'solo_yearly',
@@ -55,7 +61,13 @@ export const PLAN_CATALOG: Record<PlanCode, PlanDefinition> = {
     priceTry: 15300,
     iyzicoRefEnvKey: 'IYZICO_PLAN_SOLO_YEARLY',
     seatLimit: 1,
-    features: { ek3: true, raporx: true, spektrumhub: false, copilot: false, monthlyReportLimit: 5 },
+    features: {
+      ek3: true,
+      raporx: true,
+      spektrumhub: false,
+      copilot: false,
+      monthlyReportLimit: 5,
+    },
   },
   office_monthly: {
     code: 'office_monthly',
@@ -64,7 +76,13 @@ export const PLAN_CATALOG: Record<PlanCode, PlanDefinition> = {
     priceTry: 2500,
     iyzicoRefEnvKey: 'IYZICO_PLAN_OFFICE_MONTHLY',
     seatLimit: 3,
-    features: { ek3: true, raporx: true, spektrumhub: true, copilot: false, monthlyReportLimit: 50 },
+    features: {
+      ek3: true,
+      raporx: true,
+      spektrumhub: true,
+      copilot: false,
+      monthlyReportLimit: 50,
+    },
   },
   office_yearly: {
     code: 'office_yearly',
@@ -73,7 +91,13 @@ export const PLAN_CATALOG: Record<PlanCode, PlanDefinition> = {
     priceTry: 25500,
     iyzicoRefEnvKey: 'IYZICO_PLAN_OFFICE_YEARLY',
     seatLimit: 3,
-    features: { ek3: true, raporx: true, spektrumhub: true, copilot: false, monthlyReportLimit: 50 },
+    features: {
+      ek3: true,
+      raporx: true,
+      spektrumhub: true,
+      copilot: false,
+      monthlyReportLimit: 50,
+    },
   },
   office_ai_monthly: {
     code: 'office_ai_monthly',
@@ -82,7 +106,13 @@ export const PLAN_CATALOG: Record<PlanCode, PlanDefinition> = {
     priceTry: 3500,
     iyzicoRefEnvKey: 'IYZICO_PLAN_OFFICE_AI_MONTHLY',
     seatLimit: 5,
-    features: { ek3: true, raporx: true, spektrumhub: true, copilot: true, monthlyReportLimit: null },
+    features: {
+      ek3: true,
+      raporx: true,
+      spektrumhub: true,
+      copilot: true,
+      monthlyReportLimit: null,
+    },
   },
   office_ai_yearly: {
     code: 'office_ai_yearly',
@@ -91,7 +121,13 @@ export const PLAN_CATALOG: Record<PlanCode, PlanDefinition> = {
     priceTry: 35700,
     iyzicoRefEnvKey: 'IYZICO_PLAN_OFFICE_AI_YEARLY',
     seatLimit: 5,
-    features: { ek3: true, raporx: true, spektrumhub: true, copilot: true, monthlyReportLimit: null },
+    features: {
+      ek3: true,
+      raporx: true,
+      spektrumhub: true,
+      copilot: true,
+      monthlyReportLimit: null,
+    },
   },
   enterprise: {
     code: 'enterprise',
@@ -100,7 +136,13 @@ export const PLAN_CATALOG: Record<PlanCode, PlanDefinition> = {
     priceTry: 0,
     iyzicoRefEnvKey: null,
     seatLimit: 10,
-    features: { ek3: true, raporx: true, spektrumhub: true, copilot: true, monthlyReportLimit: null },
+    features: {
+      ek3: true,
+      raporx: true,
+      spektrumhub: true,
+      copilot: true,
+      monthlyReportLimit: null,
+    },
   },
 };
 

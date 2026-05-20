@@ -126,9 +126,7 @@ export function TeamList({
                   <tr key={inv.id} className="border-t">
                     <td className="py-2">{inv.email}</td>
                     <td className="py-2 uppercase text-xs">{inv.role}</td>
-                    <td className="py-2">
-                      {new Date(inv.expires_at).toLocaleDateString('tr-TR')}
-                    </td>
+                    <td className="py-2">{new Date(inv.expires_at).toLocaleDateString('tr-TR')}</td>
                   </tr>
                 ))}
               </tbody>

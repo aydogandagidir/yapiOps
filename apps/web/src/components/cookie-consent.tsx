@@ -36,8 +36,8 @@ export function CookieConsent() {
       className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-2xl rounded-lg border bg-background p-4 shadow-lg md:p-6"
     >
       <p className="mb-3 text-sm">
-        YapıOps, deneyiminizi geliştirmek için anonimleştirilmiş kullanım analitiği toplar
-        (KVKK uyumlu, EU veri merkezinde saklanır). Pazarlama amaçlı çerez kullanmıyoruz.
+        YapıOps, deneyiminizi geliştirmek için anonimleştirilmiş kullanım analitiği toplar (KVKK
+        uyumlu, EU veri merkezinde saklanır). Pazarlama amaçlı çerez kullanmıyoruz.
       </p>
       <div className="flex justify-end gap-2">
         <Button variant="outline" size="sm" onClick={reject}>

@@ -25,7 +25,9 @@ export function InsaatStep({ value, onChange, readOnly }: Props) {
       <Field label={t('yapiRuhsatNo')}>
         <Input
           value={v.yapiRuhsatNo ?? ''}
-          onChange={(e) => { update('yapiRuhsatNo', e.target.value); }}
+          onChange={(e) => {
+            update('yapiRuhsatNo', e.target.value);
+          }}
           disabled={readOnly}
         />
       </Field>
@@ -33,7 +35,9 @@ export function InsaatStep({ value, onChange, readOnly }: Props) {
         <Input
           type="date"
           value={v.yapiRuhsatTarihi ?? ''}
-          onChange={(e) => { update('yapiRuhsatTarihi', e.target.value); }}
+          onChange={(e) => {
+            update('yapiRuhsatTarihi', e.target.value);
+          }}
           disabled={readOnly}
         />
       </Field>
@@ -41,7 +45,9 @@ export function InsaatStep({ value, onChange, readOnly }: Props) {
         <Input
           type="date"
           value={v.baslamaTarihi ?? ''}
-          onChange={(e) => { update('baslamaTarihi', e.target.value); }}
+          onChange={(e) => {
+            update('baslamaTarihi', e.target.value);
+          }}
           disabled={readOnly}
         />
       </Field>
@@ -49,7 +55,9 @@ export function InsaatStep({ value, onChange, readOnly }: Props) {
         <Input
           type="date"
           value={v.bitisTarihi ?? ''}
-          onChange={(e) => { update('bitisTarihi', e.target.value); }}
+          onChange={(e) => {
+            update('bitisTarihi', e.target.value);
+          }}
           disabled={readOnly}
         />
       </Field>
@@ -57,7 +65,9 @@ export function InsaatStep({ value, onChange, readOnly }: Props) {
         <Input
           type="number"
           value={v.toplamSureGun ?? ''}
-          onChange={(e) => { update('toplamSureGun', Number(e.target.value)); }}
+          onChange={(e) => {
+            update('toplamSureGun', Number(e.target.value));
+          }}
           disabled={readOnly}
         />
       </Field>
@@ -65,7 +75,9 @@ export function InsaatStep({ value, onChange, readOnly }: Props) {
         <Input
           type="number"
           value={v.maliyetTry ?? ''}
-          onChange={(e) => { update('maliyetTry', Number(e.target.value)); }}
+          onChange={(e) => {
+            update('maliyetTry', Number(e.target.value));
+          }}
           disabled={readOnly}
         />
       </Field>

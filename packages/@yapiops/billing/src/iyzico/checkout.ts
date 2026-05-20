@@ -5,7 +5,6 @@ import { calculateVat } from '../plans';
 
 import { getIyzipayClient } from './client';
 
-
 export interface CheckoutInput {
   orgId: string;
   planCode: PlanCode;
@@ -93,7 +92,15 @@ export async function createCheckoutForm(input: CheckoutInput): Promise<Checkout
       subscriptionCheckoutForm: {
         initialize: (
           req: typeof request,
-          cb: (err: Error | null, result: { token: string; checkoutFormContent: string; tokenExpireTime: number; paymentPageUrl: string }) => void,
+          cb: (
+            err: Error | null,
+            result: {
+              token: string;
+              checkoutFormContent: string;
+              tokenExpireTime: number;
+              paymentPageUrl: string;
+            },
+          ) => void,
         ) => void;
       };
     };

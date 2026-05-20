@@ -12,9 +12,27 @@ import { useRouter } from '@/i18n/navigation';
 type PaidPlan = Exclude<PlanCode, 'free' | 'enterprise'>;
 
 const TIERS = [
-  { tier: 'solo', monthly: 'solo_monthly', yearly: 'solo_yearly', label: 'Solo', features: ['Ek3Pilot sınırsız', '5 RaporX/ay', '1 kullanıcı'] },
-  { tier: 'office', monthly: 'office_monthly', yearly: 'office_yearly', label: 'Office', features: ['Tüm modüller', '50 rapor/ay', '3 kullanıcı'] },
-  { tier: 'office_ai', monthly: 'office_ai_monthly', yearly: 'office_ai_yearly', label: 'Office + AI', features: ['Tüm modüller', 'TBDY-Copilot', 'Sınırsız rapor', '5 kullanıcı'] },
+  {
+    tier: 'solo',
+    monthly: 'solo_monthly',
+    yearly: 'solo_yearly',
+    label: 'Solo',
+    features: ['Ek3Pilot sınırsız', '5 RaporX/ay', '1 kullanıcı'],
+  },
+  {
+    tier: 'office',
+    monthly: 'office_monthly',
+    yearly: 'office_yearly',
+    label: 'Office',
+    features: ['Tüm modüller', '50 rapor/ay', '3 kullanıcı'],
+  },
+  {
+    tier: 'office_ai',
+    monthly: 'office_ai_monthly',
+    yearly: 'office_ai_yearly',
+    label: 'Office + AI',
+    features: ['Tüm modüller', 'TBDY-Copilot', 'Sınırsız rapor', '5 kullanıcı'],
+  },
 ] as const;
 
 export default function UpgradePage() {
@@ -53,14 +71,18 @@ export default function UpgradePage() {
       <div className="flex gap-2 rounded-md bg-muted p-1 w-fit">
         <button
           type="button"
-          onClick={() => { setInterval('monthly'); }}
+          onClick={() => {
+            setInterval('monthly');
+          }}
           className={`rounded px-3 py-1 text-sm ${interval === 'monthly' ? 'bg-background shadow' : 'text-muted-foreground'}`}
         >
           Aylık
         </button>
         <button
           type="button"
-          onClick={() => { setInterval('yearly'); }}
+          onClick={() => {
+            setInterval('yearly');
+          }}
           className={`rounded px-3 py-1 text-sm ${interval === 'yearly' ? 'bg-background shadow' : 'text-muted-foreground'}`}
         >
           Yıllık (%15 indirim)
@@ -69,14 +91,15 @@ export default function UpgradePage() {
 
       <div className="grid gap-4 md:grid-cols-3">
         {TIERS.map((tier) => {
-          const code = (interval === 'monthly' ? tier.monthly : tier.yearly);
+          const code = interval === 'monthly' ? tier.monthly : tier.yearly;
           const plan: PlanDefinition = PLAN_CATALOG[code];
           return (
             <Card key={tier.tier}>
               <CardHeader>
                 <CardTitle>{tier.label}</CardTitle>
                 <CardDescription>
-                  ₺{plan.priceTry.toLocaleString('tr-TR')} {interval === 'monthly' ? '/ ay' : '/ yıl'}
+                  ₺{plan.priceTry.toLocaleString('tr-TR')}{' '}
+                  {interval === 'monthly' ? '/ ay' : '/ yıl'}
                   <span className="block text-xs text-muted-foreground">+ KDV %20</span>
                 </CardDescription>
               </CardHeader>
@@ -104,7 +127,12 @@ export default function UpgradePage() {
         })}
       </div>
 
-      <Button variant="outline" onClick={() => { router.back(); }}>
+      <Button
+        variant="outline"
+        onClick={() => {
+          router.back();
+        }}
+      >
         Geri
       </Button>
     </div>

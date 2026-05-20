@@ -57,7 +57,7 @@ export function ProjectList() {
           {isLoading ? (
             <p className="text-sm text-muted-foreground">…</p>
           ) : error ? (
-            <p className="text-sm text-destructive">Hata: {(error).message}</p>
+            <p className="text-sm text-destructive">Hata: {error.message}</p>
           ) : !data || data.length === 0 ? (
             <p className="text-sm text-muted-foreground">{t('empty')}</p>
           ) : (
@@ -79,9 +79,7 @@ export function ProjectList() {
                       {[row.il, row.ilce].filter(Boolean).join(' / ') || '—'}
                     </td>
                     <td className="py-2 text-muted-foreground">
-                      {row.ada_no && row.parsel_no
-                        ? `${row.ada_no}/${row.parsel_no}`
-                        : '—'}
+                      {row.ada_no && row.parsel_no ? `${row.ada_no}/${row.parsel_no}` : '—'}
                     </td>
                     <td className="py-2 text-muted-foreground">
                       {new Date(row.updated_at).toLocaleDateString('tr-TR')}

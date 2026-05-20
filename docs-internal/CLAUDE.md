@@ -15,12 +15,12 @@
 
 ### 1.2 Rakipler ve farklılaştırma
 
-| Rakip | Tip | Bizim farkımız |
-|---|---|---|
-| **Etex (Rufai Demir)** | Tek-modül masaüstü | Çok-modül cloud-hibrit + AI + Ek-3 + multi-source rapor |
-| **ProtaStructure / ideCAD** | Tam paket statik yazılım | Eklenti değil, iş-akışı katmanı; mevcut yazılımları tüketen |
-| **Sadık Özbaba SPA** | Çelik birleşim hesabı | Farklı segment; çakışma yok |
-| **Mühendis Akademi / FK Akademi** | Eğitim | Partner adayı, rakip değil |
+| Rakip                             | Tip                      | Bizim farkımız                                              |
+| --------------------------------- | ------------------------ | ----------------------------------------------------------- |
+| **Etex (Rufai Demir)**            | Tek-modül masaüstü       | Çok-modül cloud-hibrit + AI + Ek-3 + multi-source rapor     |
+| **ProtaStructure / ideCAD**       | Tam paket statik yazılım | Eklenti değil, iş-akışı katmanı; mevcut yazılımları tüketen |
+| **Sadık Özbaba SPA**              | Çelik birleşim hesabı    | Farklı segment; çakışma yok                                 |
+| **Mühendis Akademi / FK Akademi** | Eğitim                   | Partner adayı, rakip değil                                  |
 
 **Üç sözcüklük farkımız:** **Çok-modül, AI-destekli, self-serve.**
 
@@ -177,64 +177,64 @@ yapiops/
 
 ### 4.1 Frontend (Web)
 
-| Katman | Teknoloji | Sebep |
-|---|---|---|
-| Framework | Next.js 15 (App Router) | Bluedev mevcut pattern, RSC + streaming |
-| UI Kit | shadcn/ui + Tailwind CSS 4 | Mevcut Bluedev standardı |
-| State | Zustand + TanStack Query | Hafif + server state ayrımı |
-| Form | react-hook-form + Zod | Tip güvenliği |
-| Tablo | TanStack Table | Rapor görüntüleme |
-| 3D Viewer | Three.js + react-three-fiber | RaporX'te ETABS modeli görselleştirme |
-| Grafik | Recharts | Ötleme/spektrum grafikleri |
-| i18n | next-intl | TR/EN |
-| Analytics | PostHog (self-hosted) | KVKK uyumlu |
+| Katman    | Teknoloji                    | Sebep                                   |
+| --------- | ---------------------------- | --------------------------------------- |
+| Framework | Next.js 15 (App Router)      | Bluedev mevcut pattern, RSC + streaming |
+| UI Kit    | shadcn/ui + Tailwind CSS 4   | Mevcut Bluedev standardı                |
+| State     | Zustand + TanStack Query     | Hafif + server state ayrımı             |
+| Form      | react-hook-form + Zod        | Tip güvenliği                           |
+| Tablo     | TanStack Table               | Rapor görüntüleme                       |
+| 3D Viewer | Three.js + react-three-fiber | RaporX'te ETABS modeli görselleştirme   |
+| Grafik    | Recharts                     | Ötleme/spektrum grafikleri              |
+| i18n      | next-intl                    | TR/EN                                   |
+| Analytics | PostHog (self-hosted)        | KVKK uyumlu                             |
 
 ### 4.2 Backend / Veritabanı
 
-| Katman | Teknoloji | Sebep |
-|---|---|---|
-| API | Next.js API Routes + tRPC | Tip güvenli end-to-end |
-| Veritabanı | Supabase Postgres 16 | Bluedev pattern'i, RLS, gerçek zamanlı |
-| Auth | Supabase Auth | Email/şifre + sosyal + 2FA |
-| Storage | Supabase Storage | ETABS dosyaları, raporlar, PDF'ler |
-| Vector DB | Supabase pgvector | TBDY-Copilot RAG |
-| Cache / Rate Limit | Upstash Redis | Serverless uyumlu |
-| Queue | Inngest | Background job (rapor üretimi, PDF render) |
-| Email | Resend | Transactional + marketing |
+| Katman             | Teknoloji                 | Sebep                                      |
+| ------------------ | ------------------------- | ------------------------------------------ |
+| API                | Next.js API Routes + tRPC | Tip güvenli end-to-end                     |
+| Veritabanı         | Supabase Postgres 16      | Bluedev pattern'i, RLS, gerçek zamanlı     |
+| Auth               | Supabase Auth             | Email/şifre + sosyal + 2FA                 |
+| Storage            | Supabase Storage          | ETABS dosyaları, raporlar, PDF'ler         |
+| Vector DB          | Supabase pgvector         | TBDY-Copilot RAG                           |
+| Cache / Rate Limit | Upstash Redis             | Serverless uyumlu                          |
+| Queue              | Inngest                   | Background job (rapor üretimi, PDF render) |
+| Email              | Resend                    | Transactional + marketing                  |
 
 ### 4.3 AI Katmanı
 
-| Bileşen | Model | Kullanım |
-|---|---|---|
-| Karmaşık akıl yürütme | Claude Opus 4.7 | TBDY madde yorumu, peer-review, hata analizi |
-| Hızlı sorgular | Claude Haiku 4.5 | Sınıflandırma, basit özet, ön-filtre |
-| Embedding | OpenAI text-embedding-3-large | RAG vektörleri (Claude embedding desteklemiyor) |
-| Orchestration | Claude Managed Agents | Multi-step iş akışları (Nisan 2026 launch) |
-| Prompt cache | Anthropic prompt caching | %70+ maliyet düşüşü (GümrükAI'da kanıtlı) |
+| Bileşen               | Model                         | Kullanım                                        |
+| --------------------- | ----------------------------- | ----------------------------------------------- |
+| Karmaşık akıl yürütme | Claude Opus 4.7               | TBDY madde yorumu, peer-review, hata analizi    |
+| Hızlı sorgular        | Claude Haiku 4.5              | Sınıflandırma, basit özet, ön-filtre            |
+| Embedding             | OpenAI text-embedding-3-large | RAG vektörleri (Claude embedding desteklemiyor) |
+| Orchestration         | Claude Managed Agents         | Multi-step iş akışları (Nisan 2026 launch)      |
+| Prompt cache          | Anthropic prompt caching      | %70+ maliyet düşüşü (GümrükAI'da kanıtlı)       |
 
 ### 4.4 Masaüstü Bridge
 
-| Katman | Teknoloji | Sebep |
-|---|---|---|
-| Framework | .NET 8 + WPF | ETABS COM/.NET API uyumu |
-| ETABS API | ETABSv1.dll (OAPI v21+) | CSI resmi API |
-| Auth | OAuth 2.0 PKCE + cloud token | Browser'da giriş, token masaüstüne döner |
-| Update | Squirrel.Windows | Otomatik güncelleme |
-| Installer | WiX Toolset | MSI üretimi, kurumsal deploy |
-| Crash reporting | Sentry | Hata izleme |
+| Katman          | Teknoloji                    | Sebep                                    |
+| --------------- | ---------------------------- | ---------------------------------------- |
+| Framework       | .NET 8 + WPF                 | ETABS COM/.NET API uyumu                 |
+| ETABS API       | ETABSv1.dll (OAPI v21+)      | CSI resmi API                            |
+| Auth            | OAuth 2.0 PKCE + cloud token | Browser'da giriş, token masaüstüne döner |
+| Update          | Squirrel.Windows             | Otomatik güncelleme                      |
+| Installer       | WiX Toolset                  | MSI üretimi, kurumsal deploy             |
+| Crash reporting | Sentry                       | Hata izleme                              |
 
 ### 4.5 DevOps & Hosting
 
-| Katman | Teknoloji | Maliyet (tahmin) |
-|---|---|---|
-| Web hosting | Vercel Pro | ~$20/ay başlangıç |
-| Veritabanı | Supabase Pro | $25/ay başlangıç, $599+ scale |
-| Redis | Upstash | Pay-as-you-go ~$10/ay |
-| AI | Anthropic API | Değişken; hedef ARR'nin %5–8'i |
-| Email | Resend | $20/ay |
-| CI/CD | GitHub Actions | Ücretsiz tier yeterli |
-| Monitoring | Sentry + PostHog | $50/ay birlikte |
-| **Toplam başlangıç** | | **~$200/ay** |
+| Katman               | Teknoloji        | Maliyet (tahmin)               |
+| -------------------- | ---------------- | ------------------------------ |
+| Web hosting          | Vercel Pro       | ~$20/ay başlangıç              |
+| Veritabanı           | Supabase Pro     | $25/ay başlangıç, $599+ scale  |
+| Redis                | Upstash          | Pay-as-you-go ~$10/ay          |
+| AI                   | Anthropic API    | Değişken; hedef ARR'nin %5–8'i |
+| Email                | Resend           | $20/ay                         |
+| CI/CD                | GitHub Actions   | Ücretsiz tier yeterli          |
+| Monitoring           | Sentry + PostHog | $50/ay birlikte                |
+| **Toplam başlangıç** |                  | **~$200/ay**                   |
 
 ---
 
@@ -429,6 +429,7 @@ yapiops-storage/
 ### 6.1 Auth akışı
 
 **Web kullanıcısı:**
+
 1. Email/şifre veya Google ile kayıt
 2. Email doğrulama
 3. Organizasyon oluşturma (ilk kullanıcı = owner)
@@ -436,6 +437,7 @@ yapiops-storage/
 5. JWT token (Supabase Auth) — 1 saat erişim, 1 hafta refresh
 
 **Masaüstü Bridge:**
+
 1. Bridge başladığında "Cloud'a bağlan" butonu
 2. Browser açılır → cloud login → callback URL
 3. OAuth 2.0 PKCE ile token bridge'e döner
@@ -444,12 +446,12 @@ yapiops-storage/
 
 ### 6.2 Rol matrisi
 
-| Rol | Proje | Rapor | Ek-3 | Billing | Org ayarları | Audit log |
-|---|---|---|---|---|---|---|
-| Owner | CRUD | CRUD | CRUD | RW | RW | R |
-| Admin | CRUD | CRUD | CRUD | R | RW | R |
-| Engineer | CRUD (atanan) | CRUD (kendi) | CRUD (kendi) | - | - | - |
-| Auditor | R | R | R | - | - | - |
+| Rol      | Proje         | Rapor        | Ek-3         | Billing | Org ayarları | Audit log |
+| -------- | ------------- | ------------ | ------------ | ------- | ------------ | --------- |
+| Owner    | CRUD          | CRUD         | CRUD         | RW      | RW           | R         |
+| Admin    | CRUD          | CRUD         | CRUD         | R       | RW           | R         |
+| Engineer | CRUD (atanan) | CRUD (kendi) | CRUD (kendi) | -       | -            | -         |
+| Auditor  | R             | R            | R            | -       | -            | -         |
 
 ---
 
@@ -471,7 +473,7 @@ export interface ModuleContext {
 export interface ModuleService<TInput, TOutput> {
   execute(ctx: ModuleContext, input: TInput): Promise<TOutput>;
   validateInput(input: TInput): ValidationResult;
-  estimateCost(input: TInput): CostEstimate;  // AI modülleri için
+  estimateCost(input: TInput): CostEstimate; // AI modülleri için
 }
 ```
 
@@ -485,14 +487,14 @@ export async function POST(req: Request, { params }) {
   // 1. RaporX: TBDY hesaplamaları
   const reportResult = await raporxService.execute(ctx, {
     etabsModelId: params.id,
-    checks: ['perde_kesme', 'oteleme', 'ikinci_mertebe']
+    checks: ['perde_kesme', 'oteleme', 'ikinci_mertebe'],
   });
 
   // 2. TBDY-Copilot: AI yorum (sadece "office+ai" planda)
   if (ctx.org.subscription_tier === 'office_ai') {
     const aiSummary = await copilotService.execute(ctx, {
       reportData: reportResult,
-      style: 'professional_turkish'
+      style: 'professional_turkish',
     });
     reportResult.ai_summary = aiSummary.text;
   }
@@ -500,7 +502,7 @@ export async function POST(req: Request, { params }) {
   // 3. PDF render (queue'ya at)
   await inngest.send({
     name: 'report.render-pdf',
-    data: { reportId: reportResult.id }
+    data: { reportId: reportResult.id },
   });
 
   // 4. Audit
@@ -544,14 +546,14 @@ GümrükAI'daki pattern'i tekrarlıyoruz:
 ```typescript
 const systemPrompt = {
   type: 'text',
-  text: TBDY_SYSTEM_PROMPT,        // ~15K token, sabit
-  cache_control: { type: 'ephemeral' }
+  text: TBDY_SYSTEM_PROMPT, // ~15K token, sabit
+  cache_control: { type: 'ephemeral' },
 };
 
 const tbdyContext = {
   type: 'text',
-  text: relevantTBDYChunks,         // ~20K token, sorguya göre değişir ama 1 oturumda sabit
-  cache_control: { type: 'ephemeral' }
+  text: relevantTBDYChunks, // ~20K token, sorguya göre değişir ama 1 oturumda sabit
+  cache_control: { type: 'ephemeral' },
 };
 
 // İlk çağrı: tam maliyet
@@ -611,6 +613,7 @@ const tbdyContext = {
 ### 9.2 Mühendislik sorumluluğu sınırı
 
 Kullanım Şartları'nda netleştirilecek:
+
 - Yazılım hesaplama yardımcısıdır, mühendislik kararı değildir
 - TBDY uygunluğu kontrolü mühendisin sorumluluğundadır
 - Audit log mühendislik karar zincirini koruma amaçlıdır
@@ -630,12 +633,12 @@ Kullanım Şartları'nda netleştirilecek:
 
 ### 10.1 Ortamlar
 
-| Ortam | URL | Amaç |
-|---|---|---|
-| Local | localhost:3000 | Geliştirme |
-| Preview | yapiops-pr-{n}.vercel.app | PR review |
-| Staging | staging.yapiops.com | QA |
-| Production | yapiops.com | Canlı |
+| Ortam      | URL                       | Amaç       |
+| ---------- | ------------------------- | ---------- |
+| Local      | localhost:3000            | Geliştirme |
+| Preview    | yapiops-pr-{n}.vercel.app | PR review  |
+| Staging    | staging.yapiops.com       | QA         |
+| Production | yapiops.com               | Canlı      |
 
 ### 10.2 CI/CD
 
@@ -645,23 +648,23 @@ name: CI/CD
 on: [push, pull_request]
 
 jobs:
-  lint:        # ESLint + Prettier + TypeScript check
-  test:        # Vitest unit tests
-  test-tbdy:   # TBDY hesaplama doğrulama (kritik)
-  build:       # Turbo build
-  e2e:         # Playwright (sadece main branch'e merge'de)
-  deploy:      # Vercel deploy (otomatik)
+  lint: # ESLint + Prettier + TypeScript check
+  test: # Vitest unit tests
+  test-tbdy: # TBDY hesaplama doğrulama (kritik)
+  build: # Turbo build
+  e2e: # Playwright (sadece main branch'e merge'de)
+  deploy: # Vercel deploy (otomatik)
 ```
 
 ### 10.3 Monitoring
 
-| Metrik | Tool | Alarm eşiği |
-|---|---|---|
-| Uptime | Vercel + Better Stack | <%99.5 |
-| API latency | PostHog | p95 > 2s |
-| Error rate | Sentry | >%1 |
-| AI maliyet | Custom dashboard | Bütçe aşımı %80 |
-| Veritabanı | Supabase Dashboard | Connection > %80 |
+| Metrik      | Tool                  | Alarm eşiği      |
+| ----------- | --------------------- | ---------------- |
+| Uptime      | Vercel + Better Stack | <%99.5           |
+| API latency | PostHog               | p95 > 2s         |
+| Error rate  | Sentry                | >%1              |
+| AI maliyet  | Custom dashboard      | Bütçe aşımı %80  |
+| Veritabanı  | Supabase Dashboard    | Connection > %80 |
 
 ### 10.4 Backup ve disaster recovery
 
@@ -724,20 +727,22 @@ jobs:
 
 ## 12. FİYATLAMA STRATEJİSİ
 
-| Plan | Aylık | Yıllık (12 ay öde, %15 indirim) | Dahil |
-|---|---|---|---|
-| **Free** | ₺0 | — | Ek3Pilot 3 proje/ay, 1 kullanıcı |
-| **Solo** | ₺1.500 | ₺15.300 | Ek3Pilot sınırsız + RaporX 5 rapor/ay, 1 seat |
-| **Office** | ₺2.500 | ₺25.500 | Tüm modüller + 3 seat + 50 rapor/ay |
-| **Office+AI** | ₺3.500 | ₺35.700 | Office + TBDY-Copilot + sınırsız rapor + 5 seat |
-| **Enterprise** | Özel | Özel | Office+AI + SSO + audit export + SLA + 10+ seat |
+| Plan           | Aylık  | Yıllık (12 ay öde, %15 indirim) | Dahil                                           |
+| -------------- | ------ | ------------------------------- | ----------------------------------------------- |
+| **Free**       | ₺0     | —                               | Ek3Pilot 3 proje/ay, 1 kullanıcı                |
+| **Solo**       | ₺1.500 | ₺15.300                         | Ek3Pilot sınırsız + RaporX 5 rapor/ay, 1 seat   |
+| **Office**     | ₺2.500 | ₺25.500                         | Tüm modüller + 3 seat + 50 rapor/ay             |
+| **Office+AI**  | ₺3.500 | ₺35.700                         | Office + TBDY-Copilot + sınırsız rapor + 5 seat |
+| **Enterprise** | Özel   | Özel                            | Office+AI + SSO + audit export + SLA + 10+ seat |
 
 **Kullanım bazlı:**
+
 - Ek seat: ₺350/ay
 - TBDY-Copilot top-up: ₺500/100 sorgu
 - Spektrum analizi tek seferlik: ₺250/proje
 
 **Tek-proje müşteri (sözleşmeli olmayan):**
+
 - Ek3Pilot tek seferlik: ₺750/proje
 - RaporX tek seferlik: ₺1.500/proje
 
@@ -751,14 +756,14 @@ jobs:
 
 ### 13.2 Faz başına hedefler
 
-| Faz | Süre | MAU | ARR | Müşteri |
-|---|---|---|---|---|
-| Faz 0 | 1 ay | 0 | 0 | 5 design partner |
-| Faz 1 | 3 ay | 50 | ₺200K | 20 ofis |
-| Faz 2 | 6 ay | 150 | ₺900K | 60 ofis |
-| Faz 3 | 9 ay | 350 | ₺2.5M | 130 ofis |
-| Yıl 1 sonu | 12 ay | 600 | ₺5M | 220 ofis |
-| Yıl 2 sonu | 24 ay | 1.500 | ₺12M | 500 ofis |
+| Faz        | Süre  | MAU   | ARR   | Müşteri          |
+| ---------- | ----- | ----- | ----- | ---------------- |
+| Faz 0      | 1 ay  | 0     | 0     | 5 design partner |
+| Faz 1      | 3 ay  | 50    | ₺200K | 20 ofis          |
+| Faz 2      | 6 ay  | 150   | ₺900K | 60 ofis          |
+| Faz 3      | 9 ay  | 350   | ₺2.5M | 130 ofis         |
+| Yıl 1 sonu | 12 ay | 600   | ₺5M   | 220 ofis         |
+| Yıl 2 sonu | 24 ay | 1.500 | ₺12M  | 500 ofis         |
 
 ### 13.3 Operasyonel
 
@@ -772,16 +777,16 @@ jobs:
 
 ## 14. RİSKLER VE AZALTIM
 
-| Risk | Olasılık | Etki | Azaltım |
-|---|---|---|---|
-| Etex'in büyümesi / Demir partnership atması | Düşük | Orta | Pazarda hız + multi-modül paket |
-| ProtaStructure kendi eklenti suite'ini çıkarır | Orta | Yüksek | Niche + AI farkı + e-fatura entegre |
-| ETABS OAPI breaking change | Düşük | Yüksek | Bridge'i version-aware yap, 2 versiyon destekle |
-| Yapı denetim yönetmeliği değişir (Ek-3 değişir) | Orta | Orta | Form'u JSON schema ile yapılandır, kolay güncelle |
-| AI maliyetleri yükselir | Orta | Orta | Haiku ön-filtre, prompt caching, kullanım sınırı |
-| Tek-kişi bağımlılığı (Bluedev Aydoğan) | Yüksek | Yüksek | Faz 2'de junior dev hire, dokümantasyon |
-| Müşteri AI'ya güvensiz | Orta | Düşük | "Danışma amaçlı, mühendis onayı şart" netleştir |
-| Iyzico/Foriba downtime | Düşük | Orta | Manuel fatura fallback, retry kuyrukları |
+| Risk                                            | Olasılık | Etki   | Azaltım                                           |
+| ----------------------------------------------- | -------- | ------ | ------------------------------------------------- |
+| Etex'in büyümesi / Demir partnership atması     | Düşük    | Orta   | Pazarda hız + multi-modül paket                   |
+| ProtaStructure kendi eklenti suite'ini çıkarır  | Orta     | Yüksek | Niche + AI farkı + e-fatura entegre               |
+| ETABS OAPI breaking change                      | Düşük    | Yüksek | Bridge'i version-aware yap, 2 versiyon destekle   |
+| Yapı denetim yönetmeliği değişir (Ek-3 değişir) | Orta     | Orta   | Form'u JSON schema ile yapılandır, kolay güncelle |
+| AI maliyetleri yükselir                         | Orta     | Orta   | Haiku ön-filtre, prompt caching, kullanım sınırı  |
+| Tek-kişi bağımlılığı (Bluedev Aydoğan)          | Yüksek   | Yüksek | Faz 2'de junior dev hire, dokümantasyon           |
+| Müşteri AI'ya güvensiz                          | Orta     | Düşük  | "Danışma amaçlı, mühendis onayı şart" netleştir   |
+| Iyzico/Foriba downtime                          | Düşük    | Orta   | Manuel fatura fallback, retry kuyrukları          |
 
 ---
 
@@ -812,6 +817,7 @@ Faz 0 tamamlandığında bana checklist üzerinden rapor ver.
 ```
 
 Modül-spesifik detaylar için Claude Code aşağıdaki dosyaları talep edecektir:
+
 - `docs-internal/modules/ek3pilot.md` — Ek-3 form alan-alan spec
 - `docs-internal/modules/raporx.md` — TBDY hesaplama formülleri ve test vakaları
 - `docs-internal/modules/spektrumhub.md` — AFAD API + parser detayı

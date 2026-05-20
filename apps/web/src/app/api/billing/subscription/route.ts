@@ -3,7 +3,6 @@ import { createSupabaseServerClient } from '@yapiops/db/server';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
-
 export async function GET() {
   const cookieStore = await cookies();
   let ctx;

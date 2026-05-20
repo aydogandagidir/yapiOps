@@ -24,7 +24,9 @@
     "next": "^15.0.0"
   },
   "peerDependenciesMeta": {
-    "next": { "optional": true }
+    "next": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@yapiops/config": "workspace:*"

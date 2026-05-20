@@ -26,11 +26,7 @@ export function FirmaFields<T extends FirmaBilgileri | YapiDenetimBilgileri>({
     onChange({ ...v, [key]: raw });
   };
 
-  const updateNested = (
-    parent: 'yetkili' | 'sorumluMuhendis',
-    key: string,
-    raw: string,
-  ) => {
+  const updateNested = (parent: 'yetkili' | 'sorumluMuhendis', key: string, raw: string) => {
     const vRecord = v as unknown as Record<string, Record<string, string> | undefined>;
     const existing = vRecord[parent];
     onChange({
@@ -47,7 +43,9 @@ export function FirmaFields<T extends FirmaBilgileri | YapiDenetimBilgileri>({
       <Field label={t('unvan')} required>
         <Input
           value={v.unvan ?? ''}
-          onChange={(e) => { update('unvan', e.target.value); }}
+          onChange={(e) => {
+            update('unvan', e.target.value);
+          }}
           disabled={readOnly}
         />
       </Field>
@@ -55,7 +53,9 @@ export function FirmaFields<T extends FirmaBilgileri | YapiDenetimBilgileri>({
         <Input
           value={v.vkn ?? ''}
           maxLength={10}
-          onChange={(e) => { update('vkn', e.target.value); }}
+          onChange={(e) => {
+            update('vkn', e.target.value);
+          }}
           disabled={readOnly}
         />
       </Field>
@@ -64,16 +64,18 @@ export function FirmaFields<T extends FirmaBilgileri | YapiDenetimBilgileri>({
           <Field label={t('yetkiSinifi')}>
             <Input
               value={v.yetkiBelgesiSinifi ?? ''}
-              onChange={(e) =>
-                { update('yetkiBelgesiSinifi', e.target.value); }
-              }
+              onChange={(e) => {
+                update('yetkiBelgesiSinifi', e.target.value);
+              }}
               disabled={readOnly}
             />
           </Field>
           <Field label={t('yetkiNo')}>
             <Input
               value={v.yetkiBelgesiNo ?? ''}
-              onChange={(e) => { update('yetkiBelgesiNo', e.target.value); }}
+              onChange={(e) => {
+                update('yetkiBelgesiNo', e.target.value);
+              }}
               disabled={readOnly}
             />
           </Field>
@@ -83,7 +85,12 @@ export function FirmaFields<T extends FirmaBilgileri | YapiDenetimBilgileri>({
         <Field label={t('izinBelgesiNo')} required>
           <Input
             value={denetimV.izinBelgesiNo ?? ''}
-            onChange={(e) => { update('izinBelgesiNo' as keyof T, e.target.value); /* izinBelgesiNo only on denetim */ }}
+            onChange={(e) => {
+              update(
+                'izinBelgesiNo' as keyof T,
+                e.target.value,
+              ); /* izinBelgesiNo only on denetim */
+            }}
             disabled={readOnly}
           />
         </Field>
@@ -91,7 +98,9 @@ export function FirmaFields<T extends FirmaBilgileri | YapiDenetimBilgileri>({
       <Field label={t('yetkiliAdi')} required>
         <Input
           value={v.yetkili?.adSoyad ?? ''}
-          onChange={(e) => { updateNested('yetkili', 'adSoyad', e.target.value); }}
+          onChange={(e) => {
+            updateNested('yetkili', 'adSoyad', e.target.value);
+          }}
           disabled={readOnly}
         />
       </Field>
@@ -99,7 +108,9 @@ export function FirmaFields<T extends FirmaBilgileri | YapiDenetimBilgileri>({
         <Input
           value={v.yetkili?.tckn ?? ''}
           maxLength={11}
-          onChange={(e) => { updateNested('yetkili', 'tckn', e.target.value); }}
+          onChange={(e) => {
+            updateNested('yetkili', 'tckn', e.target.value);
+          }}
           disabled={readOnly}
         />
       </Field>
@@ -108,14 +119,18 @@ export function FirmaFields<T extends FirmaBilgileri | YapiDenetimBilgileri>({
           <Field label={t('sorumluMuhendis')} required>
             <Input
               value={denetimV.sorumluMuhendis?.adSoyad ?? ''}
-              onChange={(e) => { updateNested('sorumluMuhendis', 'adSoyad', e.target.value); }}
+              onChange={(e) => {
+                updateNested('sorumluMuhendis', 'adSoyad', e.target.value);
+              }}
               disabled={readOnly}
             />
           </Field>
           <Field label={t('odaSicilNo')} required>
             <Input
               value={denetimV.sorumluMuhendis?.odaSicilNo ?? ''}
-              onChange={(e) => { updateNested('sorumluMuhendis', 'odaSicilNo', e.target.value); }}
+              onChange={(e) => {
+                updateNested('sorumluMuhendis', 'odaSicilNo', e.target.value);
+              }}
               disabled={readOnly}
             />
           </Field>
@@ -124,14 +139,18 @@ export function FirmaFields<T extends FirmaBilgileri | YapiDenetimBilgileri>({
       <Field label={t('adres')} required>
         <Input
           value={v.adres ?? ''}
-          onChange={(e) => { update('adres', e.target.value); }}
+          onChange={(e) => {
+            update('adres', e.target.value);
+          }}
           disabled={readOnly}
         />
       </Field>
       <Field label={t('telefon')}>
         <Input
           value={v.telefon ?? ''}
-          onChange={(e) => { update('telefon', e.target.value); }}
+          onChange={(e) => {
+            update('telefon', e.target.value);
+          }}
           disabled={readOnly}
         />
       </Field>
@@ -139,7 +158,9 @@ export function FirmaFields<T extends FirmaBilgileri | YapiDenetimBilgileri>({
         <Input
           type="email"
           value={v.eposta ?? ''}
-          onChange={(e) => { update('eposta', e.target.value); }}
+          onChange={(e) => {
+            update('eposta', e.target.value);
+          }}
           disabled={readOnly}
         />
       </Field>

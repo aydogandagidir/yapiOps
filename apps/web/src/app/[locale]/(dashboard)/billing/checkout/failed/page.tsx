@@ -17,8 +17,8 @@ export default async function CheckoutFailedPage({ params }: PageProps) {
       <CardHeader className="text-center">
         <CardTitle>Ödeme Başarısız</CardTitle>
         <CardDescription>
-          Ödeme işlemi tamamlanamadı. Kart bilgilerinizi kontrol edip tekrar deneyin veya
-          farklı bir kart kullanın.
+          Ödeme işlemi tamamlanamadı. Kart bilgilerinizi kontrol edip tekrar deneyin veya farklı bir
+          kart kullanın.
         </CardDescription>
       </CardHeader>
       <CardContent className="text-center space-x-2">

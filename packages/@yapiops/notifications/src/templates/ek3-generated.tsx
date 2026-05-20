@@ -29,9 +29,9 @@ const COPY = {
     greeting: (name: string) => `Merhaba ${name},`,
     body: (project: string, version: number) =>
       `${project} projesi için Ek-3 v${String(version)} formu üretildi ve e-imzaya hazır durumda.`,
-    cta: 'PDF\'i Görüntüle',
+    cta: "PDF'i Görüntüle",
     secondaryHint:
-      'Bağlantı 24 saat içinde sona ererse, panele gidip aynı Ek-3 kaydından PDF\'i tekrar indirebilirsiniz.',
+      "Bağlantı 24 saat içinde sona ererse, panele gidip aynı Ek-3 kaydından PDF'i tekrar indirebilirsiniz.",
   },
   en: {
     subject: 'Your Ek-3 PDF is ready',
@@ -41,7 +41,7 @@ const COPY = {
       `Your Ek-3 v${String(version)} for project "${project}" has been generated and is ready for e-signature.`,
     cta: 'View PDF',
     secondaryHint:
-      "If the link expires within 24 hours, you can re-download it from the same Ek-3 record on the dashboard.",
+      'If the link expires within 24 hours, you can re-download it from the same Ek-3 record on the dashboard.',
   },
 } as const;
 

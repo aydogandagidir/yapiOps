@@ -17,7 +17,8 @@ export function TrialBanner({ trialEnd }: { trialEnd: Date }) {
 
   // 3 katmanlı ton: bilgi (>3 gün) → uyarı (1-3 gün) → kritik (0 gün).
   // Renkler shadcn token'larından — primary/warning/destructive.
-  const tone = daysLeft === 0 ? 'expired' : daysLeft <= WARNING_THRESHOLD_DAYS ? 'warning' : 'normal';
+  const tone =
+    daysLeft === 0 ? 'expired' : daysLeft <= WARNING_THRESHOLD_DAYS ? 'warning' : 'normal';
 
   const message =
     tone === 'expired'

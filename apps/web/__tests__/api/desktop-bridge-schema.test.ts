@@ -19,15 +19,11 @@ describe('BridgeRefreshSchema', () => {
   });
 
   it('rejects unrelated payloads', () => {
-    expect(
-      BridgeRefreshSchema.safeParse({ access_token: 'abc...' }).success,
-    ).toBe(false);
+    expect(BridgeRefreshSchema.safeParse({ access_token: 'abc...' }).success).toBe(false);
   });
 
   it('caps token length at 2048', () => {
-    expect(
-      BridgeRefreshSchema.safeParse({ refresh_token: 'a'.repeat(2049) }).success,
-    ).toBe(false);
+    expect(BridgeRefreshSchema.safeParse({ refresh_token: 'a'.repeat(2049) }).success).toBe(false);
   });
 });
 

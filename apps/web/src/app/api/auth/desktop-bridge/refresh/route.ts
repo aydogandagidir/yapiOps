@@ -8,7 +8,6 @@ import { BridgeRefreshSchema } from '../_schema';
 
 import { captureRouteWarning } from '@/lib/sentry-helpers';
 
-
 export const runtime = 'nodejs';
 
 /**

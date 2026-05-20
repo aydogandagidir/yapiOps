@@ -12,7 +12,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
-
 interface SablonRow {
   id: string;
   type: 'muteahhit' | 'denetim';
@@ -97,7 +96,12 @@ export function FirmaSablonManager() {
             </div>
             <div className="space-y-2">
               <Label>Şablon adı</Label>
-              <Input value={name} onChange={(e) => { setName(e.target.value); }} />
+              <Input
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
+              />
             </div>
           </div>
           {type === 'muteahhit' ? (
@@ -127,9 +131,7 @@ export function FirmaSablonManager() {
           >
             Kaydet
           </Button>
-          {create.isError && (
-            <p className="text-sm text-destructive">{(create.error).message}</p>
-          )}
+          {create.isError && <p className="text-sm text-destructive">{create.error.message}</p>}
         </CardContent>
       </Card>
 

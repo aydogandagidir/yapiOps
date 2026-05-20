@@ -33,10 +33,10 @@ GümrükAI'da kanıtlanmış pattern: %70+ maliyet düşüşü.
 
 ### 3. Plan başına aylık sınır
 
-| Plan | Sorgu/ay | Tahmini maliyet | Marj |
-|---|---|---|---|
-| Office+AI | 200 | $10–15 | %70+ |
-| Enterprise | Sınırsız (fair use) | Değişken | %50+ |
+| Plan       | Sorgu/ay            | Tahmini maliyet | Marj |
+| ---------- | ------------------- | --------------- | ---- |
+| Office+AI  | 200                 | $10–15          | %70+ |
+| Enterprise | Sınırsız (fair use) | Değişken        | %50+ |
 
 Limit aşımında: top-up ($5/100 sorgu) veya plan upgrade.
 
@@ -64,12 +64,15 @@ Bu sağlıklı. Plana ek operasyonel maliyet (Vercel, Supabase, Iyzico komisyon)
 ## Alternatif değerlendirmeler
 
 ### A1: Self-hosted Ollama (Llama 3.1 70B)
+
 Reddedildi — Türkçe yapı mühendisliği terminolojisinde Claude'dan zayıf, GPU maliyeti yüksek (~$500/ay sabit), kalite risk yüksek.
 
 ### A2: GPT-4 / Gemini
+
 Reddedildi — Bluedev'in mevcut Anthropic ekosistemine yatırımı, prompt caching avantajı kaybolur.
 
 ### A3: Sınırsız sorgu, kullanıma göre faturalama
+
 Reddedildi — Türk müşteri psikolojisi sabit fiyatı tercih eder. "Sürpriz fatura" riskinden kaçınma.
 
 ## İzleme

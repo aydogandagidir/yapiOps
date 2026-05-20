@@ -100,9 +100,7 @@ export function NotificationPreferences({ initialEk3Generated, initialWeeklyDige
               </span>
             )}
           </div>
-          {save.isError && (
-            <p className="text-sm text-destructive">{(save.error).message}</p>
-          )}
+          {save.isError && <p className="text-sm text-destructive">{save.error.message}</p>}
         </CardContent>
       </Card>
     </div>

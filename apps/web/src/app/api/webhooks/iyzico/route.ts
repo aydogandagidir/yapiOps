@@ -59,10 +59,7 @@ export async function POST(request: Request) {
   return NextResponse.json({ received: true });
 }
 
-async function handlePaymentSucceeded(
-  supabase: SupabaseClient,
-  event: IyzicoWebhookEvent,
-) {
+async function handlePaymentSucceeded(supabase: SupabaseClient, event: IyzicoWebhookEvent) {
   if (!event.iyzicoSubscriptionReferenceCode || !event.paidPrice) return;
 
   const { data: sub } = await supabase
@@ -73,10 +70,7 @@ async function handlePaymentSucceeded(
 
   if (!sub) return;
 
-  await supabase
-    .from('subscriptions')
-    .update({ status: 'active' })
-    .eq('id', sub.id);
+  await supabase.from('subscriptions').update({ status: 'active' }).eq('id', sub.id);
 
   const { data: org } = await supabase
     .from('organizations')
@@ -101,9 +95,7 @@ async function handlePaymentSucceeded(
         city: 'Istanbul',
         country: 'Turkey',
       },
-      kalemler: [
-        { description: 'YapıOps subscription', quantity: 1, unitPriceTry: exclVat },
-      ],
+      kalemler: [{ description: 'YapıOps subscription', quantity: 1, unitPriceTry: exclVat }],
     });
     eFaturaUuid = result.uuid;
     eFaturaStatus = result.status;
@@ -135,10 +127,7 @@ async function handlePaymentSucceeded(
   });
 }
 
-async function handlePaymentFailed(
-  supabase: SupabaseClient,
-  event: IyzicoWebhookEvent,
-) {
+async function handlePaymentFailed(supabase: SupabaseClient, event: IyzicoWebhookEvent) {
   if (!event.iyzicoSubscriptionReferenceCode) return;
 
   const { data: sub } = await supabase
@@ -159,10 +148,7 @@ async function handlePaymentFailed(
   });
 }
 
-async function handleSubscriptionCanceled(
-  supabase: SupabaseClient,
-  event: IyzicoWebhookEvent,
-) {
+async function handleSubscriptionCanceled(supabase: SupabaseClient, event: IyzicoWebhookEvent) {
   if (!event.iyzicoSubscriptionReferenceCode) return;
 
   const { data: sub } = await supabase

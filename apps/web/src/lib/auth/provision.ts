@@ -31,13 +31,12 @@ export async function provisionFirstLogin(input: {
     .maybeSingle<{ id: string }>();
   if (existing) return;
 
-  const fullName =
-    (input.user.user_metadata.full_name as string | undefined) ?? null;
-  const orgNameFromMeta =
-    (input.user.user_metadata.org_name as string | undefined) ?? null;
-  const orgName = orgNameFromMeta && orgNameFromMeta.trim().length > 0
-    ? orgNameFromMeta
-    : (input.user.email ?? 'My Office');
+  const fullName = (input.user.user_metadata.full_name as string | undefined) ?? null;
+  const orgNameFromMeta = (input.user.user_metadata.org_name as string | undefined) ?? null;
+  const orgName =
+    orgNameFromMeta && orgNameFromMeta.trim().length > 0
+      ? orgNameFromMeta
+      : (input.user.email ?? 'My Office');
   const slug = `${slugify(orgName)}-${input.user.id.slice(0, 8)}`;
 
   const { data: org, error: orgErr } = await service

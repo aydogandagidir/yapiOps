@@ -63,7 +63,7 @@ export function Ek3List() {
           {isLoading ? (
             <p className="text-sm text-muted-foreground">…</p>
           ) : error ? (
-            <p className="text-sm text-destructive">Hata: {(error).message}</p>
+            <p className="text-sm text-destructive">Hata: {error.message}</p>
           ) : !data || data.length === 0 ? (
             <p className="text-sm text-muted-foreground">{t('list.empty')}</p>
           ) : (

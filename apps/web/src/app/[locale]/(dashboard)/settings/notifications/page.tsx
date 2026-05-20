@@ -34,7 +34,7 @@ export default async function NotificationsSettingsPage({ params }: PageProps) {
     .eq('id', ctx.user.id)
     .maybeSingle<UserPreferencesRow>();
 
-  const initial = (data?.preferences ?? {});
+  const initial = data?.preferences ?? {};
 
   return (
     <NotificationPreferences

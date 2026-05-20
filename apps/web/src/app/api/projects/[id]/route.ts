@@ -71,10 +71,7 @@ export async function PATCH(request: Request, context: RouteContext) {
   }
 
   // Engineer can only edit projects they created.
-  if (
-    ctx.membership.role === 'engineer' &&
-    existing.created_by !== ctx.user.id
-  ) {
+  if (ctx.membership.role === 'engineer' && existing.created_by !== ctx.user.id) {
     return NextResponse.json({ error: 'forbidden' }, { status: 403 });
   }
 

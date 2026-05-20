@@ -8,15 +8,11 @@ describe('PreferencesPatchSchema', () => {
   });
 
   it('accepts ek3_generated alone', () => {
-    expect(
-      PreferencesPatchSchema.safeParse({ email_ek3_generated: true }).success,
-    ).toBe(true);
+    expect(PreferencesPatchSchema.safeParse({ email_ek3_generated: true }).success).toBe(true);
   });
 
   it('accepts weekly_digest alone', () => {
-    expect(
-      PreferencesPatchSchema.safeParse({ email_weekly_digest: false }).success,
-    ).toBe(true);
+    expect(PreferencesPatchSchema.safeParse({ email_weekly_digest: false }).success).toBe(true);
   });
 
   it('accepts both flags together', () => {
@@ -29,9 +25,7 @@ describe('PreferencesPatchSchema', () => {
   });
 
   it('rejects non-boolean values', () => {
-    expect(
-      PreferencesPatchSchema.safeParse({ email_ek3_generated: 'yes' }).success,
-    ).toBe(false);
+    expect(PreferencesPatchSchema.safeParse({ email_ek3_generated: 'yes' }).success).toBe(false);
   });
 
   it('strips unknown keys silently (Zod default)', () => {

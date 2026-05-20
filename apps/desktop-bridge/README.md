@@ -8,27 +8,27 @@
 
 ## Hedef yığın
 
-| Katman | Seçim |
-|---|---|
-| Framework | .NET 8 + WPF |
-| ETABS API | ETABSv1.dll (OAPI v21+) — COM/.NET interop |
-| Auth | OAuth 2.0 PKCE — browser login, token Windows Credential Manager'da |
-| HTTP | `HttpClient` + Polly retry |
-| Update | Squirrel.Windows |
-| Installer | WiX Toolset (MSI) |
-| Crash reporting | Sentry .NET SDK |
+| Katman          | Seçim                                                               |
+| --------------- | ------------------------------------------------------------------- |
+| Framework       | .NET 8 + WPF                                                        |
+| ETABS API       | ETABSv1.dll (OAPI v21+) — COM/.NET interop                          |
+| Auth            | OAuth 2.0 PKCE — browser login, token Windows Credential Manager'da |
+| HTTP            | `HttpClient` + Polly retry                                          |
+| Update          | Squirrel.Windows                                                    |
+| Installer       | WiX Toolset (MSI)                                                   |
+| Crash reporting | Sentry .NET SDK                                                     |
 
 ## Cloud-side hazırlık (✅ tamamlandı)
 
 Bu commit serisi **Bridge'in HENÜZ var olmadığı** durumda bile çalışan cloud kontrat'larını koymuştur:
 
-| Kontrat | Yer |
-|---|---|
-| `POST /api/ek3/import-etabs` | [apps/web/src/app/api/ek3/import-etabs/route.ts](../web/src/app/api/ek3/import-etabs/route.ts) — `Ek3EtabsImportSchema` ile validate; `mapEtabsToYapi()` ile yapı bloğunu doldurur |
-| `Ek3EtabsImportSchema` | [packages/@yapiops/ek3/src/schema.ts](../../packages/@yapiops/ek3/src/schema.ts) — Bridge'in göndereceği JSON formatı |
-| `mapEtabsToYapi()` | [packages/@yapiops/ek3/src/etabs-mapping.ts](../../packages/@yapiops/ek3/src/etabs-mapping.ts) — ETABS metadata → form alan mapping |
-| Bridge login UI | [apps/web/src/app/[locale]/auth/desktop-bridge/page.tsx](../web/src/app/%5Blocale%5D/auth/desktop-bridge/page.tsx) — kullanıcıyı authenticate edip Bridge'in localhost listener'ına token aktarır |
-| Bridge token refresh | [apps/web/src/app/api/auth/desktop-bridge/refresh/route.ts](../web/src/app/api/auth/desktop-bridge/refresh/route.ts) — refresh_token swap; Supabase service-role |
+| Kontrat                      | Yer                                                                                                                                                                                               |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `POST /api/ek3/import-etabs` | [apps/web/src/app/api/ek3/import-etabs/route.ts](../web/src/app/api/ek3/import-etabs/route.ts) — `Ek3EtabsImportSchema` ile validate; `mapEtabsToYapi()` ile yapı bloğunu doldurur                |
+| `Ek3EtabsImportSchema`       | [packages/@yapiops/ek3/src/schema.ts](../../packages/@yapiops/ek3/src/schema.ts) — Bridge'in göndereceği JSON formatı                                                                             |
+| `mapEtabsToYapi()`           | [packages/@yapiops/ek3/src/etabs-mapping.ts](../../packages/@yapiops/ek3/src/etabs-mapping.ts) — ETABS metadata → form alan mapping                                                               |
+| Bridge login UI              | [apps/web/src/app/[locale]/auth/desktop-bridge/page.tsx](../web/src/app/%5Blocale%5D/auth/desktop-bridge/page.tsx) — kullanıcıyı authenticate edip Bridge'in localhost listener'ına token aktarır |
+| Bridge token refresh         | [apps/web/src/app/api/auth/desktop-bridge/refresh/route.ts](../web/src/app/api/auth/desktop-bridge/refresh/route.ts) — refresh_token swap; Supabase service-role                                  |
 
 ## OAuth akışı
 
@@ -67,6 +67,7 @@ Bridge (.NET WPF)              Browser                    YapıOps Cloud
 ```
 
 ### Güvenlik notları
+
 - **URL fragment** (`#`) HTTP sunucusuna gitmez — token'lar yalnızca tarayıcıda kalır.
 - **State** parametresi Bridge tarafında üretilir, cloud yansıtır, Bridge eşleştirir → CSRF koruması.
 - **Loopback redirect_uri** allowlist'i: sadece `http://localhost:53682/...` veya `yapiops-bridge://...` (custom protokol fallback).
@@ -77,6 +78,7 @@ Bridge (.NET WPF)              Browser                    YapıOps Cloud
 Implementasyon planı: [`~/.claude/plans/faz-1-hafta-8-9-bridge-poc.md`](../../) (yerel olarak Claude oturumlarında erişilir).
 
 Yüksek seviye:
+
 1. `apps/desktop-bridge/src/YapiOps.Bridge/` — ana WPF uygulaması
 2. `YapiOps.Bridge.Etabs/` — OAPI wrapper (story/section/spectrum reader)
 3. `YapiOps.Bridge.Auth/` — PKCE flow + Windows Credential Manager
@@ -96,6 +98,7 @@ dotnet build
 ```
 
 Cloud tarafıyla entegrasyon test'i için `.env`'e:
+
 ```
 YAPIOPS_CLOUD_BASE_URL=https://staging.yapiops.com
 YAPIOPS_OAUTH_CALLBACK_PORT=53682

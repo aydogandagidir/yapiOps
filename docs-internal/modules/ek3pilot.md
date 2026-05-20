@@ -11,6 +11,7 @@ Yapı Denetim Hizmet Sözleşmesi Ek-3 formunu 5 dakikada doldur, e-imza-ready P
 ## 2. Kullanıcı senaryoları
 
 ### S1: ETABS'lı hızlı yol
+
 1. Mühendis ETABS modelini açar, masaüstü bridge'i başlatır
 2. Bridge "Ek-3 oluştur" butonu → cloud'da yeni form açılır
 3. Kat sayısı, alan, DTS, BYS, Sds/Sd1, koordinat OTOMATİK dolar
@@ -19,12 +20,14 @@ Yapı Denetim Hizmet Sözleşmesi Ek-3 formunu 5 dakikada doldur, e-imza-ready P
 6. **Toplam süre: 3–5 dakika**
 
 ### S2: Manuel yol (ETABS yok)
+
 1. Mühendis web'de "Yeni Ek-3" tıklar
 2. 6 sekmeli form doldurur (proje / yapı / inşaat / firma / sahibi / müteahhit)
 3. Validate → PDF üretir
 4. **Toplam süre: 10–15 dakika** (geleneksel 30–60 dk yerine)
 
 ### S3: Revize akışı
+
 1. Mevcut Ek-3'ü aç → "Yeni versiyon"
 2. Değişen alanları güncelle → eskisi `superseded` olarak arşivlenir, yenisi v2 olur
 3. Değişiklik gerekçesi yazılır, audit log'a düşer
@@ -34,6 +37,7 @@ Yapı Denetim Hizmet Sözleşmesi Ek-3 formunu 5 dakikada doldur, e-imza-ready P
 > **Not:** Resmi Ek-3 formu yönetmelik ekinde tanımlı. Aşağıdaki alanlar formun temel yapısını yansıtır; **uygulama öncesi resmi formla bire bir karşılaştırma yapılmalı** (Çevre, Şehircilik ve İklim Değişikliği Bakanlığı'nın güncel formu kontrol edilmeli).
 
 ### 3.1 Proje bilgileri
+
 - Proje adı
 - İl / İlçe / Mahalle
 - Pafta / Ada / Parsel no
@@ -41,6 +45,7 @@ Yapı Denetim Hizmet Sözleşmesi Ek-3 formunu 5 dakikada doldur, e-imza-ready P
 - İmar durumu
 
 ### 3.2 Yapı bilgileri
+
 - Yapı sınıfı (1A/1B/2A/2B/3A/3B/4A/4B/5A) — yönetmelik tablosundan
 - Kullanım amacı (konut / ticaret / sanayi / sağlık / eğitim / vb.)
 - Toplam inşaat alanı (m²)
@@ -53,6 +58,7 @@ Yapı Denetim Hizmet Sözleşmesi Ek-3 formunu 5 dakikada doldur, e-imza-ready P
 - Tasarım sınıfı (Sds, Sd1, PGA)
 
 ### 3.3 İnşaat bilgileri
+
 - Yapı ruhsat no ve tarihi
 - İnşaat başlama tarihi
 - Tahmini bitiş tarihi
@@ -60,6 +66,7 @@ Yapı Denetim Hizmet Sözleşmesi Ek-3 formunu 5 dakikada doldur, e-imza-ready P
 - İnşaat maliyeti (₺)
 
 ### 3.4 Yapı sahibi
+
 - Ad soyad / Ünvan
 - TCKN / VKN
 - Adres
@@ -67,6 +74,7 @@ Yapı Denetim Hizmet Sözleşmesi Ek-3 formunu 5 dakikada doldur, e-imza-ready P
 - E-posta
 
 ### 3.5 Yapı müteahhidi
+
 - Ünvan
 - VKN
 - Yetki belgesi sınıfı ve no
@@ -74,6 +82,7 @@ Yapı Denetim Hizmet Sözleşmesi Ek-3 formunu 5 dakikada doldur, e-imza-ready P
 - Adres / İletişim
 
 ### 3.6 Yapı denetim kuruluşu
+
 - Ünvan
 - İzin belgesi no
 - Adres / İletişim
@@ -99,8 +108,8 @@ export interface Ek3Form {
 
   generatedAt?: string;
   pdfUrl?: string;
-  supersededBy?: string;   // Sonraki versiyon ID
-  supersedes?: string;      // Önceki versiyon ID
+  supersededBy?: string; // Sonraki versiyon ID
+  supersedes?: string; // Önceki versiyon ID
   revisionReason?: string;
 }
 
@@ -113,25 +122,27 @@ export const Ek3FormSchema = z.object({
     pafta: z.string().optional(),
     ada: z.string(),
     parsel: z.string(),
-    koordinat: z.object({
-      lat: z.number().min(35).max(43),  // Türkiye sınırları
-      lng: z.number().min(25).max(45)
-    }).optional(),
-    imarDurumu: z.string().optional()
+    koordinat: z
+      .object({
+        lat: z.number().min(35).max(43), // Türkiye sınırları
+        lng: z.number().min(25).max(45),
+      })
+      .optional(),
+    imarDurumu: z.string().optional(),
   }),
   yapi: z.object({
-    sinif: z.enum(['1A','1B','2A','2B','3A','3B','4A','4B','5A']),
+    sinif: z.enum(['1A', '1B', '2A', '2B', '3A', '3B', '4A', '4B', '5A']),
     kullanimAmaci: z.string(),
     toplamAlanM2: z.number().positive(),
     bodrumKat: z.number().int().min(0),
     zeminUstuKat: z.number().int().min(0),
     toplamYukseklikM: z.number().positive(),
-    tasiyiciSistem: z.enum(['BAC','BAP','BAC-BAP','YIGMA','CELIK','KARMA']),
+    tasiyiciSistem: z.enum(['BAC', 'BAP', 'BAC-BAP', 'YIGMA', 'CELIK', 'KARMA']),
     dts: z.number().int().min(1).max(4),
     bys: z.number().int().min(1).max(8),
     sds: z.number().positive().optional(),
     sd1: z.number().positive().optional(),
-    pga: z.number().positive().optional()
+    pga: z.number().positive().optional(),
   }),
   // ... diğer bölümler benzer şekilde
 });
@@ -141,21 +152,22 @@ export const Ek3FormSchema = z.object({
 
 Bridge'in ETABS modelinden çıkarması gereken alanlar:
 
-| Ek-3 alanı | ETABS kaynak | OAPI çağrısı |
-|---|---|---|
-| Toplam alan | Story tanımları + Slab area | `SapModel.AreaObj.GetAllAreas()` + filtre |
-| Bodrum kat sayısı | Story Z koordinatı < 0 | `SapModel.Story.GetStories()` |
-| Zemin üstü kat sayısı | Story Z koordinatı ≥ 0 | aynı |
-| Toplam yükseklik | Max(Story Z) - Min(Story Z) | aynı |
-| Taşıyıcı sistem | Wall + Column varlığına göre çıkarım | `GetAllFrames`, `GetAllAreas` |
-| Sds, Sd1 | Response spectrum function | `SapModel.Func.FuncRS.*` |
-| DTS, BYS | Sds + bina yüksekliğinden hesap | TBDY 4.4.1 + 3.3.1 tabloları |
+| Ek-3 alanı            | ETABS kaynak                         | OAPI çağrısı                              |
+| --------------------- | ------------------------------------ | ----------------------------------------- |
+| Toplam alan           | Story tanımları + Slab area          | `SapModel.AreaObj.GetAllAreas()` + filtre |
+| Bodrum kat sayısı     | Story Z koordinatı < 0               | `SapModel.Story.GetStories()`             |
+| Zemin üstü kat sayısı | Story Z koordinatı ≥ 0               | aynı                                      |
+| Toplam yükseklik      | Max(Story Z) - Min(Story Z)          | aynı                                      |
+| Taşıyıcı sistem       | Wall + Column varlığına göre çıkarım | `GetAllFrames`, `GetAllAreas`             |
+| Sds, Sd1              | Response spectrum function           | `SapModel.Func.FuncRS.*`                  |
+| DTS, BYS              | Sds + bina yüksekliğinden hesap      | TBDY 4.4.1 + 3.3.1 tabloları              |
 
 > **Not:** DTS ve BYS, Sds ve toplam yükseklik girdileriyle TBDY 2018 tablolarından **deterministik** çıkar. Ek3Pilot bu hesabı yapar; kullanıcı override edebilir.
 
 ## 6. PDF üretimi
 
 ### 6.1 Yaklaşım
+
 - Resmi Ek-3 PDF formu (Çevre Şehircilik Bakanlığı sitesinden) → form alanları (AcroForm) ile doldurulur
 - `pdf-lib` ile alan-alan yazma
 - E-imza için imza alanı bırakılır (boş PDF signature field)
@@ -167,8 +179,7 @@ Bridge'in ETABS modelinden çıkarması gereken alanlar:
 import { PDFDocument } from 'pdf-lib';
 
 export async function renderEk3Pdf(form: Ek3Form): Promise<Uint8Array> {
-  const templateBytes = await fetch('/templates/ek3-resmi-form.pdf')
-    .then(r => r.arrayBuffer());
+  const templateBytes = await fetch('/templates/ek3-resmi-form.pdf').then((r) => r.arrayBuffer());
   const pdfDoc = await PDFDocument.load(templateBytes);
   const formFields = pdfDoc.getForm();
 
@@ -177,9 +188,7 @@ export async function renderEk3Pdf(form: Ek3Form): Promise<Uint8Array> {
   formFields.getTextField('il').setText(form.proje.il);
   formFields.getTextField('ada').setText(form.proje.ada);
   formFields.getTextField('parsel').setText(form.proje.parsel);
-  formFields.getTextField('toplam_alan').setText(
-    form.yapi.toplamAlanM2.toLocaleString('tr-TR')
-  );
+  formFields.getTextField('toplam_alan').setText(form.yapi.toplamAlanM2.toLocaleString('tr-TR'));
   // ... tüm alanlar
 
   // İmza alanı işaretle (e-imza için)
@@ -260,10 +269,10 @@ export const ek3Validators = {
     // TCKN algoritma kontrolü
     if (!/^[1-9]\d{10}$/.test(value)) return false;
     const digits = value.split('').map(Number);
-    const sum1 = (digits[0]+digits[2]+digits[4]+digits[6]+digits[8]) * 7;
-    const sum2 = digits[1]+digits[3]+digits[5]+digits[7];
+    const sum1 = (digits[0] + digits[2] + digits[4] + digits[6] + digits[8]) * 7;
+    const sum2 = digits[1] + digits[3] + digits[5] + digits[7];
     if ((sum1 - sum2) % 10 !== digits[9]) return false;
-    if (digits.slice(0,10).reduce((a,b)=>a+b,0) % 10 !== digits[10]) return false;
+    if (digits.slice(0, 10).reduce((a, b) => a + b, 0) % 10 !== digits[10]) return false;
     return true;
   },
 
@@ -275,8 +284,8 @@ export const ek3Validators = {
   dtsConsistency: (sds: number, dts: number): boolean => {
     // TBDY Tablo 3.2 — DTS Sds eşik kontrolü
     if (dts === 1) return sds >= 0.75;
-    if (dts === 2) return sds >= 0.50 && sds < 0.75;
-    if (dts === 3) return sds >= 0.33 && sds < 0.50;
+    if (dts === 2) return sds >= 0.5 && sds < 0.75;
+    if (dts === 3) return sds >= 0.33 && sds < 0.5;
     if (dts === 4) return sds < 0.33;
     return false;
   },
@@ -286,7 +295,7 @@ export const ek3Validators = {
     // (basitleştirilmiş — gerçek implementasyon detaylı olmalı)
     // ...
     return true;
-  }
+  },
 };
 ```
 

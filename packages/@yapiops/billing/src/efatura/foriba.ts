@@ -54,7 +54,9 @@ export async function eArsivFaturaKes(input: KesEFaturaInput): Promise<EFaturaRe
   const password = process.env.FORIBA_PASSWORD;
 
   if (!baseUrl || !username || !password) {
-    throw new Error('Missing Foriba credentials: FORIBA_BASE_URL, FORIBA_USERNAME, FORIBA_PASSWORD');
+    throw new Error(
+      'Missing Foriba credentials: FORIBA_BASE_URL, FORIBA_USERNAME, FORIBA_PASSWORD',
+    );
   }
 
   const faturaTipi: FaturaTipi = input.alici.vknOrTckn.length === 10 ? 'TICARI' : 'BIREYSEL';

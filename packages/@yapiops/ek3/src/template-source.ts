@@ -115,7 +115,10 @@ export async function fetchOfficialTemplate(): Promise<FetchedTemplate> {
       // Sanity check: PDF magic header.
       if (
         bytes.length < 5 ||
-        bytes[0] !== 0x25 || bytes[1] !== 0x50 || bytes[2] !== 0x44 || bytes[3] !== 0x46
+        bytes[0] !== 0x25 ||
+        bytes[1] !== 0x50 ||
+        bytes[2] !== 0x44 ||
+        bytes[3] !== 0x46
       ) {
         lastError = new Error(`Response from ${url} is not a valid PDF`);
         continue;
@@ -150,9 +153,7 @@ export function sha256OfBytes(bytes: Uint8Array): string {
  * Aktif satırın sha256'sını döndürür; aktif satır yoksa null. Renderer'ın
  * cache invalidation kararı için de kullanılır.
  */
-export async function getActiveTemplate(
-  supabase: SupabaseClient,
-): Promise<Ek3TemplateRow | null> {
+export async function getActiveTemplate(supabase: SupabaseClient): Promise<Ek3TemplateRow | null> {
   const { data } = await supabase
     .from('ek3_templates')
     .select('*')
@@ -204,12 +205,10 @@ export async function recordNewTemplate(
   const id = crypto.randomUUID();
   const storagePath = `${id}.pdf`;
 
-  const upload = await supabase.storage
-    .from(STORAGE_BUCKET)
-    .upload(storagePath, input.bytes, {
-      contentType: 'application/pdf',
-      upsert: false,
-    });
+  const upload = await supabase.storage.from(STORAGE_BUCKET).upload(storagePath, input.bytes, {
+    contentType: 'application/pdf',
+    upsert: false,
+  });
   if (upload.error) {
     throw new Error(`Storage upload failed: ${upload.error.message}`);
   }
@@ -274,9 +273,7 @@ export async function downloadActiveTemplateBytes(
   const row = await getActiveTemplate(supabase);
   if (!row) return null;
 
-  const { data, error } = await supabase.storage
-    .from(STORAGE_BUCKET)
-    .download(row.storage_path);
+  const { data, error } = await supabase.storage.from(STORAGE_BUCKET).download(row.storage_path);
   if (error || !data) return null;
 
   const arrayBuffer = await data.arrayBuffer();

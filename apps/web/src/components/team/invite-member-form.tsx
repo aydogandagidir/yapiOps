@@ -57,7 +57,10 @@ export function InviteMemberForm() {
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-4 md:grid-cols-[1fr_180px_120px]">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="grid gap-4 md:grid-cols-[1fr_180px_120px]"
+          >
             <FormField
               control={form.control}
               name="email"
