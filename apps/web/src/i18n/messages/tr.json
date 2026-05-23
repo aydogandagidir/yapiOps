@@ -51,6 +51,14 @@
       }
     }
   },
+  "nav": {
+    "settings": "Ayarlar",
+    "organization": "Organizasyon",
+    "team": "Ekip",
+    "notifications": "Bildirimler",
+    "templates": "Ek-3 Şablonları",
+    "audit": "Denetim Kaydı"
+  },
   "dashboard": {
     "welcome": "Hoş geldin, {name}",
     "welcomeAnonymous": "Hoş geldin",
