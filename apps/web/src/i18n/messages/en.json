@@ -51,6 +51,14 @@
       }
     }
   },
+  "nav": {
+    "settings": "Settings",
+    "organization": "Organization",
+    "team": "Team",
+    "notifications": "Notifications",
+    "templates": "Ek-3 Templates",
+    "audit": "Audit Log"
+  },
   "dashboard": {
     "welcome": "Welcome, {name}",
     "welcomeAnonymous": "Welcome",
