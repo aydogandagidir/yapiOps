@@ -15,6 +15,7 @@
     "clean": "rimraf .turbo dist"
   },
   "dependencies": {
+    "@pdf-lib/fontkit": "^1.1.1",
     "@yapiops/ek3": "workspace:*",
     "pdf-lib": "^1.17.1"
   },
