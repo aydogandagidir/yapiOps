@@ -12,6 +12,7 @@ coverage
 
 # Generated
 packages/@yapiops/db/src/database.types.ts
+packages/@yapiops/pdf/src/fonts/roboto.ts
 
 # Supabase
 infrastructure/supabase/.branches
