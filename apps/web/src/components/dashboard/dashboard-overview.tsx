@@ -15,6 +15,7 @@ import { getTranslations } from 'next-intl/server';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from '@/i18n/navigation';
+import { formatLocaleDate } from '@/lib/i18n/format';
 
 export type Ek3Status = 'draft' | 'completed' | 'signed' | 'superseded';
 
@@ -331,7 +332,12 @@ async function RecentEk3sCard({
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm font-medium">{item.projectName ?? '—'}</p>
                 <p className="text-xs text-muted-foreground">
-                  {t('version', { version: item.version })} · {formatDate(item.createdAt, locale)}
+                  {t('version', { version: item.version })} ·{' '}
+                  {formatLocaleDate(item.createdAt, locale, {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric',
+                  })}
                 </p>
               </div>
               <StatusBadge status={item.status} label={tStatus(item.status)} />
@@ -360,14 +366,6 @@ function StatusBadge({ status, label }: { status: Ek3Status; label: string }): R
       {label}
     </span>
   );
-}
-
-function formatDate(iso: string, locale: string): string {
-  return new Intl.DateTimeFormat(locale === 'tr' ? 'tr-TR' : 'en-US', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  }).format(new Date(iso));
 }
 
 // ---------------------------------------------------------------------------

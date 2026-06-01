@@ -34,6 +34,7 @@ const STATUS_BADGE: Record<Ek3ListItem['status'], string> = {
 
 export function Ek3List() {
   const t = useTranslations('ek3pilot');
+  const tCommon = useTranslations('common');
   const locale = useLocale();
   const { data, isLoading, error } = useQuery({
     queryKey: ['ek3', 'list'],
@@ -65,7 +66,9 @@ export function Ek3List() {
           {isLoading ? (
             <p className="text-sm text-muted-foreground">…</p>
           ) : error ? (
-            <p className="text-sm text-destructive">Hata: {error.message}</p>
+            <p className="text-sm text-destructive">
+              {tCommon('error')}: {error.message}
+            </p>
           ) : !data || data.length === 0 ? (
             <p className="text-sm text-muted-foreground">{t('list.empty')}</p>
           ) : (
@@ -99,7 +102,7 @@ export function Ek3List() {
                     </td>
                     <td className="py-2 text-right">
                       <Button asChild variant="link" size="sm">
-                        <Link href={`/ek3pilot/${row.id}`}>Aç</Link>
+                        <Link href={`/ek3pilot/${row.id}`}>{t('list.open')}</Link>
                       </Button>
                     </td>
                   </tr>

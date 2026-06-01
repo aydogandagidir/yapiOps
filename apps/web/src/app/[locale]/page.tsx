@@ -1,8 +1,13 @@
-import { redirect } from '@/i18n/navigation';
+import { setRequestLocale } from 'next-intl/server';
 
-export default async function RootPage({ params }: { params: Promise<{ locale: string }> }) {
+import { LandingPage } from '@/components/marketing/landing-page';
+
+interface PageProps {
+  params: Promise<{ locale: string }>;
+}
+
+export default async function RootPage({ params }: PageProps): Promise<React.JSX.Element> {
   const { locale } = await params;
-  // Phase 0: route the root to login. Once we have a session check, switch
-  // to /dashboard for authenticated users.
-  redirect({ href: '/login', locale });
+  setRequestLocale(locale);
+  return <LandingPage />;
 }

@@ -296,7 +296,25 @@
     "perMonth": "/ mo",
     "perYear": "/ yr",
     "vatNote": "+ 20% VAT",
-    "redirecting": "Redirecting…"
+    "redirecting": "Redirecting…",
+    "tiers": {
+      "solo": {
+        "f1": "Unlimited Ek3Pilot",
+        "f2": "5 RaporX / month",
+        "f3": "1 user"
+      },
+      "office": {
+        "f1": "All modules",
+        "f2": "50 reports / month",
+        "f3": "3 users"
+      },
+      "officeAi": {
+        "f1": "All modules",
+        "f2": "TBDY-Copilot",
+        "f3": "Unlimited reports",
+        "f4": "5 users"
+      }
+    }
   },
   "errors": {
     "required": "This field is required",
@@ -319,6 +337,7 @@
     "subtitle": "Generate the Yapı Denetim Ek-3 form in 5 minutes",
     "list": {
       "newButton": "New Ek-3",
+      "open": "Open",
       "empty": "No Ek-3 forms yet. Click to create your first one.",
       "columns": {
         "project": "Project",
@@ -505,5 +524,152 @@
     "message": "YapıOps collects anonymized usage analytics to improve your experience (KVKK-compliant, stored in the EU). We don't use marketing cookies.",
     "reject": "Decline",
     "accept": "Accept"
+  },
+  "team": {
+    "members": "Members",
+    "invitations": "Pending Invitations",
+    "columns": {
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "expiresAt": "Expires"
+    },
+    "roles": {
+      "owner": "Owner",
+      "admin": "Admin",
+      "engineer": "Engineer",
+      "auditor": "Auditor"
+    },
+    "removeConfirm": "Remove this member from the organization?",
+    "removeAria": "Remove member",
+    "roleSelectAria": "Change role"
+  },
+  "landing": {
+    "hero": {
+      "heading": "One workflow layer for Turkish structural offices",
+      "subheading": "From Ek-3 to TBDY 2018 reports, AFAD spectra to e-invoicing — five modules, one account.",
+      "ctaPrimary": "Start 14-day free trial",
+      "ctaSecondary": "Explore Ek3Pilot",
+      "microcopy": "No card required. KVKK compliant."
+    },
+    "trust": {
+      "label1": "KVKK compliant",
+      "label2": "e-signature ready",
+      "label3": "e-invoice integrated",
+      "label4": "TBDY 2018 aligned",
+      "label5": "Hosted in Türkiye"
+    },
+    "modules": {
+      "heading": "One licence, five modules",
+      "subheading": "Activate the modules your office needs; pause the rest under one subscription.",
+      "items": {
+        "ek3pilot": {
+          "name": "Ek3Pilot",
+          "description": "Fill the Yapı Denetim Ek-3 form in 5 minutes, export e-signature-ready PDF.",
+          "status": "Live"
+        },
+        "raporX": {
+          "name": "RaporX",
+          "description": "Compile TBDY 2018 reports straight from your ETABS model.",
+          "status": "Coming — Phase 2"
+        },
+        "spektrumHub": {
+          "name": "SpektrumHub",
+          "description": "Connect AFAD spectra and soil data to your project.",
+          "status": "On roadmap — Phase 3"
+        },
+        "copilot": {
+          "name": "TBDY-Copilot",
+          "description": "Ask TBDY clauses in plain language, get cited answers.",
+          "status": "On roadmap — Phase 3"
+        },
+        "billingCore": {
+          "name": "BillingCore",
+          "description": "Manage subscription and e-invoicing in one place.",
+          "status": "Running in background"
+        }
+      }
+    },
+    "spotlight": {
+      "heading": "Don't let Ek-3 cost you an afternoon",
+      "subheading": "Complete, review and route the Yapı Denetim Hizmet Sözleşmesi Ek-3 for signature in five minutes.",
+      "cta": "Try the live module",
+      "step1Title": "Form",
+      "step1Description": "Auto-fill the smart template with project data.",
+      "step2Title": "Validation",
+      "step2Description": "Pass KVKK and form-field checks automatically.",
+      "step3Title": "PDF",
+      "step3Description": "Download the official, e-signature-ready PDF."
+    },
+    "roadmap": {
+      "heading": "Roadmap",
+      "subheading": "Use what's live today; future modules unlock under the same licence.",
+      "phase1Title": "Phase 1 — Live",
+      "phase1Description": "Ek3Pilot in production.",
+      "phase2Title": "Phase 2 — ~6 months",
+      "phase2Description": "RaporX with ETABS link.",
+      "phase3aTitle": "Phase 3 — ~9 months",
+      "phase3aDescription": "SpektrumHub, AFAD integration.",
+      "phase3bTitle": "Phase 3 — ~10 months",
+      "phase3bDescription": "TBDY-Copilot assistant."
+    },
+    "pricing": {
+      "heading": "Pricing that scales with your office",
+      "subheading": "Monthly or annual, 14-day free trial. Save 15% on annual plans.",
+      "recommended": "Recommended",
+      "ctaSelect": "Choose plan",
+      "ctaEnterprise": "Contact sales",
+      "free": {
+        "name": "Free",
+        "price": "₺0",
+        "description": "3 Ek-3 forms per month, 1 user."
+      },
+      "solo": {
+        "name": "Solo",
+        "price": "₺1,500 / mo",
+        "description": "Unlimited Ek3Pilot, 5 RaporX, 1 user."
+      },
+      "office": {
+        "name": "Office",
+        "price": "₺2,500 / mo",
+        "description": "All modules, 50 reports, 3 users."
+      },
+      "officeAi": {
+        "name": "Office + AI",
+        "price": "₺3,500 / mo",
+        "description": "Office plus unlimited Copilot, 5 users."
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "price": "Custom",
+        "description": "SSO, audit export, SLA, 10+ users."
+      }
+    },
+    "faq": {
+      "heading": "Frequently asked questions",
+      "q1Question": "Can the generated Ek-3 PDF be signed with an official e-signature?",
+      "q1Answer": "Yes. The output is a PAdES-compatible PDF, ready for qualified e-signature and KEP workflows registered through e-Devlet.",
+      "q2Question": "Where is our data stored and how is KVKK compliance handled?",
+      "q2Answer": "Project and personal data are hosted in Türkiye; we maintain a KVKK-compliant processing inventory and an active VERBİS record.",
+      "q3Question": "When will RaporX support our ETABS version?",
+      "q3Answer": "Phase 2, in roughly 6 months. We plan .edb import for ETABS 2019 and later; you can join the early access list now.",
+      "q4Question": "Is there a contract — can we cancel anytime?",
+      "q4Answer": "No commitment. Monthly plans cancel each month, annual at term end. The 14-day trial never auto-charges.",
+      "q5Question": "What happens when the office user seat fills up?",
+      "q5Answer": "Add seats prorated, or upgrade to Office+AI or Enterprise in one click — no data migration needed."
+    },
+    "finalCta": {
+      "heading": "Start with Ek-3, scale to the rest of the office",
+      "subheading": "14 days free, no card. No install — opens in your browser.",
+      "ctaPrimary": "Create account",
+      "ctaSecondary": "Schedule a demo"
+    },
+    "nav": {
+      "modules": "Modules",
+      "pricing": "Pricing",
+      "faq": "FAQ",
+      "signIn": "Sign in",
+      "signUp": "Sign up"
+    }
   }
 }
