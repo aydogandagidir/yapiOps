@@ -543,5 +543,133 @@
     "removeConfirm": "Bu üyeyi organizasyondan çıkarmak istediğinizden emin misiniz?",
     "removeAria": "Üyeyi çıkar",
     "roleSelectAria": "Rolü değiştir"
+  },
+  "landing": {
+    "hero": {
+      "heading": "Türk yapı ofisleri için tek bir iş-akışı katmanı",
+      "subheading": "Ek-3'ten TBDY 2018 hesap raporuna, AFAD spektrumundan e-faturaya — beş modül, tek hesap.",
+      "ctaPrimary": "14 gün ücretsiz dene",
+      "ctaSecondary": "Ek3Pilot'u incele",
+      "microcopy": "Kart gerekmez. KVKK uyumlu."
+    },
+    "trust": {
+      "label1": "KVKK uyumlu",
+      "label2": "e-imza hazır",
+      "label3": "e-fatura entegre",
+      "label4": "TBDY 2018 uyumlu",
+      "label5": "Türkiye'de barındırma"
+    },
+    "modules": {
+      "heading": "Tek lisans, beş modül",
+      "subheading": "Ofis aboneliğinizle ihtiyaç duyduğunuz modülü açın, kullanmadığınızı kapatın.",
+      "items": {
+        "ek3pilot": {
+          "name": "Ek3Pilot",
+          "description": "Yapı Denetim Ek-3 formunu 5 dakikada doldurun, e-imza'ya hazır PDF üretin.",
+          "status": "Canlı"
+        },
+        "raporX": {
+          "name": "RaporX",
+          "description": "ETABS modelinden TBDY 2018 hesap raporunu otomatik derleyin.",
+          "status": "Yakında — Faz 2"
+        },
+        "spektrumHub": {
+          "name": "SpektrumHub",
+          "description": "AFAD spektrumu ve zemin verisini projenize bağlayın.",
+          "status": "Yol haritasında — Faz 3"
+        },
+        "copilot": {
+          "name": "TBDY-Copilot",
+          "description": "TBDY maddelerine doğal dilde sorular sorun, kaynaklı cevap alın.",
+          "status": "Yol haritasında — Faz 3"
+        },
+        "billingCore": {
+          "name": "BillingCore",
+          "description": "Aboneliğinizi ve e-faturanızı tek yerden yönetin.",
+          "status": "Arka planda aktif"
+        }
+      }
+    },
+    "spotlight": {
+      "heading": "Ek-3 bir öğleden sonrayı yemesin",
+      "subheading": "Yapı Denetim Hizmet Sözleşmesi Ek-3'ü doldurun, kontrol edin, imzaya gönderin — beş dakika.",
+      "cta": "Canlı modülü dene",
+      "step1Title": "Form",
+      "step1Description": "Proje verisini akıllı şablona aktar.",
+      "step2Title": "Doğrulama",
+      "step2Description": "KVKK ve form alanı kontrolünü otomatik geçir.",
+      "step3Title": "PDF",
+      "step3Description": "E-imza'ya hazır resmî çıktıyı indir."
+    },
+    "roadmap": {
+      "heading": "Yol haritası",
+      "subheading": "Yayında olanı bugün kullanın, gelecek modülleri lisansınızla devralın.",
+      "phase1Title": "Faz 1 — Canlı",
+      "phase1Description": "Ek3Pilot kullanımda.",
+      "phase2Title": "Faz 2 — ~6 ay",
+      "phase2Description": "RaporX, ETABS bağlantısı.",
+      "phase3aTitle": "Faz 3 — ~9 ay",
+      "phase3aDescription": "SpektrumHub, AFAD entegrasyonu.",
+      "phase3bTitle": "Faz 3 — ~10 ay",
+      "phase3bDescription": "TBDY-Copilot danışman."
+    },
+    "pricing": {
+      "heading": "Ofisinizin ölçeğine göre planlayın",
+      "subheading": "Aylık veya yıllık, 14 gün ücretsiz. Yıllık planda %15 indirim.",
+      "recommended": "Önerilen",
+      "ctaSelect": "Planı seç",
+      "ctaEnterprise": "Satışla görüş",
+      "free": {
+        "name": "Free",
+        "price": "₺0",
+        "description": "3 Ek-3 / ay, 1 kullanıcı."
+      },
+      "solo": {
+        "name": "Solo",
+        "price": "₺1.500 / ay",
+        "description": "Ek3Pilot sınırsız, 5 RaporX, 1 kullanıcı."
+      },
+      "office": {
+        "name": "Office",
+        "price": "₺2.500 / ay",
+        "description": "Tüm modüller, 50 rapor, 3 kullanıcı."
+      },
+      "officeAi": {
+        "name": "Office + AI",
+        "price": "₺3.500 / ay",
+        "description": "Office + Copilot sınırsız, 5 kullanıcı."
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "price": "Özel",
+        "description": "SSO, audit export, SLA, 10+ kullanıcı."
+      }
+    },
+    "faq": {
+      "heading": "Sıkça sorulan sorular",
+      "q1Question": "Üretilen Ek-3 PDF'i resmî e-imza ile imzalanabilir mi?",
+      "q1Answer": "Evet. Çıktı PAdES uyumlu PDF'tir; e-Devlet ile kayıtlı nitelikli e-imza ve KEP süreçlerine doğrudan yüklenebilir.",
+      "q2Question": "Verilerimiz nerede tutuluyor, KVKK uyumu nasıl sağlanıyor?",
+      "q2Answer": "Tüm proje ve kişisel veri Türkiye'deki sunucularda barındırılır; KVKK uyumlu işleme envanteri ve VERBİS kaydımız mevcuttur.",
+      "q3Question": "RaporX ETABS sürümünüzle ne zaman çalışacak?",
+      "q3Answer": "Faz 2'de, yaklaşık 6 ay içinde. ETABS 2019 ve üzeri sürümlerle .edb içe aktarımı planlanıyor; erken erişim listesine kaydolabilirsiniz.",
+      "q4Question": "Sözleşme süresi var mı, istediğimde iptal edebilir miyim?",
+      "q4Answer": "Taahhüt yok. Aylık planlar her ay, yıllık planlar dönem sonunda iptal edilir. 14 günlük denemede otomatik tahsilat yapılmaz.",
+      "q5Question": "Ofis lisansındaki kullanıcı sayısı dolduğunda ne oluyor?",
+      "q5Answer": "Ek kullanıcılar prorata olarak eklenir; Office+AI veya Enterprise plana geçiş tek tıkla yapılır, veri taşıma gerekmez."
+    },
+    "finalCta": {
+      "heading": "Ek-3'ten başlayın, ofisin geri kalanı sıraya gelsin",
+      "subheading": "14 gün ücretsiz, kart istemiyoruz. Kurulum yok, tarayıcıda açın.",
+      "ctaPrimary": "Hesabı oluştur",
+      "ctaSecondary": "Demo planla"
+    },
+    "nav": {
+      "modules": "Modüller",
+      "pricing": "Fiyatlandırma",
+      "faq": "SSS",
+      "signIn": "Giriş yap",
+      "signUp": "Kayıt ol"
+    }
   }
 }
