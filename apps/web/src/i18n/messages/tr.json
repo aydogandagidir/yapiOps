@@ -78,6 +78,50 @@
       "spektrumhub": "Spektrum Hub",
       "copilot": "TBDY Copilot",
       "billing": "Faturalama"
+    },
+    "valueProp": {
+      "title": "Ek-3 Pilot",
+      "description": "Yapı Denetim Hizmet Sözleşmesi Ek-3'ünü ~5 dakikada doldur, e-imza'ya hazır PDF al."
+    },
+    "stats": {
+      "projects": "Projeler",
+      "ek3Total": "Toplam Ek-3",
+      "ek3ThisMonth": "Bu ay üretilen",
+      "quota": "Aylık kota"
+    },
+    "quota": {
+      "unlimited": "Sınırsız"
+    },
+    "onboarding": {
+      "title": "Hoş geldin! 3 adımda başla",
+      "subtitle": "Her adım bir sonrakini açar.",
+      "step1": "Proje oluştur",
+      "step1Hint": "Proje iskeletini kur — il/ilçe, ada/parsel, taşıyıcı sistem.",
+      "step1Cta": "Yeni Proje",
+      "step2": "Ek-3 formunu doldur",
+      "step2Hint": "6 adımlı sihirbaz; her alan yazarken otomatik kaydedilir.",
+      "step2Cta": "Yeni Ek-3",
+      "step3": "PDF üret",
+      "step3Hint": "Türkçe, form düzeninde, e-imza'ya hazır çıktı."
+    },
+    "recent": {
+      "title": "Son Ek-3'ler",
+      "subtitle": "En son 5 form",
+      "empty": "Henüz Ek-3 oluşturmadın.",
+      "version": "v{version}"
+    },
+    "quickActions": {
+      "title": "Hızlı Aksiyonlar",
+      "newProject": "Yeni Proje",
+      "newEk3": "Yeni Ek-3",
+      "templates": "Firma Şablonları",
+      "billing": "Plan ve Faturalandırma"
+    },
+    "status": {
+      "draft": "Taslak",
+      "completed": "Tamamlandı",
+      "signed": "İmzalı",
+      "superseded": "Yenilendi"
     }
   },
   "projects": {
