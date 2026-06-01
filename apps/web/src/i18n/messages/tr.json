@@ -296,7 +296,25 @@
     "perMonth": "/ ay",
     "perYear": "/ yıl",
     "vatNote": "+ KDV %20",
-    "redirecting": "Yönlendiriliyor…"
+    "redirecting": "Yönlendiriliyor…",
+    "tiers": {
+      "solo": {
+        "f1": "Ek3Pilot sınırsız",
+        "f2": "5 RaporX / ay",
+        "f3": "1 kullanıcı"
+      },
+      "office": {
+        "f1": "Tüm modüller",
+        "f2": "50 rapor / ay",
+        "f3": "3 kullanıcı"
+      },
+      "officeAi": {
+        "f1": "Tüm modüller",
+        "f2": "TBDY-Copilot",
+        "f3": "Sınırsız rapor",
+        "f4": "5 kullanıcı"
+      }
+    }
   },
   "errors": {
     "required": "Bu alan zorunlu",
@@ -319,6 +337,7 @@
     "subtitle": "Yapı Denetim Hizmet Sözleşmesi Ek-3 formunu 5 dakikada üret",
     "list": {
       "newButton": "Yeni Ek-3",
+      "open": "Aç",
       "empty": "Henüz Ek-3 formunuz yok. İlk formu oluşturmak için tıklayın.",
       "columns": {
         "project": "Proje",
@@ -505,5 +524,24 @@
     "message": "YapıOps, deneyiminizi geliştirmek için anonimleştirilmiş kullanım analitiği toplar (KVKK uyumlu, EU veri merkezinde saklanır). Pazarlama amaçlı çerez kullanmıyoruz.",
     "reject": "Reddet",
     "accept": "Kabul Et"
+  },
+  "team": {
+    "members": "Üyeler",
+    "invitations": "Bekleyen Davetler",
+    "columns": {
+      "name": "İsim",
+      "email": "E-posta",
+      "role": "Rol",
+      "expiresAt": "Süre Sonu"
+    },
+    "roles": {
+      "owner": "Sahip",
+      "admin": "Admin",
+      "engineer": "Mühendis",
+      "auditor": "Denetçi"
+    },
+    "removeConfirm": "Bu üyeyi organizasyondan çıkarmak istediğinizden emin misiniz?",
+    "removeAria": "Üyeyi çıkar",
+    "roleSelectAria": "Rolü değiştir"
   }
 }

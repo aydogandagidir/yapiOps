@@ -28,6 +28,7 @@ async function fetchProjects(): Promise<ProjectListItem[]> {
 
 export function ProjectList() {
   const t = useTranslations('projects');
+  const tCommon = useTranslations('common');
   const locale = useLocale();
   const { data, isLoading, error } = useQuery({
     queryKey: ['projects', 'list'],
@@ -59,7 +60,9 @@ export function ProjectList() {
           {isLoading ? (
             <p className="text-sm text-muted-foreground">…</p>
           ) : error ? (
-            <p className="text-sm text-destructive">Hata: {error.message}</p>
+            <p className="text-sm text-destructive">
+              {tCommon('error')}: {error.message}
+            </p>
           ) : !data || data.length === 0 ? (
             <p className="text-sm text-muted-foreground">{t('empty')}</p>
           ) : (

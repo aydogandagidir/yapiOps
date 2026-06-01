@@ -296,7 +296,25 @@
     "perMonth": "/ mo",
     "perYear": "/ yr",
     "vatNote": "+ 20% VAT",
-    "redirecting": "Redirecting…"
+    "redirecting": "Redirecting…",
+    "tiers": {
+      "solo": {
+        "f1": "Unlimited Ek3Pilot",
+        "f2": "5 RaporX / month",
+        "f3": "1 user"
+      },
+      "office": {
+        "f1": "All modules",
+        "f2": "50 reports / month",
+        "f3": "3 users"
+      },
+      "officeAi": {
+        "f1": "All modules",
+        "f2": "TBDY-Copilot",
+        "f3": "Unlimited reports",
+        "f4": "5 users"
+      }
+    }
   },
   "errors": {
     "required": "This field is required",
@@ -319,6 +337,7 @@
     "subtitle": "Generate the Yapı Denetim Ek-3 form in 5 minutes",
     "list": {
       "newButton": "New Ek-3",
+      "open": "Open",
       "empty": "No Ek-3 forms yet. Click to create your first one.",
       "columns": {
         "project": "Project",
@@ -505,5 +524,24 @@
     "message": "YapıOps collects anonymized usage analytics to improve your experience (KVKK-compliant, stored in the EU). We don't use marketing cookies.",
     "reject": "Decline",
     "accept": "Accept"
+  },
+  "team": {
+    "members": "Members",
+    "invitations": "Pending Invitations",
+    "columns": {
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "expiresAt": "Expires"
+    },
+    "roles": {
+      "owner": "Owner",
+      "admin": "Admin",
+      "engineer": "Engineer",
+      "auditor": "Auditor"
+    },
+    "removeConfirm": "Remove this member from the organization?",
+    "removeAria": "Remove member",
+    "roleSelectAria": "Change role"
   }
 }

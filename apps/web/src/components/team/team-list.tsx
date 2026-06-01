@@ -2,7 +2,7 @@
 
 import type { OrgRole } from '@yapiops/db';
 import { Trash2 } from 'lucide-react';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -34,6 +34,7 @@ export function TeamList({
   currentUserId: string;
   canManage: boolean;
 }) {
+  const t = useTranslations('team');
   const router = useRouter();
   const locale = useLocale();
 
@@ -47,7 +48,7 @@ export function TeamList({
   }
 
   async function removeMember(userId: string) {
-    if (!confirm('Bu üyeyi organizasyondan çıkarmak istediğinizden emin misiniz?')) return;
+    if (!confirm(t('removeConfirm'))) return;
     await fetch(`/api/org/members/${userId}`, { method: 'DELETE' });
     router.refresh();
   }
@@ -56,15 +57,15 @@ export function TeamList({
     <div className="space-y-4">
       <Card>
         <CardHeader>
-          <CardTitle>Üyeler</CardTitle>
+          <CardTitle>{t('members')}</CardTitle>
         </CardHeader>
         <CardContent>
           <table className="w-full text-sm">
             <thead className="text-left text-muted-foreground">
               <tr>
-                <th className="py-2">İsim</th>
-                <th className="py-2">E-posta</th>
-                <th className="py-2">Rol</th>
+                <th className="py-2">{t('columns.name')}</th>
+                <th className="py-2">{t('columns.email')}</th>
+                <th className="py-2">{t('columns.role')}</th>
                 <th className="py-2"></th>
               </tr>
             </thead>
@@ -76,18 +77,19 @@ export function TeamList({
                   <td className="py-2">
                     {canManage && m.id !== currentUserId && m.role !== 'owner' ? (
                       <select
+                        aria-label={t('roleSelectAria')}
                         defaultValue={m.role}
                         onChange={(e) => {
                           void changeRole(m.id, e.target.value as OrgRole);
                         }}
                         className="rounded border px-2 py-1 text-xs"
                       >
-                        <option value="admin">Admin</option>
-                        <option value="engineer">Mühendis</option>
-                        <option value="auditor">Denetçi</option>
+                        <option value="admin">{t('roles.admin')}</option>
+                        <option value="engineer">{t('roles.engineer')}</option>
+                        <option value="auditor">{t('roles.auditor')}</option>
                       </select>
                     ) : (
-                      <span className="text-xs uppercase">{m.role}</span>
+                      <span className="text-xs">{t(`roles.${m.role}`)}</span>
                     )}
                   </td>
                   <td className="py-2 text-right">
@@ -95,6 +97,7 @@ export function TeamList({
                       <Button
                         variant="ghost"
                         size="sm"
+                        aria-label={t('removeAria')}
                         onClick={() => {
                           void removeMember(m.id);
                         }}
@@ -113,22 +116,22 @@ export function TeamList({
       {invitations.length > 0 ? (
         <Card>
           <CardHeader>
-            <CardTitle>Bekleyen Davetler</CardTitle>
+            <CardTitle>{t('invitations')}</CardTitle>
           </CardHeader>
           <CardContent>
             <table className="w-full text-sm">
               <thead className="text-left text-muted-foreground">
                 <tr>
-                  <th className="py-2">E-posta</th>
-                  <th className="py-2">Rol</th>
-                  <th className="py-2">Süre Sonu</th>
+                  <th className="py-2">{t('columns.email')}</th>
+                  <th className="py-2">{t('columns.role')}</th>
+                  <th className="py-2">{t('columns.expiresAt')}</th>
                 </tr>
               </thead>
               <tbody>
                 {invitations.map((inv) => (
                   <tr key={inv.id} className="border-t">
                     <td className="py-2">{inv.email}</td>
-                    <td className="py-2 text-xs uppercase">{inv.role}</td>
+                    <td className="py-2 text-xs">{t(`roles.${inv.role}`)}</td>
                     <td className="py-2">{formatLocaleDate(inv.expires_at, locale)}</td>
                   </tr>
                 ))}

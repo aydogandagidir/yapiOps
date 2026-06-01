@@ -13,30 +13,30 @@ import { formatLocaleNumber } from '@/lib/i18n/format';
 
 type PaidPlan = Exclude<PlanCode, 'free' | 'enterprise'>;
 
-// TODO: i18n the feature lists below. Restructuring requires breaking out the
-// hardcoded TR feature strings into translation keys per plan tier; deferred
-// to a follow-up i18n cleanup PR.
+// Feature labels are resolved via i18n at render time (`billing.tiers.<key>`).
+// Adding a new feature: append the key here AND add the same key under
+// `billing.tiers.<tier>.fN` in en.json + tr.json.
 const TIERS = [
   {
     tier: 'solo',
     monthly: 'solo_monthly',
     yearly: 'solo_yearly',
     label: 'Solo',
-    features: ['Ek3Pilot sınırsız', '5 RaporX/ay', '1 kullanıcı'],
+    featureKeys: ['solo.f1', 'solo.f2', 'solo.f3'],
   },
   {
     tier: 'office',
     monthly: 'office_monthly',
     yearly: 'office_yearly',
     label: 'Office',
-    features: ['Tüm modüller', '50 rapor/ay', '3 kullanıcı'],
+    featureKeys: ['office.f1', 'office.f2', 'office.f3'],
   },
   {
     tier: 'office_ai',
     monthly: 'office_ai_monthly',
     yearly: 'office_ai_yearly',
     label: 'Office + AI',
-    features: ['Tüm modüller', 'TBDY-Copilot', 'Sınırsız rapor', '5 kullanıcı'],
+    featureKeys: ['officeAi.f1', 'officeAi.f2', 'officeAi.f3', 'officeAi.f4'],
   },
 ] as const;
 
@@ -111,10 +111,10 @@ export default function UpgradePage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <ul className="space-y-2 text-sm">
-                  {tier.features.map((f) => (
-                    <li key={f} className="flex items-center gap-2">
+                  {tier.featureKeys.map((key) => (
+                    <li key={key} className="flex items-center gap-2">
                       <Check className="h-4 w-4 text-primary" />
-                      {f}
+                      {t(`tiers.${key}`)}
                     </li>
                   ))}
                 </ul>
