@@ -78,6 +78,50 @@
       "spektrumhub": "Spektrum Hub",
       "copilot": "TBDY Copilot",
       "billing": "Billing"
+    },
+    "valueProp": {
+      "title": "Ek-3 Pilot",
+      "description": "Fill the Yapı Denetim Hizmet Sözleşmesi Ek-3 in ~5 minutes and download an e-signature-ready PDF."
+    },
+    "stats": {
+      "projects": "Projects",
+      "ek3Total": "Total Ek-3",
+      "ek3ThisMonth": "Generated this month",
+      "quota": "Monthly quota"
+    },
+    "quota": {
+      "unlimited": "Unlimited"
+    },
+    "onboarding": {
+      "title": "Welcome! Get started in 3 steps",
+      "subtitle": "Each step unlocks the next.",
+      "step1": "Create a project",
+      "step1Hint": "Set the project shell — province/district, ada/parsel, structural system.",
+      "step1Cta": "New Project",
+      "step2": "Fill the Ek-3 form",
+      "step2Hint": "6-step wizard; every field autosaves as you type.",
+      "step2Cta": "New Ek-3",
+      "step3": "Generate the PDF",
+      "step3Hint": "Turkish, form-style, e-signature-ready."
+    },
+    "recent": {
+      "title": "Recent Ek-3s",
+      "subtitle": "Your most recent 5 forms",
+      "empty": "You haven't created any Ek-3s yet.",
+      "version": "v{version}"
+    },
+    "quickActions": {
+      "title": "Quick Actions",
+      "newProject": "New Project",
+      "newEk3": "New Ek-3",
+      "templates": "Company Templates",
+      "billing": "Plans & Billing"
+    },
+    "status": {
+      "draft": "Draft",
+      "completed": "Completed",
+      "signed": "Signed",
+      "superseded": "Superseded"
     }
   },
   "projects": {
