@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -8,6 +9,7 @@ import { posthog } from '@/lib/posthog';
 const STORAGE_KEY = 'yapiops:cookie-consent';
 
 export function CookieConsent() {
+  const t = useTranslations('cookieConsent');
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -32,19 +34,16 @@ export function CookieConsent() {
   return (
     <div
       role="dialog"
-      aria-label="Çerez izni"
+      aria-label={t('dialogLabel')}
       className="fixed inset-x-4 bottom-4 z-50 mx-auto max-w-2xl rounded-lg border bg-background p-4 shadow-lg md:p-6"
     >
-      <p className="mb-3 text-sm">
-        YapıOps, deneyiminizi geliştirmek için anonimleştirilmiş kullanım analitiği toplar (KVKK
-        uyumlu, EU veri merkezinde saklanır). Pazarlama amaçlı çerez kullanmıyoruz.
-      </p>
+      <p className="mb-3 text-sm">{t('message')}</p>
       <div className="flex justify-end gap-2">
         <Button variant="outline" size="sm" onClick={reject}>
-          Reddet
+          {t('reject')}
         </Button>
         <Button size="sm" onClick={accept}>
-          Kabul Et
+          {t('accept')}
         </Button>
       </div>
     </div>

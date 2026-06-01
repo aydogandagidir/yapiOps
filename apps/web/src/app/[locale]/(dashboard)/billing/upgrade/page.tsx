@@ -3,14 +3,19 @@
 import { PLAN_CATALOG, type PlanDefinition } from '@yapiops/billing/plans';
 import type { BillingInterval, PlanCode } from '@yapiops/db';
 import { Check } from 'lucide-react';
+import { useLocale, useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useRouter } from '@/i18n/navigation';
+import { formatLocaleNumber } from '@/lib/i18n/format';
 
 type PaidPlan = Exclude<PlanCode, 'free' | 'enterprise'>;
 
+// TODO: i18n the feature lists below. Restructuring requires breaking out the
+// hardcoded TR feature strings into translation keys per plan tier; deferred
+// to a follow-up i18n cleanup PR.
 const TIERS = [
   {
     tier: 'solo',
@@ -36,6 +41,9 @@ const TIERS = [
 ] as const;
 
 export default function UpgradePage() {
+  const t = useTranslations('billing');
+  const tCommon = useTranslations('common');
+  const locale = useLocale();
   const [interval, setInterval] = useState<BillingInterval>('monthly');
   const [loadingCode, setLoadingCode] = useState<PaidPlan | null>(null);
   const router = useRouter();
@@ -62,13 +70,11 @@ export default function UpgradePage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold">Plan Seç</h1>
-        <p className="text-sm text-muted-foreground">
-          14 gün ücretsiz deneme — istediğiniz zaman iptal edebilirsiniz.
-        </p>
+        <h1 className="text-2xl font-bold">{t('upgradeTitle')}</h1>
+        <p className="text-sm text-muted-foreground">{t('selectPlanSubtitle')}</p>
       </div>
 
-      <div className="flex gap-2 rounded-md bg-muted p-1 w-fit">
+      <div className="flex w-fit gap-2 rounded-md bg-muted p-1">
         <button
           type="button"
           onClick={() => {
@@ -76,7 +82,7 @@ export default function UpgradePage() {
           }}
           className={`rounded px-3 py-1 text-sm ${interval === 'monthly' ? 'bg-background shadow' : 'text-muted-foreground'}`}
         >
-          Aylık
+          {t('monthly')}
         </button>
         <button
           type="button"
@@ -85,7 +91,7 @@ export default function UpgradePage() {
           }}
           className={`rounded px-3 py-1 text-sm ${interval === 'yearly' ? 'bg-background shadow' : 'text-muted-foreground'}`}
         >
-          Yıllık (%15 indirim)
+          {t('yearlyWithDiscount')}
         </button>
       </div>
 
@@ -98,9 +104,9 @@ export default function UpgradePage() {
               <CardHeader>
                 <CardTitle>{tier.label}</CardTitle>
                 <CardDescription>
-                  ₺{plan.priceTry.toLocaleString('tr-TR')}{' '}
-                  {interval === 'monthly' ? '/ ay' : '/ yıl'}
-                  <span className="block text-xs text-muted-foreground">+ KDV %20</span>
+                  ₺{formatLocaleNumber(plan.priceTry, locale)}{' '}
+                  {interval === 'monthly' ? t('perMonth') : t('perYear')}
+                  <span className="block text-xs text-muted-foreground">{t('vatNote')}</span>
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -119,7 +125,7 @@ export default function UpgradePage() {
                   }}
                   disabled={loadingCode !== null}
                 >
-                  {loadingCode === code ? 'Yönlendiriliyor...' : 'Bu Plan'}
+                  {loadingCode === code ? t('redirecting') : t('selectPlan')}
                 </Button>
               </CardContent>
             </Card>
@@ -133,7 +139,7 @@ export default function UpgradePage() {
           router.back();
         }}
       >
-        Geri
+        {tCommon('back')}
       </Button>
     </div>
   );

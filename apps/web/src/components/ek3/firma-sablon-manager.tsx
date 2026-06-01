@@ -44,6 +44,7 @@ async function createSablon(payload: {
 
 export function FirmaSablonManager() {
   const t = useTranslations('ek3pilot.firmaSablon');
+  const tCommon = useTranslations('common');
   const queryClient = useQueryClient();
   const { data } = useQuery({
     queryKey: ['firma-sablonlari', 'all'],
@@ -82,7 +83,7 @@ export function FirmaSablonManager() {
         <CardContent className="space-y-4">
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
-              <Label>Tür</Label>
+              <Label>{t('typeLabel')}</Label>
               <select
                 className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                 value={type}
@@ -90,12 +91,12 @@ export function FirmaSablonManager() {
                   setType(e.target.value as 'muteahhit' | 'denetim');
                 }}
               >
-                <option value="muteahhit">Müteahhit</option>
-                <option value="denetim">Yapı Denetim</option>
+                <option value="muteahhit">{t('muteahhitOption')}</option>
+                <option value="denetim">{t('denetimOption')}</option>
               </select>
             </div>
             <div className="space-y-2">
-              <Label>Şablon adı</Label>
+              <Label>{t('nameLabel')}</Label>
               <Input
                 value={name}
                 onChange={(e) => {
@@ -129,7 +130,7 @@ export function FirmaSablonManager() {
               if (payload) create.mutate(payload);
             }}
           >
-            Kaydet
+            {tCommon('save')}
           </Button>
           {create.isError && <p className="text-sm text-destructive">{create.error.message}</p>}
         </CardContent>

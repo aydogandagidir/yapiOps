@@ -4,13 +4,14 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { Ek3TemplateRow } from '@yapiops/ek3/template-source';
 import { cn } from '@yapiops/ui';
 import { CheckCircle2, CloudDownload, FileUp, Loader2, RotateCw } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useRef, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { formatLocaleDate, formatLocaleDateTime } from '@/lib/i18n/format';
 
 interface Props {
   initialTemplates: Ek3TemplateRow[];
@@ -52,6 +53,7 @@ async function activateRow(id: string): Promise<void> {
 
 export function Ek3TemplateManager({ initialTemplates }: Props) {
   const t = useTranslations('ek3pilot.templates');
+  const locale = useLocale();
   const queryClient = useQueryClient();
 
   const { data } = useQuery({
@@ -121,9 +123,7 @@ export function Ek3TemplateManager({ initialTemplates }: Props) {
               <dt className="text-muted-foreground">{t('fields.sha256')}</dt>
               <dd className="font-mono text-xs">{active.sha256.slice(0, 16)}…</dd>
               <dt className="text-muted-foreground">{t('fields.fetchedAt')}</dt>
-              <dd>
-                {active.fetched_at ? new Date(active.fetched_at).toLocaleString('tr-TR') : '—'}
-              </dd>
+              <dd>{active.fetched_at ? formatLocaleDateTime(active.fetched_at, locale) : '—'}</dd>
               {active.source_url && (
                 <>
                   <dt className="text-muted-foreground">{t('fields.sourceUrl')}</dt>
@@ -259,7 +259,7 @@ export function Ek3TemplateManager({ initialTemplates }: Props) {
                     </td>
                     <td className="py-2 font-mono text-xs">{row.sha256.slice(0, 12)}…</td>
                     <td className="py-2 text-muted-foreground">
-                      {row.fetched_at ? new Date(row.fetched_at).toLocaleDateString('tr-TR') : '—'}
+                      {row.fetched_at ? formatLocaleDate(row.fetched_at, locale) : '—'}
                     </td>
                     <td className="py-2 text-right">
                       {row.is_active ? (

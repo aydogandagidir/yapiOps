@@ -2,11 +2,12 @@
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FilePlus, Trash2 } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link, useRouter } from '@/i18n/navigation';
+import { formatLocaleDate } from '@/lib/i18n/format';
 
 interface ProjectRow {
   id: string;
@@ -28,6 +29,7 @@ interface Props {
 
 export function ProjectDetail({ project, canDelete }: Props) {
   const t = useTranslations('projects');
+  const locale = useLocale();
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -88,11 +90,11 @@ export function ProjectDetail({ project, canDelete }: Props) {
             <Pair label={t('fields.parsel')} value={project.parsel_no} />
             <Pair
               label={t('fields.created')}
-              value={new Date(project.created_at).toLocaleDateString('tr-TR')}
+              value={formatLocaleDate(project.created_at, locale)}
             />
             <Pair
               label={t('fields.updated')}
-              value={new Date(project.updated_at).toLocaleDateString('tr-TR')}
+              value={formatLocaleDate(project.updated_at, locale)}
             />
           </dl>
         </CardContent>

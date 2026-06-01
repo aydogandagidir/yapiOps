@@ -13,7 +13,7 @@ import {
 } from '@yapiops/ek3';
 import { cn } from '@yapiops/ui';
 import { Check, Loader2 } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { DenetimStep } from './steps/denetim-step';
@@ -26,6 +26,7 @@ import { YapiStep } from './steps/yapi-step';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { useRouter } from '@/i18n/navigation';
+import { formatLocaleTime } from '@/lib/i18n/format';
 
 export interface Ek3FormDataPartial {
   proje?: Partial<ProjeBilgileri>;
@@ -44,6 +45,20 @@ interface Ek3WizardProps {
 
 const AUTOSAVE_DELAY_MS = 800;
 
+/** Custom Error that carries quota metadata (`used` / `limit`) from a 402
+ *  response, so the UI can render the real values instead of placeholder 0s. */
+class GenerateError extends Error {
+  readonly used: number | undefined;
+  readonly limit: number | undefined;
+
+  constructor(message: string, used?: number, limit?: number) {
+    super(message);
+    this.name = 'GenerateError';
+    this.used = used;
+    this.limit = limit;
+  }
+}
+
 async function patchForm(ek3Id: string, formData: Ek3FormDataPartial): Promise<void> {
   const res = await fetch(`/api/ek3/${ek3Id}`, {
     method: 'PATCH',
@@ -56,15 +71,21 @@ async function patchForm(ek3Id: string, formData: Ek3FormDataPartial): Promise<v
   }
 }
 
-async function generatePdf(ek3Id: string): Promise<{ pdfUrl: string; error?: string }> {
+async function generatePdf(ek3Id: string): Promise<{ pdfUrl: string }> {
   const res = await fetch(`/api/ek3/${ek3Id}/generate`, { method: 'POST' });
-  const json = (await res.json()) as { pdfUrl?: string; error?: string };
-  if (!res.ok) throw new Error(json.error ?? 'generate_failed');
+  const json = (await res.json()) as {
+    pdfUrl?: string;
+    error?: string;
+    used?: number;
+    limit?: number;
+  };
+  if (!res.ok) throw new GenerateError(json.error ?? 'generate_failed', json.used, json.limit);
   return { pdfUrl: json.pdfUrl ?? '' };
 }
 
 export function Ek3Wizard({ ek3Id, initialData, initialStatus }: Ek3WizardProps) {
   const t = useTranslations('ek3pilot');
+  const locale = useLocale();
   const router = useRouter();
   const queryClient = useQueryClient();
   const [step, setStep] = useState<Ek3Step>('proje');
@@ -179,7 +200,7 @@ export function Ek3Wizard({ ek3Id, initialData, initialStatus }: Ek3WizardProps)
           ) : savedAt ? (
             <span className="inline-flex items-center gap-1">
               <Check className="h-3 w-3" /> {t('wizard.savedAt')}{' '}
-              {savedAt.toLocaleTimeString('tr-TR')}
+              {formatLocaleTime(savedAt, locale)}
             </span>
           ) : null}
         </div>
@@ -187,6 +208,7 @@ export function Ek3Wizard({ ek3Id, initialData, initialStatus }: Ek3WizardProps)
           {stepIndex > 0 && (
             <Button
               variant="outline"
+              aria-label={t('wizard.previousStep')}
               onClick={() => {
                 setStep(EK3_STEPS[stepIndex - 1] ?? 'proje');
               }}
@@ -196,6 +218,7 @@ export function Ek3Wizard({ ek3Id, initialData, initialStatus }: Ek3WizardProps)
           )}
           {!isLastStep ? (
             <Button
+              aria-label={t('wizard.nextStep')}
               onClick={() => {
                 setStep(EK3_STEPS[stepIndex + 1] ?? 'denetim');
               }}
@@ -218,23 +241,30 @@ export function Ek3Wizard({ ek3Id, initialData, initialStatus }: Ek3WizardProps)
         </div>
       </div>
 
-      {generateMutation.isError && (
-        <p className="text-sm text-destructive">
-          {generateMutation.error.message === 'quota_exceeded'
-            ? t('errors.quotaExceeded', { used: 0, limit: 0 })
-            : generateMutation.error.message}
-        </p>
-      )}
+      {generateMutation.isError &&
+        (() => {
+          const err = generateMutation.error;
+          // Narrow `err` directly via the type-guard so we can read `used` /
+          // `limit` without a redundant cast (no-unnecessary-type-assertion).
+          if (err instanceof GenerateError && err.message === 'quota_exceeded') {
+            const text = t('errors.quotaExceeded', {
+              used: err.used ?? 0,
+              limit: err.limit ?? 0,
+            });
+            return <p className="text-sm text-destructive">{text}</p>;
+          }
+          return <p className="text-sm text-destructive">{err.message}</p>;
+        })()}
     </div>
   );
 }
 
 function Stepper({ current, onChange }: { current: Ek3Step; onChange: (s: Ek3Step) => void }) {
-  const t = useTranslations('ek3pilot.wizard.stepLabels');
+  const t = useTranslations('ek3pilot.wizard');
   const currentIdx = EK3_STEPS.indexOf(current);
 
   return (
-    <ol className="flex items-center gap-2 overflow-x-auto" aria-label="Form adımları">
+    <ol className="flex items-center gap-2 overflow-x-auto" aria-label={t('stepsAriaLabel')}>
       {EK3_STEPS.map((s, i) => {
         const active = s === current;
         const completed = i < currentIdx;
@@ -254,7 +284,7 @@ function Stepper({ current, onChange }: { current: Ek3Step; onChange: (s: Ek3Ste
               aria-current={active ? 'step' : undefined}
             >
               <span className="font-mono">{i + 1}</span>
-              {t(s)}
+              {t(`stepLabels.${s}`)}
             </button>
           </li>
         );

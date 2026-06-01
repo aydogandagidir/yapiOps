@@ -55,26 +55,23 @@ export function Ek3NewClient({ projects }: Props) {
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Proje seç</CardTitle>
-          <CardDescription>
-            Ek-3 bir projeye bağlanır. İlgili projeyi seçin veya yeni bir proje oluşturun.
-          </CardDescription>
+          <CardTitle className="text-base">{t('newForm.selectProject')}</CardTitle>
+          <CardDescription>{t('newForm.selectHint')}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           {projects.length === 0 ? (
             <div className="rounded-md border border-dashed p-4 text-sm text-muted-foreground">
-              Henüz projeniz yok.
+              {t('newForm.noProjects')}
               <Button asChild variant="link" size="sm" className="ml-1 h-auto p-0">
                 <Link href="/projects/new">
-                  <Plus className="mr-1 h-3 w-3" /> Yeni proje oluşturun
+                  <Plus className="mr-1 h-3 w-3" /> {t('newForm.createProjectLink')}
                 </Link>
               </Button>
-              .
             </div>
           ) : (
             <>
               <div className="space-y-2">
-                <Label>Proje</Label>
+                <Label>{t('newForm.projectLabel')}</Label>
                 <select
                   className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   value={projectId}
@@ -97,11 +94,11 @@ export function Ek3NewClient({ projects }: Props) {
                     create.mutate(projectId);
                   }}
                 >
-                  Oluştur
+                  {t('newForm.createButton')}
                 </Button>
                 <Button asChild variant="outline">
                   <Link href="/projects/new">
-                    <Plus className="mr-2 h-4 w-4" /> Yeni proje
+                    <Plus className="mr-2 h-4 w-4" /> {t('newForm.newProjectButton')}
                   </Link>
                 </Button>
               </div>

@@ -3,11 +3,12 @@
 import { useQuery } from '@tanstack/react-query';
 import { cn } from '@yapiops/ui';
 import { FileText, Plus } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from '@/i18n/navigation';
+import { formatLocaleDate } from '@/lib/i18n/format';
 
 interface Ek3ListItem {
   id: string;
@@ -33,6 +34,7 @@ const STATUS_BADGE: Record<Ek3ListItem['status'], string> = {
 
 export function Ek3List() {
   const t = useTranslations('ek3pilot');
+  const locale = useLocale();
   const { data, isLoading, error } = useQuery({
     queryKey: ['ek3', 'list'],
     queryFn: fetchEk3List,
@@ -93,7 +95,7 @@ export function Ek3List() {
                       </span>
                     </td>
                     <td className="py-2 text-muted-foreground">
-                      {new Date(row.updated_at).toLocaleDateString('tr-TR')}
+                      {formatLocaleDate(row.updated_at, locale)}
                     </td>
                     <td className="py-2 text-right">
                       <Button asChild variant="link" size="sm">
