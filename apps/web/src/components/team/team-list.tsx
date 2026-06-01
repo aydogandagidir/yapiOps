@@ -2,10 +2,12 @@
 
 import type { OrgRole } from '@yapiops/db';
 import { Trash2 } from 'lucide-react';
+import { useLocale } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useRouter } from '@/i18n/navigation';
+import { formatLocaleDate } from '@/lib/i18n/format';
 
 interface Member {
   id: string;
@@ -33,6 +35,7 @@ export function TeamList({
   canManage: boolean;
 }) {
   const router = useRouter();
+  const locale = useLocale();
 
   async function changeRole(userId: string, role: OrgRole) {
     await fetch(`/api/org/members/${userId}/role`, {
@@ -125,8 +128,8 @@ export function TeamList({
                 {invitations.map((inv) => (
                   <tr key={inv.id} className="border-t">
                     <td className="py-2">{inv.email}</td>
-                    <td className="py-2 uppercase text-xs">{inv.role}</td>
-                    <td className="py-2">{new Date(inv.expires_at).toLocaleDateString('tr-TR')}</td>
+                    <td className="py-2 text-xs uppercase">{inv.role}</td>
+                    <td className="py-2">{formatLocaleDate(inv.expires_at, locale)}</td>
                   </tr>
                 ))}
               </tbody>

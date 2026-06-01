@@ -3,7 +3,7 @@ import { requireAuthContext } from '@yapiops/auth/server';
 import { createSupabaseServerClient } from '@yapiops/db/server';
 import { cookies } from 'next/headers';
 import { notFound, redirect } from 'next/navigation';
-import { setRequestLocale } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 import { Ek3PdfPreview } from '@/components/ek3/pdf-preview';
 
@@ -39,11 +39,16 @@ export default async function Ek3PilotPreviewPage({ params }: PageProps) {
     .maybeSingle<Ek3PreviewRow>();
   if (!row) notFound();
 
+  const t = await getTranslations('ek3pilot.preview');
+  const tStatus = await getTranslations('ek3pilot.list.status');
+
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold">Ek-3 v{row.version} — Önizleme</h1>
-        <p className="text-sm text-muted-foreground">Durum: {row.status}</p>
+        <h1 className="text-2xl font-bold">{t('pageTitle', { version: row.version })}</h1>
+        <p className="text-sm text-muted-foreground">
+          {t('statusLabel')}: {tStatus(row.status)}
+        </p>
       </div>
       <Ek3PdfPreview ek3Id={row.id} pdfUrl={row.pdf_url} />
     </div>

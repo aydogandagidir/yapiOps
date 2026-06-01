@@ -2,11 +2,12 @@
 
 import { useMutation } from '@tanstack/react-query';
 import { Bell, Loader2, Save } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { formatLocaleTime } from '@/lib/i18n/format';
 
 interface Props {
   initialEk3Generated: boolean;
@@ -32,6 +33,7 @@ async function patchPreferences(payload: PreferencesPatch): Promise<void> {
 
 export function NotificationPreferences({ initialEk3Generated, initialWeeklyDigest }: Props) {
   const t = useTranslations('settings.notifications');
+  const locale = useLocale();
 
   const [ek3Generated, setEk3Generated] = useState(initialEk3Generated);
   const [weeklyDigest, setWeeklyDigest] = useState(initialWeeklyDigest);
@@ -96,7 +98,7 @@ export function NotificationPreferences({ initialEk3Generated, initialWeeklyDige
             </Button>
             {savedAt && !save.isPending && (
               <span className="text-xs text-muted-foreground">
-                {t('savedAt', { time: savedAt.toLocaleTimeString('tr-TR') })}
+                {t('savedAt', { time: formatLocaleTime(savedAt, locale) })}
               </span>
             )}
           </div>

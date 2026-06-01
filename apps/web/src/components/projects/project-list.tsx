@@ -2,11 +2,12 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { FolderOpen, Plus } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from '@/i18n/navigation';
+import { formatLocaleDate } from '@/lib/i18n/format';
 
 interface ProjectListItem {
   id: string;
@@ -27,6 +28,7 @@ async function fetchProjects(): Promise<ProjectListItem[]> {
 
 export function ProjectList() {
   const t = useTranslations('projects');
+  const locale = useLocale();
   const { data, isLoading, error } = useQuery({
     queryKey: ['projects', 'list'],
     queryFn: fetchProjects,
@@ -82,7 +84,7 @@ export function ProjectList() {
                       {row.ada_no && row.parsel_no ? `${row.ada_no}/${row.parsel_no}` : '—'}
                     </td>
                     <td className="py-2 text-muted-foreground">
-                      {new Date(row.updated_at).toLocaleDateString('tr-TR')}
+                      {formatLocaleDate(row.updated_at, locale)}
                     </td>
                     <td className="py-2 text-right">
                       <Button asChild variant="link" size="sm">

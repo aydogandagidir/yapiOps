@@ -14,7 +14,8 @@
     "close": "Close",
     "error": "Error",
     "success": "Success",
-    "logout": "Logout"
+    "logout": "Logout",
+    "create": "Create"
   },
   "auth": {
     "signupTitle": "Create Account",
@@ -289,7 +290,13 @@
       "pastDue": "Past Due",
       "canceled": "Canceled",
       "expired": "Expired"
-    }
+    },
+    "selectPlanSubtitle": "14-day free trial — cancel anytime.",
+    "yearlyWithDiscount": "Yearly (15% off)",
+    "perMonth": "/ mo",
+    "perYear": "/ yr",
+    "vatNote": "+ 20% VAT",
+    "redirecting": "Redirecting…"
   },
   "errors": {
     "required": "This field is required",
@@ -406,13 +413,20 @@
       "vkn": "Invalid VKN",
       "tcknOrVkn": "TCKN or VKN required",
       "dtsWarning": "Sds-DTS mismatch (TBDY 2018 §3.2)",
-      "bysWarning": "BYS-height mismatch (TBDY 2018 §3.3)"
+      "bysWarning": "BYS-height mismatch (TBDY 2018 §3.3)",
+      "stepsAriaLabel": "Form steps",
+      "previousStep": "Previous step",
+      "nextStep": "Next step"
     },
     "preview": {
       "title": "PDF Preview",
       "download": "Download PDF",
       "regenerate": "Regenerate",
-      "signNote": "PDF includes an e-signature field — open with E-İmzaTR to sign."
+      "signNote": "PDF includes an e-signature field — open with E-İmzaTR to sign.",
+      "pageTitle": "Ek-3 v{version} — Preview",
+      "statusLabel": "Status",
+      "pdfFrameTitle": "Ek-3 PDF",
+      "pdfNotGenerated": "PDF hasn't been generated yet."
     },
     "errors": {
       "quotaExceeded": "Monthly Ek-3 limit reached ({used}/{limit}). Upgrade your plan from billing.",
@@ -430,7 +444,20 @@
       "denetimTitle": "Building Inspectors",
       "empty": "No templates yet.",
       "selectPlaceholder": "Pick from template...",
-      "selectNone": "Skip template"
+      "selectNone": "Skip template",
+      "typeLabel": "Type",
+      "muteahhitOption": "Contractor",
+      "denetimOption": "Building Inspector",
+      "nameLabel": "Template name"
+    },
+    "newForm": {
+      "selectProject": "Choose a project",
+      "selectHint": "Each Ek-3 belongs to a project. Pick one or create a new project.",
+      "noProjects": "You don't have any projects yet.",
+      "createProjectLink": "Create a project",
+      "projectLabel": "Project",
+      "createButton": "Create",
+      "newProjectButton": "New project"
     },
     "templates": {
       "title": "Ek-3 Form Templates",
@@ -472,5 +499,11 @@
         "deduped": "Same SHA-256 was already recorded; existing record activated."
       }
     }
+  },
+  "cookieConsent": {
+    "dialogLabel": "Cookie consent",
+    "message": "YapıOps collects anonymized usage analytics to improve your experience (KVKK-compliant, stored in the EU). We don't use marketing cookies.",
+    "reject": "Decline",
+    "accept": "Accept"
   }
 }

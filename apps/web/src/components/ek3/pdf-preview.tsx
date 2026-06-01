@@ -35,9 +35,13 @@ export function Ek3PdfPreview({ ek3Id, pdfUrl }: Props) {
       </CardHeader>
       <CardContent className="space-y-4">
         {pdfUrl ? (
-          <iframe title="Ek-3 PDF" src={pdfUrl} className="h-[800px] w-full rounded-md border" />
+          <iframe
+            title={t('pdfFrameTitle')}
+            src={pdfUrl}
+            className="h-[800px] w-full rounded-md border"
+          />
         ) : (
-          <p className="text-sm text-muted-foreground">PDF henüz üretilmedi.</p>
+          <p className="text-sm text-muted-foreground">{t('pdfNotGenerated')}</p>
         )}
         <div className="flex gap-2">
           {pdfUrl && (

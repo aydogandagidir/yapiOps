@@ -14,7 +14,8 @@
     "close": "Kapat",
     "error": "Hata",
     "success": "Başarılı",
-    "logout": "Çıkış"
+    "logout": "Çıkış",
+    "create": "Oluştur"
   },
   "auth": {
     "signupTitle": "Hesap Oluştur",
@@ -289,7 +290,13 @@
       "pastDue": "Ödeme Bekliyor",
       "canceled": "İptal Edildi",
       "expired": "Süresi Doldu"
-    }
+    },
+    "selectPlanSubtitle": "14 gün ücretsiz deneme — istediğiniz zaman iptal edebilirsiniz.",
+    "yearlyWithDiscount": "Yıllık (%15 indirim)",
+    "perMonth": "/ ay",
+    "perYear": "/ yıl",
+    "vatNote": "+ KDV %20",
+    "redirecting": "Yönlendiriliyor…"
   },
   "errors": {
     "required": "Bu alan zorunlu",
@@ -406,13 +413,20 @@
       "vkn": "Geçersiz VKN",
       "tcknOrVkn": "TCKN veya VKN zorunlu",
       "dtsWarning": "Sds-DTS uyumsuzluğu (TBDY Tablo 3.2)",
-      "bysWarning": "BYS-yükseklik uyumsuzluğu (TBDY Tablo 3.3)"
+      "bysWarning": "BYS-yükseklik uyumsuzluğu (TBDY Tablo 3.3)",
+      "stepsAriaLabel": "Form adımları",
+      "previousStep": "Önceki adım",
+      "nextStep": "Sonraki adım"
     },
     "preview": {
       "title": "PDF Önizleme",
       "download": "PDF İndir",
       "regenerate": "Yeniden Üret",
-      "signNote": "PDF e-imza alanı içerir; E-İmzaTR ile açıp imzalayabilirsiniz."
+      "signNote": "PDF e-imza alanı içerir; E-İmzaTR ile açıp imzalayabilirsiniz.",
+      "pageTitle": "Ek-3 v{version} — Önizleme",
+      "statusLabel": "Durum",
+      "pdfFrameTitle": "Ek-3 PDF",
+      "pdfNotGenerated": "PDF henüz üretilmedi."
     },
     "errors": {
       "quotaExceeded": "Aylık Ek-3 limitinize ulaştınız ({used}/{limit}). Plan yükseltmek için faturalama sayfasına gidin.",
@@ -430,7 +444,20 @@
       "denetimTitle": "Yapı Denetim Kuruluşları",
       "empty": "Henüz şablon yok.",
       "selectPlaceholder": "Şablondan seç...",
-      "selectNone": "Şablonsuz devam et"
+      "selectNone": "Şablonsuz devam et",
+      "typeLabel": "Tür",
+      "muteahhitOption": "Müteahhit",
+      "denetimOption": "Yapı Denetim",
+      "nameLabel": "Şablon adı"
+    },
+    "newForm": {
+      "selectProject": "Proje seç",
+      "selectHint": "Her Ek-3 bir projeye bağlanır. İlgili projeyi seçin veya yeni bir proje oluşturun.",
+      "noProjects": "Henüz projeniz yok.",
+      "createProjectLink": "Yeni proje oluşturun",
+      "projectLabel": "Proje",
+      "createButton": "Oluştur",
+      "newProjectButton": "Yeni proje"
     },
     "templates": {
       "title": "Ek-3 Form Şablonları",
@@ -472,5 +499,11 @@
         "deduped": "Aynı SHA-256 daha önce kaydedilmişti; mevcut kayıt aktive edildi."
       }
     }
+  },
+  "cookieConsent": {
+    "dialogLabel": "Çerez izni",
+    "message": "YapıOps, deneyiminizi geliştirmek için anonimleştirilmiş kullanım analitiği toplar (KVKK uyumlu, EU veri merkezinde saklanır). Pazarlama amaçlı çerez kullanmıyoruz.",
+    "reject": "Reddet",
+    "accept": "Kabul Et"
   }
 }
